@@ -27,16 +27,16 @@ package javafx.scene.control;
 
 // editor and converter code in sync with ComboBox 2708:a3e606ef6ead
 
-import java.time.LocalDate;
-import java.time.DateTimeException;
-import java.time.chrono.Chronology;
-import java.time.chrono.ChronoLocalDate;
-import java.time.chrono.IsoChronology;
-// import java.time.format.DateTimeFormatSymbols;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.time.format.FormatStyle;
-import java.time.temporal.TemporalAccessor;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.DateTimeException;
+import org.threeten.bp.chrono.Chronology;
+import org.threeten.bp.chrono.ChronoLocalDate;
+import org.threeten.bp.chrono.IsoChronology;
+// import org.threeten.bp.format.DateTimeFormatSymbols;
+import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.format.DateTimeParseException;
+import org.threeten.bp.format.FormatStyle;
+import org.threeten.bp.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -71,12 +71,12 @@ import sun.util.locale.provider.LocaleProviderAdapter;
  * The DatePicker control allows the user to enter a date as text or
  * to select a date from a calendar popup. The calendar is based on
  * either the standard ISO-8601 chronology or any of the other
- * chronology classes defined in the java.time.chrono package.
+ * chronology classes defined in the org.threeten.bp.chrono package.
  *
  * <p>The {@link #valueProperty() value} property represents the
- * currently selected {@link java.time.LocalDate}.  An initial date can
- * be set via the {@link #DatePicker(java.time.LocalDate) constructor}
- * or by calling {@link #setValue(java.time.LocalDate) setValue()}.  The
+ * currently selected {@link org.threeten.bp.LocalDate}.  An initial date can
+ * be set via the {@link #DatePicker(org.threeten.bp.LocalDate) constructor}
+ * or by calling {@link #setValue(org.threeten.bp.LocalDate) setValue()}.  The
  * default value is null.
  *
  * <pre><code>
@@ -95,8 +95,8 @@ import sun.util.locale.provider.LocaleProviderAdapter;
  * The {@link #valueProperty() value} property is always defined in
  * the ISO calendar system, however, so applications based on a
  * different chronology may use the conversion methods provided in the
- * {@link java.time.chrono.Chronology} API to get or set the
- * corresponding {@link java.time.chrono.ChronoLocalDate} value. For
+ * {@link org.threeten.bp.chrono.Chronology} API to get or set the
+ * corresponding {@link org.threeten.bp.chrono.ChronoLocalDate} value. For
  * example:
  *
  * <pre><code>
@@ -190,7 +190,7 @@ public class DatePicker extends ComboBoxBase<LocalDate> {
      *
      * <p>The default value is returned from a call to
      * {@code Chronology.ofLocale(Locale.getDefault(Locale.Category.FORMAT))}.
-     * The default is usually {@link java.time.chrono.IsoChronology} unless
+     * The default is usually {@link org.threeten.bp.chrono.IsoChronology} unless
      * provided explicitly in the {@link java.util.Locale} by use of a
      * Locale calendar extension.
      *
@@ -267,7 +267,7 @@ public class DatePicker extends ComboBoxBase<LocalDate> {
      * versa.
      *
      * <p>If not set by the application, the DatePicker skin class will
-     * set a converter based on a {@link java.time.DateTimeFormatter}
+     * set a converter based on a {@link org.threeten.bp.DateTimeFormatter}
      * for the current {@link java.util.Locale} and
      * {@link #chronologyProperty() chronology}. This formatter is
      * then used to parse and display the current date value.
