@@ -63,7 +63,7 @@ import javafx.util.StringConverter;
 import com.sun.javafx.css.converters.BooleanConverter;
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
 import com.sun.javafx.scene.control.skin.resources.ControlResources;
-import sun.util.locale.provider.LocaleProviderAdapter;
+//import sun.util.locale.provider.LocaleProviderAdapter;
 
 
 
@@ -411,11 +411,13 @@ public class DatePicker extends ComboBoxBase<LocalDate> {
         Locale locale = Locale.getDefault(Locale.Category.FORMAT);
         Chronology chrono = getChronology();
 
-        return LocaleProviderAdapter.getResourceBundleBased()
-                                    .getLocaleResources(locale)
-                                    .getJavaTimeDateTimePattern(-1,
-                                                                FormatStyle.SHORT.ordinal(),
-                                                                chrono.getCalendarType());
+//        return LocaleProviderAdapter.getResourceBundleBased()
+//                                    .getLocaleResources(locale)
+//                                    .getJavaTimeDateTimePattern(-1,
+//                                                                FormatStyle.SHORT.ordinal(),
+//                                                                chrono.getCalendarType());
+        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
+                .withChronology(chrono).toFormat().toString(); //FIXME?
     }
 
 
