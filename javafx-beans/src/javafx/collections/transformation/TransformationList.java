@@ -36,7 +36,7 @@ import javafx.collections.WeakListChangeListener;
  * elements, order, size or generally it's structure.
  * 
  * If the source list is observable, a listener is automatically added to it
- * and the events are delegated to {@link #onSourceChanged(javafx.collections.ListChangeListener.Change)}
+ * and the events are delegated to {@link #sourceChanged(javafx.collections.ListChangeListener.Change)}
  * 
  * @param <E> the type parameter of this list
  * @param <F> the upper bound of the type of the source list
@@ -64,7 +64,7 @@ public abstract class TransformationList<E, F> extends ObservableListBase<E> imp
             throw new NullPointerException();
         }
         this.source = source;
-        source.addListener(new WeakListChangeListener<>(getListener()));
+        source.addListener(new WeakListChangeListener<F>(getListener()));
     }
 
     /**
@@ -101,8 +101,11 @@ public abstract class TransformationList<E, F> extends ObservableListBase<E> imp
 
     private ListChangeListener<F> getListener() {
         if (sourceListener == null) {
-            sourceListener = (Change<? extends F> c) -> {
-                TransformationList.this.sourceChanged(c);
+            sourceListener = new ListChangeListener<F>() {
+                @Override
+                public void onChanged(Change<? extends F> c) {
+                    TransformationList.this.sourceChanged(c);
+                }
             };
         }
         return sourceListener;
