@@ -30,11 +30,11 @@ import com.sun.javafx.collections.SortHelper;
 import java.text.Collator;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
+import javafx.util.Callback;
 
 /**
  * Wraps an ObservableList and sorts it's content.
@@ -54,7 +54,7 @@ public final class SortedList<E> extends TransformationList<E, E>{
 
     private final SortHelper helper = new SortHelper();
 
-    private final Element<E> tempElement = new Element<>(null, -1);
+    private final Element<E> tempElement = new Element<E>(null, -1);
 
 
     /**
@@ -74,7 +74,7 @@ public final class SortedList<E> extends TransformationList<E, E>{
             sorted[i] = new Element<E>(source.get(i), i);
         }
         if (comparator == null) {
-            elementComparator = new NaturalElementComparator<>();
+            elementComparator = new NaturalElementComparator<E>();
             Arrays.sort(sorted, 0, size, elementComparator);
         } else {
             setComparator(comparator);
@@ -85,7 +85,7 @@ public final class SortedList<E> extends TransformationList<E, E>{
     /**
      * Constructs a new SortedList wrapper around the source list.
      * @param source the source list
-     * @see #SortedList(java.util.List, java.util.Comparator)
+     * @see #SortedList(ObservableList, java.util.Comparator)
      */
     public SortedList(ObservableList<? extends E> source) {
         this(source, (Comparator)null);
@@ -120,7 +120,7 @@ public final class SortedList<E> extends TransformationList<E, E>{
                 @Override
                 protected void invalidated() {
                     Comparator<? super E> current = get();
-                    elementComparator = current != null ? new ElementComparator<>(current) : new NaturalElementComparator<>();
+                    elementComparator = current != null ? new ElementComparator<E>(current) : new NaturalElementComparator<E>();
                     doSortWithPermutationChange();
                 }
 
@@ -174,7 +174,7 @@ public final class SortedList<E> extends TransformationList<E, E>{
 
     private void doSortWithPermutationChange() {
         int[] perm = helper.sort(sorted, 0, size, elementComparator);
-        fireChange(new SimplePermutationChange<>(0, size, perm, this));
+        fireChange(new SimplePermutationChange<E>(0, size, perm, this));
     }
 
     @Override
@@ -296,7 +296,7 @@ public final class SortedList<E> extends TransformationList<E, E>{
         ensureSize(size + 1);
         updateIndices(idx, 1);
         System.arraycopy(sorted, pos, sorted, pos + 1, size - pos);
-        sorted[pos] = new Element<>(e, idx);
+        sorted[pos] = new Element<E>(e, idx);
         ++size;
         nextAdd(pos, pos + 1);
 
@@ -328,5 +328,34 @@ public final class SortedList<E> extends TransformationList<E, E>{
         }
     }
 
+
+    /**
+     * Creates a {@link FilteredList} wrapper of this list using
+     * the specified predicate.
+     * @param predicate the predicate to use
+     * @return new {@code FilteredList}
+     */
+    public FilteredList<E> filtered(Callback<E, Boolean> predicate) {
+        return new FilteredList<E>(this, predicate);
+    }
+
+    /**
+     * Creates a {@link SortedList} wrapper of this list using
+     * the specified comparator.
+     * @param comparator the comparator to use or null for the natural order
+     * @return new {@code SortedList}
+     */
+    public SortedList<E> sorted(Comparator<E> comparator) {
+        return new SortedList<E>(this, comparator);
+    }
+
+    /**
+     * Creates a {@link SortedList} wrapper of this list with the natural
+     * ordering.
+     * @return new {@code SortedList}
+     */
+    public SortedList<E> sorted() {
+        return sorted(null);
+    }
 
 }
