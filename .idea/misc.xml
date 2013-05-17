@@ -3,13 +3,267 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
-  <component name="IdProvider" IDEtalkID="5A22F63458C80CE167DF63107CDD247D" />
-  <component name="ProjectResources">
-    <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
+  <component name="GradleLocalSettings">
+    <option name="availableTasks">
+      <set>
+        <GradleTaskDescriptor>
+          <option name="description" value="Assembles the outputs of this project." />
+          <option name="name" value="assemble" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Assembles and tests this project." />
+          <option name="name" value="build" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Assembles and tests this project and all projects that depend on it." />
+          <option name="name" value="buildDependents" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="name" value="buildJavaFXPackager" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Assembles and tests this project and all projects it depends on." />
+          <option name="name" value="buildNeeded" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compiles native sources for glass for mac" />
+          <option name="name" value="ccMacGlass" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compiles native sources for iio for mac" />
+          <option name="name" value="ccMacIio" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compiles native sources for prism for mac" />
+          <option name="name" value="ccMacPrism" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compiles native sources for prismES2 for mac" />
+          <option name="name" value="ccMacPrismES2" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compiles native sources for prismSW for mac" />
+          <option name="name" value="ccMacPrismSW" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Runs all checks." />
+          <option name="name" value="check" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Assembles the main classes." />
+          <option name="name" value="classes" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Deletes the build directory." />
+          <option name="name" value="clean" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Deletes generated NetBeans files" />
+          <option name="name" value="cleanNetBeans" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compile the Decora JSL Compilers" />
+          <option name="name" value="compileDecoraCompilers" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compile Decora HLSL files into .obj files" />
+          <option name="name" value="compileDecoraHLSLShaders" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compile the Java Decora JSL shaders" />
+          <option name="name" value="compileDecoraJavaShaders" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compiles Decora SSE natives" />
+          <option name="name" value="compileDecoraNativeShadersMac" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compiles the main/java source set." />
+          <option name="name" value="compileJava" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compiles native sources for the application co-bundle launcher" />
+          <option name="name" value="compileLauncher" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compile the Prism JSL Compilers" />
+          <option name="name" value="compilePrismCompilers" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compile Prism HLSL files into .obj files" />
+          <option name="name" value="compilePrismHLSLShaders" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compile the Java Prism JSL shaders" />
+          <option name="name" value="compilePrismJavaShaders" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compiles the stub/java source set." />
+          <option name="name" value="compileStubJava" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compiles the test/java source set." />
+          <option name="name" value="compileTestJava" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Generates JNI Headers for Decora SSE Natives" />
+          <option name="name" value="generateDecoraNativeHeaders" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Generate Decora shaders from JSL" />
+          <option name="name" value="generateDecoraShaders" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Generate Prism shaders from JSL" />
+          <option name="name" value="generatePrismShaders" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Assembles a jar archive containing the main classes." />
+          <option name="name" value="jar" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Generates Javadoc API documentation for the main source code." />
+          <option name="name" value="javadoc" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Generates JNI Headers for glass for mac" />
+          <option name="name" value="javahMacGlass" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Generates JNI Headers for iio for mac" />
+          <option name="name" value="javahMacIio" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Generates JNI Headers for prism for mac" />
+          <option name="name" value="javahMacPrism" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Generates JNI Headers for prismES2 for mac" />
+          <option name="name" value="javahMacPrismES2" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Generates JNI Headers for prismSW for mac" />
+          <option name="name" value="javahMacPrismSW" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="name" value="jfxrt" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Creates the jfxrt.jar for the mac target" />
+          <option name="name" value="jfxrtMac" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Creates native dynamic library for Decora SSE" />
+          <option name="name" value="linkDecoraNativeShadersMac" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Creates native dynamic library for glass for mac" />
+          <option name="name" value="linkMacGlass" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Creates native dynamic library for iio for mac" />
+          <option name="name" value="linkMacIio" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Creates native dynamic library for prism for mac" />
+          <option name="name" value="linkMacPrism" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Creates native dynamic library for prismES2 for mac" />
+          <option name="name" value="linkMacPrismES2" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Creates native dynamic library for prismSW for mac" />
+          <option name="name" value="linkMacPrismSW" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="name" value="man" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Compiles and Builds all native libraries for Graphics" />
+          <option name="name" value="native" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="name" value="nativeDecora" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Generates JNI headers, compiles, and builds native dynamic library for glass for all compile targets" />
+          <option name="name" value="nativeGlass" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Generates JNI headers, compiles, and builds native dynamic library for iio for all compile targets" />
+          <option name="name" value="nativeIio" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Generates JNI headers, compiles, and builds native dynamic library for prism for all compile targets" />
+          <option name="name" value="nativePrism" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Generates JNI headers, compiles, and builds native dynamic library for prismES2 for all compile targets" />
+          <option name="name" value="nativePrismES2" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Generates JNI headers, compiles, and builds native dynamic library for prismSW for all compile targets" />
+          <option name="name" value="nativePrismSW" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Creates the NetBeans project files for JavaFX" />
+          <option name="name" value="netBeans" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Copy hlsl / frag shaders to build/resources/jsl-decora" />
+          <option name="name" value="processDecoraShaders" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Copy hlsl / frag shaders to build/resources/jsl-prism" />
+          <option name="name" value="processPrismShaders" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Processes the main resources." />
+          <option name="name" value="processResources" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Processes the stub resources." />
+          <option name="name" value="processStubResources" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Processes the test resources." />
+          <option name="name" value="processTestResources" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Replace params in VersionInfo and copy file to destination" />
+          <option name="name" value="processVersionInfo" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="name" value="sdk" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Creates the SDK for mac" />
+          <option name="name" value="sdkMac" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Assembles the stub classes." />
+          <option name="name" value="stubClasses" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Runs the unit tests." />
+          <option name="name" value="test" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="description" value="Assembles the test classes." />
+          <option name="name" value="testClasses" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="name" value="testWithStub" />
+        </GradleTaskDescriptor>
+        <GradleTaskDescriptor>
+          <option name="name" value="testWithoutStub" />
+        </GradleTaskDescriptor>
+      </set>
+    </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/build" />
+    <output url="file://$PROJECT_DIR$/out" />
   </component>
-  <component name="WebServicesPlugin" addRequiredLibraries="true" />
 </project>
 
