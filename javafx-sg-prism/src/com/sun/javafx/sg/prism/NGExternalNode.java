@@ -37,7 +37,6 @@ import javafx.util.Callback;
 import java.nio.Buffer;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.function.UnaryOperator;
 
 public class NGExternalNode extends NGNode implements PGExternalNode {
     
