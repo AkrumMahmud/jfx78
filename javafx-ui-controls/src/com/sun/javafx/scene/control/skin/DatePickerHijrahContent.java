@@ -27,6 +27,7 @@ package com.sun.javafx.scene.control.skin;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.DateTimeException;
+import org.threeten.bp.YearMonth;
 // import org.threeten.bp.format.DateTimeFormatSymbols;
 import org.threeten.bp.chrono.Chronology;
 import org.threeten.bp.chrono.HijrahChronology;
@@ -88,10 +89,18 @@ class DatePickerHijrahContent extends DatePickerContent {
         String firstMonthStr = null;
         String firstYearStr = null;
         String hijrahStr = null;
+        YearMonth displayedYearMonth = displayedYearMonthProperty().get();
 
         for (DateCell dayCell : dayCells) {
+            LocalDate date = dayCellDate(dayCell);
+
+            // Display Hijra month names only for current ISO month.
+            if (!displayedYearMonth.equals(YearMonth.from(date))) {
+                continue;
+            }
+
             try {
-                HijrahDate cDate = chrono.date(dayCellDate(dayCell));
+                HijrahDate cDate = chrono.date(date);
                 long month = cDate.getLong(MONTH_OF_YEAR);
                 long year = cDate.getLong(YEAR);
 
