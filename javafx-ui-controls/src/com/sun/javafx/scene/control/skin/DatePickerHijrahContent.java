@@ -25,17 +25,17 @@
 
 package com.sun.javafx.scene.control.skin;
 
-import java.time.LocalDate;
-import java.time.DateTimeException;
-import java.time.YearMonth;
-import java.time.format.DecimalStyle;
-import java.time.chrono.Chronology;
-import java.time.chrono.HijrahChronology;
-import java.time.chrono.HijrahDate;
-import java.time.chrono.IsoChronology;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.DateTimeException;
+import org.threeten.bp.YearMonth;
+//threeten doesn't supportimport org.threeten.bp.format.DecimalStyle;
+import org.threeten.bp.chrono.Chronology;
+import org.threeten.bp.chrono.HijrahChronology;
+import org.threeten.bp.chrono.HijrahDate;
+import org.threeten.bp.chrono.IsoChronology;
 import java.util.Locale;
 
-import static java.time.temporal.ChronoField.*;
+import static org.threeten.bp.temporal.ChronoField.*;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.DatePicker;
@@ -107,11 +107,11 @@ class DatePickerHijrahContent extends DatePickerContent {
                 if (hijrahStr == null || month != firstMonth) {
                     String monthStr = monthFormatter.withLocale(locale)
                                                     .withChronology(chrono)
-                                                    .withDecimalStyle(DecimalStyle.of(locale))
+//threeten doesn't support                                                    .withDecimalStyle(DecimalStyle.of(locale))
                                                     .format(cDate);
                     String yearStr = yearFormatter.withLocale(locale)
                                                     .withChronology(chrono)
-                                                    .withDecimalStyle(DecimalStyle.of(locale))
+//threeten doesn't support                                                    .withDecimalStyle(DecimalStyle.of(locale))
                                                     .format(cDate);
                     if (hijrahStr == null) {
                         firstMonth = month;
@@ -170,7 +170,7 @@ class DatePickerHijrahContent extends DatePickerContent {
                 String hijrahStr =
                     dayCellFormatter.withLocale(locale)
                                     .withChronology(chrono)
-                                    .withDecimalStyle(DecimalStyle.of(locale))
+//threeten doesn't support                                    .withDecimalStyle(DecimalStyle.of(locale))
                                     .format(cDate);
 
                 secondaryText.setText(hijrahStr);
