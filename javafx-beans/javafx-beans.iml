@@ -12,7 +12,7 @@
       <excludeFolder url="file://$MODULE_DIR$/nbproject" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
     <orderEntry type="module" module-name="javafx-collections" />
     <orderEntry type="library" name="junit" level="project" />
   </component>
