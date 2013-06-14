@@ -30,7 +30,7 @@ import java.util.HashMap;
 import com.sun.glass.ui.Clipboard;
 import com.sun.glass.ui.SystemClipboard;
 
-import sun.util.logging.PlatformLogger.Level;
+import sun.util.logging.PlatformLogger;
 
 /**
  * Current supported embedded system doesn't have native clipboard, therefore
@@ -42,7 +42,7 @@ final class LensSystemClipboard extends SystemClipboard {
 
     public LensSystemClipboard() {
         super(Clipboard.SYSTEM);
-        if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
             LensLogger.getLogger().fine("LensSystemClipboard created");
         }
     }
@@ -58,7 +58,7 @@ final class LensSystemClipboard extends SystemClipboard {
                                 int supportedActions) {
         //no-op as there is no system clipboard
 
-        if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
             LensLogger.getLogger().fine("LensSystemClipboard::pushToSystem " +
                                         "cacheData = " + cacheData +
                                         "supportedActions: " +
@@ -69,7 +69,7 @@ final class LensSystemClipboard extends SystemClipboard {
 
     protected void pushTargetActionToSystem(int actionDone) {
         //no-op as there is no system clipboard
-        if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
             LensLogger.getLogger().fine("LensSystemClipboard::pushTargetActionToSystem "
                                         + "actionDone: " +
                                         getActionString(actionDone));

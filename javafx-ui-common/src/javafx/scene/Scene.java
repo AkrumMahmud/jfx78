@@ -101,7 +101,6 @@ import com.sun.javafx.geom.Vec3d;
 import com.sun.javafx.geom.transform.BaseTransform;
 import com.sun.javafx.geom.transform.GeneralTransform3D;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 import com.sun.javafx.perf.PerformanceTracker;
 import com.sun.javafx.robot.impl.FXRobotHelper;
 import com.sun.javafx.scene.CssFlags;
@@ -588,7 +587,7 @@ public class Scene implements EventTarget {
         // roots, we'll leave those for next pulse.
         if (dirtyLayoutRoots.size() > 0) {
             PlatformLogger logger = Logging.getLayoutLogger();
-            if (logger.isLoggable(Level.FINER)) {
+            if (logger.isLoggable(PlatformLogger.FINER)) {
                 logger.finer("after layout pass, "+dirtyLayoutRoots.size()+" layout root nodes still dirty");
             }
             Toolkit.getToolkit().requestNextPulse();
@@ -607,11 +606,11 @@ public class Scene implements EventTarget {
 
             for (Parent parent : temp) {
                 if (parent.getScene() == this && parent.isNeedsLayout()) {
-                    if (logger.isLoggable(Level.FINE)) {
+                    if (logger.isLoggable(PlatformLogger.FINE)) {
                         logger.fine("<<< START >>> root = "+parent.toString());
                     }
                     parent.layout();
-                    if (logger.isLoggable(Level.FINE)) {
+                    if (logger.isLoggable(PlatformLogger.FINE)) {
                         logger.fine("<<<  END  >>> root = "+parent.toString());
                     }
                 }
@@ -2088,7 +2087,7 @@ public class Scene implements EventTarget {
                 ((Node.FocusedProperty) value.focusedProperty()).notifyListeners();
             }
             PlatformLogger logger = Logging.getFocusLogger();
-            if (logger.isLoggable(Level.FINE)) {
+            if (logger.isLoggable(PlatformLogger.FINE)) {
                 logger.fine("Changed focus from "
                         + oldFocusOwner + " to " + value);
             }
