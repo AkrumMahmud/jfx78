@@ -2,17 +2,23 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/javafx-beans/javafx-beans.iml" filepath="$PROJECT_DIR$/javafx-beans/javafx-beans.iml" group="Tools" />
-      <module fileurl="file://$PROJECT_DIR$/javafx-beans-dt/javafx-beans-dt.iml" filepath="$PROJECT_DIR$/javafx-beans-dt/javafx-beans-dt.iml" group="Tools" />
+      <module fileurl="file://$PROJECT_DIR$/glass/Glass.iml" filepath="$PROJECT_DIR$/glass/Glass.iml" />
+      <module fileurl="file://$PROJECT_DIR$/all.iml" filepath="$PROJECT_DIR$/all.iml" />
+      <module fileurl="file://$PROJECT_DIR$/decora-prism/decora-prism.iml" filepath="$PROJECT_DIR$/decora-prism/decora-prism.iml" />
+      <module fileurl="file://$PROJECT_DIR$/decora-prism-ps/decora-prism-ps.iml" filepath="$PROJECT_DIR$/decora-prism-ps/decora-prism-ps.iml" />
+      <module fileurl="file://$PROJECT_DIR$/decora-prism-sw/decora-prism-sw.iml" filepath="$PROJECT_DIR$/decora-prism-sw/decora-prism-sw.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javafx-beans/javafx-beans.iml" filepath="$PROJECT_DIR$/javafx-beans/javafx-beans.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javafx-beans-dt/javafx-beans-dt.iml" filepath="$PROJECT_DIR$/javafx-beans-dt/javafx-beans-dt.iml" />
       <module fileurl="file://$PROJECT_DIR$/javafx-concurrent/javafx-concurrent.iml" filepath="$PROJECT_DIR$/javafx-concurrent/javafx-concurrent.iml" group="Concurrent" />
-      <module fileurl="file://$PROJECT_DIR$/javafx-designtime/javafx-designtime.iml" filepath="$PROJECT_DIR$/javafx-designtime/javafx-designtime.iml" group="Tools" />
+      <module fileurl="file://$PROJECT_DIR$/javafx-designtime/javafx-designtime.iml" filepath="$PROJECT_DIR$/javafx-designtime/javafx-designtime.iml" />
       <module fileurl="file://$PROJECT_DIR$/javafx-embed-swing/javafx-embed-swing.iml" filepath="$PROJECT_DIR$/javafx-embed-swing/javafx-embed-swing.iml" />
       <module fileurl="file://$PROJECT_DIR$/javafx-embed-swt/javafx-embed-swt.iml" filepath="$PROJECT_DIR$/javafx-embed-swt/javafx-embed-swt.iml" />
       <module fileurl="file://$PROJECT_DIR$/javafx-ui-charts/javafx-ui-charts.iml" filepath="$PROJECT_DIR$/javafx-ui-charts/javafx-ui-charts.iml" group="Controls" />
       <module fileurl="file://$PROJECT_DIR$/javafx-ui-common/javafx-ui-common.iml" filepath="$PROJECT_DIR$/javafx-ui-common/javafx-ui-common.iml" group="Scene Graph" />
       <module fileurl="file://$PROJECT_DIR$/javafx-ui-controls/javafx-ui-controls.iml" filepath="$PROJECT_DIR$/javafx-ui-controls/javafx-ui-controls.iml" group="Controls" />
       <module fileurl="file://$PROJECT_DIR$/javafx-util-converter/javafx-util-converter.iml" filepath="$PROJECT_DIR$/javafx-util-converter/javafx-util-converter.iml" group="Core" />
-      <module fileurl="file://$PROJECT_DIR$/test-stub-toolkit/test-stub-toolkit.iml" filepath="$PROJECT_DIR$/test-stub-toolkit/test-stub-toolkit.iml" group="Tools" />
+      <module fileurl="file://$PROJECT_DIR$/prism-common/prism-common.iml" filepath="$PROJECT_DIR$/prism-common/prism-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test-stub-toolkit/test-stub-toolkit.iml" filepath="$PROJECT_DIR$/test-stub-toolkit/test-stub-toolkit.iml" />
     </modules>
   </component>
 </project>
