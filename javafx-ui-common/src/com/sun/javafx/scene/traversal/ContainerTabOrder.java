@@ -32,7 +32,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import com.sun.javafx.Logging;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 import static com.sun.javafx.scene.traversal.Direction.*;
 
@@ -48,7 +47,7 @@ public class ContainerTabOrder implements Algorithm {
         Node newNode = null;
         int newNodeIndex = -1;
 
-        if (focusLogger.isLoggable(Level.FINER)) {
+        if (focusLogger.isLoggable(PlatformLogger.FINER)) {
             focusLogger.finer("old focus owner : "+node+", bounds : "+engine.getBounds(node));
         }
 
@@ -71,7 +70,7 @@ public class ContainerTabOrder implements Algorithm {
 
         }
 
-        if (focusLogger.isLoggable(Level.FINER)) {
+        if (focusLogger.isLoggable(PlatformLogger.FINER)) {
             if (newNode != null) {
                 focusLogger.finer("new focus owner : "+newNode+", bounds : "+engine.getBounds(newNode));
             }
@@ -88,7 +87,7 @@ public class ContainerTabOrder implements Algorithm {
         Node newNode = null;
         List<Node> parentNodes = findPeers(startNode);
         if (parentNodes == null) {
-            if (focusLogger.isLoggable(Level.FINER)) {
+            if (focusLogger.isLoggable(PlatformLogger.FINER)) {
                 focusLogger.finer("can't find peers for a node without a parent");
             }
             return null;
@@ -97,7 +96,7 @@ public class ContainerTabOrder implements Algorithm {
         int ourIndex = parentNodes.indexOf(startNode);
 
         if (ourIndex == -1) {
-            if (focusLogger.isLoggable(Level.FINER)) {
+            if (focusLogger.isLoggable(PlatformLogger.FINER)) {
                 focusLogger.finer("index not founds, no focus transfer");
             }
             return null;
@@ -176,7 +175,7 @@ public class ContainerTabOrder implements Algorithm {
         int ourIndex = parentNodes.indexOf(startNode);
 
         if (ourIndex == -1) {
-            if (focusLogger.isLoggable(Level.FINER)) {
+            if (focusLogger.isLoggable(PlatformLogger.FINER)) {
                 focusLogger.finer("index not founds, no focus transfer");
             }
             return null;

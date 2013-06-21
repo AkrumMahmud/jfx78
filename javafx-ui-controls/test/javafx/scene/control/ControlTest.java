@@ -50,7 +50,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 import static org.junit.Assert.*;
 
@@ -102,13 +101,13 @@ public class ControlTest {
     private void disableLogging() {
         final PlatformLogger logger = Logging.getControlsLogger();
         originalLogLevel = logger.level();
-        logger.setLevel(Level.OFF);
+        logger.setLevel(PlatformLogger.OFF);
     }
 
     private void enableLogging() {
         final PlatformLogger logger = Logging.getControlsLogger();
 //        logger.setLevel(originalLogLevel);
-        logger.setLevel(Level.FINE);
+        logger.setLevel(PlatformLogger.FINE);
     }
 
     @Test public void focusTraversableIsTrueByDefault() {
