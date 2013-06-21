@@ -1423,16 +1423,16 @@ allprojects {
  *                                                                            *
  *****************************************************************************/
 
-task clean() {
-    group = "Basic"
-    description = "Deletes the build directory and the build directory of all sub projects"
-    getSubprojects().each { subProject ->
-        dependsOn(subProject.getTasksByName("clean", true));
-    }
-    doLast {
-        delete(buildDir);
-    }
-}
+//task clean() {
+//    group = "Basic"
+//    description = "Deletes the build directory and the build directory of all sub projects"
+//    getSubprojects().each { subProject ->
+//        dependsOn(subProject.getTasksByName("clean", true));
+//    }
+//    doLast {
+//        delete(buildDir);
+//    }
+//}
 
 task javadoc(type: Javadoc) {
     group = "Basic"
@@ -2022,3 +2022,9 @@ cleanIdeaWorkspace.description = "Deletes the javafx.ipw file"
 if (BUILD_CLOSED) {
     apply from: supplementalBuildFile
 }
+
+
+//JFX78 maven publishing
+apply from: 'narya.gradle'
+
+
