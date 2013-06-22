@@ -79,7 +79,7 @@ public final class StyleCacheEntry {
 
         @Override
         public int hashCode() {
-            int hash = Double.hashCode(fontSize);
+            int hash = Double.valueOf(fontSize).hashCode();
 
             final int iMax = pseudoClassStates != null ? pseudoClassStates.length : 0;
             

@@ -28,7 +28,7 @@ package com.sun.glass.ui.lens;
 import com.sun.glass.ui.Clipboard;
 import com.sun.glass.ui.delegate.ClipboardDelegate;
 
-import sun.util.logging.PlatformLogger.Level;
+import sun.util.logging.PlatformLogger;
 
 final class LensClipboardDelegate implements ClipboardDelegate {
 
@@ -40,7 +40,7 @@ final class LensClipboardDelegate implements ClipboardDelegate {
         //We may support Selection clipboard in the future, but others systems
         //are not seem to use it at this point
 
-        if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
             LensLogger.getLogger().fine("LensClipboardDelegate::createClipboard("+clipboardName+")");
         }
         if (Clipboard.DND.equals(clipboardName)) {
