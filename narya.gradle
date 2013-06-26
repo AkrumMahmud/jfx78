@@ -4,7 +4,7 @@ allprojects {
     apply plugin: 'signing'
 
     group = 'org.naryafx.jfx78'
-    version = '8.0.0.94'
+    version = '7.8.0.94'
 
     configurations {
         maven { extendsFrom archives }
@@ -123,7 +123,6 @@ project(':fxpackager') {
         include 'com/sun/javafx/tools/resource/windows'
 
         baseName = 'jfx-packager-winbundles'
-        version = "8.0.0.94"
     }
 
     artifacts {

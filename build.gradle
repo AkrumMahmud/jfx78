@@ -328,8 +328,8 @@ defineProperty("PROMOTED_BUILD_NUMBER", "00")
 defineProperty("PRODUCT_NAME", "OpenJFX")
 // TODO: set the values of RAW_VERSION, RELEASE_NAME, and RELEASE_MILESTONE based on the
 // settings in build.properties
-defineProperty("RAW_VERSION", "8.0.0")
-defineProperty("RELEASE_NAME", "8.0")
+defineProperty("RAW_VERSION", "7.8.0")
+defineProperty("RELEASE_NAME", "7.8")
 defineProperty("RELEASE_MILESTONE", "ea")
 
 // Check whether the COMPILE_TARGETS property has been specified (if so, it was done by
