@@ -25,19 +25,16 @@
 
 package com.sun.javafx.scene.control;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 import javafx.beans.InvalidationListener;
 import com.sun.javafx.collections.ListListenerHelper;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
-
-import java.util.Collections;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.util.Callback;
 
 /**
  * A read-only and unbacked ObservableList - the data is retrieved on demand by
@@ -249,6 +246,35 @@ public abstract class ReadOnlyUnbackedObservableList<E> implements ObservableLis
 
     @Override public boolean retainAll(E... elements) {
         throw new UnsupportedOperationException("Not supported.");
+    }
+
+    /**
+     * Creates a {@link javafx.collections.transformation.FilteredList} wrapper of this list using
+     * the specified predicate.
+     * @param predicate the predicate to use
+     * @return new {@code FilteredList}
+     */
+    public FilteredList<E> filtered(Callback<E, Boolean> predicate) {
+        return new FilteredList<E>(this, predicate);
+    }
+
+    /**
+     * Creates a {@link javafx.collections.transformation.SortedList} wrapper of this list using
+     * the specified comparator.
+     * @param comparator the comparator to use or null for the natural order
+     * @return new {@code SortedList}
+     */
+    public SortedList<E> sorted(Comparator<E> comparator) {
+        return new SortedList<E>(this, comparator);
+    }
+
+    /**
+     * Creates a {@link SortedList} wrapper of this list with the natural
+     * ordering.
+     * @return new {@code SortedList}
+     */
+    public SortedList<E> sorted() {
+        return sorted(null);
     }
 
     private static class SelectionListIterator<E> implements ListIterator<E> {

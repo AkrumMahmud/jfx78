@@ -68,7 +68,6 @@ import com.sun.javafx.css.Stylesheet;
 import com.sun.javafx.css.converters.FontConverter;
 import com.sun.javafx.css.parser.CSSParser;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 import static com.sun.javafx.css.CalculatedValue.*;
 
@@ -609,7 +608,7 @@ final class CssStyleHelper {
                         ? currentValue.equals(value) == false
                         : value != null)) {
 
-                    if (LOGGER.isLoggable(Level.FINER)) {
+                    if (LOGGER.isLoggable(PlatformLogger.FINER)) {
                         LOGGER.finer(property + ", call applyStyle: " + styleableProperty + ", value =" +
                                 String.valueOf(value) + ", originOfCalculatedValue=" + originOfCalculatedValue);
                     }
@@ -642,7 +641,7 @@ final class CssStyleHelper {
                 }
                 // TODO: use logger here
                 PlatformLogger logger = Logging.getCSSLogger();
-                if (logger.isLoggable(Level.WARNING)) {
+                if (logger.isLoggable(PlatformLogger.WARNING)) {
                     logger.warning(String.format("Failed to set css [%s]\n", cssMetaData), e);
                 }
             }
@@ -803,7 +802,7 @@ final class CssStyleHelper {
                         final CssError error = new CssError.PropertySetError(styleable, node, msg);
                         errors.add(error);
                     }
-                    if (LOGGER.isLoggable(Level.WARNING)) {
+                    if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
                         LOGGER.warning("caught: ", cce);
                         LOGGER.warning("styleable = " + styleable);
                         LOGGER.warning("node = " + node.toString());
@@ -1251,7 +1250,7 @@ final class CssStyleHelper {
                     final CssError error = new CssError.PropertySetError(cssMetaData, node, msg);
                     errors.add(error);
                 }
-                if (LOGGER.isLoggable(Level.WARNING)) {
+                if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
                     LOGGER.warning(msg);
                     LOGGER.fine("node = " + node.toString());
                     LOGGER.fine("cssMetaData = " + cssMetaData);
@@ -1265,7 +1264,7 @@ final class CssStyleHelper {
                     final CssError error = new CssError.PropertySetError(cssMetaData, node, msg);
                     errors.add(error);
                 }
-                if (LOGGER.isLoggable(Level.WARNING)) {
+                if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
                     LOGGER.warning("caught: ", iae);
                     LOGGER.fine("styleable = " + cssMetaData);
                     LOGGER.fine("node = " + node.toString());
@@ -1278,7 +1277,7 @@ final class CssStyleHelper {
                     final CssError error = new CssError.PropertySetError(cssMetaData, node, msg);
                     errors.add(error);
                 }
-                if (LOGGER.isLoggable(Level.WARNING)) {
+                if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
                     LOGGER.warning("caught: ", npe);
                     LOGGER.fine("styleable = " + cssMetaData);
                     LOGGER.fine("node = " + node.toString());

@@ -53,7 +53,6 @@ import com.sun.javafx.geom.transform.NoninvertibleTransformException;
 import com.sun.javafx.jmx.MXNodeAlgorithm;
 import com.sun.javafx.jmx.MXNodeAlgorithmContext;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 import com.sun.javafx.scene.CssFlags;
 import com.sun.javafx.scene.DirtyBits;
 import com.sun.javafx.scene.input.PickResultChooser;
@@ -817,7 +816,7 @@ public abstract class Parent extends Node {
             minWidthCache = -1;
             minHeightCache = -1;
             PlatformLogger logger = Logging.getLayoutLogger();
-            if (logger.isLoggable(Level.FINER)) {
+            if (logger.isLoggable(PlatformLogger.FINER)) {
                 logger.finer(this.toString());
             }
 
@@ -1023,7 +1022,7 @@ public abstract class Parent extends Node {
             performingLayout = true;
 
             PlatformLogger logger = Logging.getLayoutLogger();
-            if (logger.isLoggable(Level.FINE)) {
+            if (logger.isLoggable(PlatformLogger.FINE)) {
                 logger.fine(this+" size: "+
                         getLayoutBounds().getWidth()+" x "+getLayoutBounds().getHeight());
             }

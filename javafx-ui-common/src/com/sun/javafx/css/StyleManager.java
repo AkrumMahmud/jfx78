@@ -69,7 +69,6 @@ import javafx.scene.image.Image;
 import javafx.stage.PopupWindow;
 import javafx.util.Pair;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 /**
  * Contains the stylesheet state for a single scene. This includes both the
@@ -680,14 +679,14 @@ final public class StyleManager {
             } catch (IllegalArgumentException iae) {
                 // url was empty!
                 final PlatformLogger logger = getLogger();
-                if (logger != null && logger.isLoggable(Level.WARNING)) {
+                if (logger != null && logger.isLoggable(PlatformLogger.WARNING)) {
                         LOGGER.warning(iae.getLocalizedMessage());
                 }
 
             } catch (NullPointerException npe) {
                 // url was null!
                 final PlatformLogger logger = getLogger();
-                if (logger != null && logger.isLoggable(Level.WARNING)) {
+                if (logger != null && logger.isLoggable(PlatformLogger.WARNING)) {
                         LOGGER.warning(npe.getLocalizedMessage());
                 }
             }
@@ -752,7 +751,7 @@ final public class StyleManager {
         try {
             return loadStylesheetUnPrivileged(fname);
         } catch (java.security.AccessControlException ace) {
-            if (getLogger().isLoggable(Level.INFO)) {
+            if (getLogger().isLoggable(PlatformLogger.INFO)) {
                 getLogger().info("Could not load the stylesheet, trying with FilePermissions : " + fname);
             }
 
@@ -941,7 +940,7 @@ final public class StyleManager {
                         );
                     errors.add(error);
                 }
-                if (getLogger().isLoggable(Level.WARNING)) {
+                if (getLogger().isLoggable(PlatformLogger.WARNING)) {
                     getLogger().warning(
                         String.format("Resource \"%s\" not found.", fname)
                     );
@@ -975,7 +974,7 @@ final public class StyleManager {
                     );
                 errors.add(error);
             }
-            if (getLogger().isLoggable(Level.INFO)) {
+            if (getLogger().isLoggable(PlatformLogger.INFO)) {
                 getLogger().info("Could not find stylesheet: " + fname);//, fnfe);
             }
         } catch (IOException ioe) {
@@ -986,7 +985,7 @@ final public class StyleManager {
                         );
                     errors.add(error);
                 }
-            if (getLogger().isLoggable(Level.INFO)) {
+            if (getLogger().isLoggable(PlatformLogger.INFO)) {
                 getLogger().info("Could not load stylesheet: " + fname);//, ioe);
             }
         }
