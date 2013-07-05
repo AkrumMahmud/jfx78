@@ -1708,7 +1708,6 @@ compileTargets { t ->
                     def variants = targetProperties[lib].containsKey('variants') ? targetProperties[lib].variants : [null]
                     variants.each { variant ->
                         def variantProperties = variant ? targetProperties[lib][variant] : targetProperties[lib]
-                        println "modules/graphics/build/libs/$lib/$t.name/${library(variantProperties.lib)}"
                         from ("modules/graphics/build/libs/$lib/$t.name/${library(variantProperties.lib)}")
                     }
                 }
@@ -2487,7 +2486,6 @@ project(":web") {
     }
 
     task copyClassesFromBinaryStub << {
-        println "BINARY_STUB=$BINARY_STUB"
         copy {
             from zipTree(BINARY_STUB.getSingleFile())
             into "build/classes/main"
