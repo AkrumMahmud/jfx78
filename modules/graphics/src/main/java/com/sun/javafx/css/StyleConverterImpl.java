@@ -38,7 +38,6 @@ import javafx.css.Styleable;
 
 import com.sun.javafx.Logging;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 /**
  * Converter converts ParsedValueImpl&lt;F,T&gt; from type F to type T.
@@ -108,7 +107,7 @@ public class StyleConverterImpl<F, T> extends StyleConverter<F, T> {
             StyleConverter<?,?> converter = getInstance(cname);
             if (converter == null) {
                 final PlatformLogger logger = Logging.getCSSLogger();
-                if (logger.isLoggable(Level.SEVERE)) {
+                if (logger.isLoggable(PlatformLogger.SEVERE)) {
                     logger.severe("could not deserialize " + cname);
                 }
             }
@@ -281,7 +280,7 @@ public class StyleConverterImpl<F, T> extends StyleConverter<F, T> {
 
             default :
             final PlatformLogger logger = Logging.getCSSLogger();
-            if (logger.isLoggable(Level.SEVERE)) {
+            if (logger.isLoggable(PlatformLogger.SEVERE)) {
                 logger.severe("StyleConverterImpl : converter Class is null for : "+converterClass);
             }
             break;

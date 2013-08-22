@@ -32,7 +32,6 @@ import com.sun.javafx.css.SizeUnits;
 import com.sun.javafx.css.StyleConverterImpl;
 import javafx.css.ParsedValue;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 /**
  * Similar to Insets but with flag denoting values are proportional.
@@ -115,7 +114,7 @@ public class Margins {
             // not all of the units are percent.
             if (unitsMatch == false) {
                    final PlatformLogger LOGGER = com.sun.javafx.Logging.getCSSLogger();
-                    if (LOGGER.isLoggable(Level.WARNING)) {
+                    if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
                         final String msg =
                             new StringBuilder("units do no match: ")
                                 .append(topSz.toString())

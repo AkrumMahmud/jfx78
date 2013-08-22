@@ -51,7 +51,6 @@ import javafx.scene.Parent;
 import javafx.scene.shape.Shape;
 import javafx.util.Callback;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1150,7 +1149,7 @@ public class Region extends Parent {
         setWidth(width);
         setHeight(height);
         PlatformLogger logger = Logging.getLayoutLogger();
-        if (logger.isLoggable(Level.FINER)) {
+        if (logger.isLoggable(PlatformLogger.FINER)) {
             logger.finer(this.toString() + " resized to " + width + " x " + height);
         }
     }

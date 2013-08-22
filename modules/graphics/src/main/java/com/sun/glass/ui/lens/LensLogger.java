@@ -28,7 +28,6 @@ package com.sun.glass.ui.lens;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 final class LensLogger {
 
@@ -43,9 +42,39 @@ final class LensLogger {
             }
         });
         try {
-            logger.setLevel(Level.valueOf(levelString));
+            int level = PlatformLogger.SEVERE;
+            switch (levelString) {
+                case "OFF":
+                    level = PlatformLogger.OFF;
+                    break;
+                case "SEVERE":
+                    level = PlatformLogger.SEVERE;
+                    break;
+                case "WARNING":
+                    level = PlatformLogger.WARNING;
+                    break;
+                case "INFO":
+                    level = PlatformLogger.INFO;
+                    break;
+                case "CONFIG":
+                    level = PlatformLogger.CONFIG;
+                    break;
+                case "FINE":
+                    level = PlatformLogger.FINE;
+                    break;
+                case "FINER":
+                    level = PlatformLogger.FINER;
+                    break;
+                case "FINEST":
+                    level = PlatformLogger.FINEST;
+                    break;
+                case "ALL":
+                    level = PlatformLogger.ALL;
+                    break;
+            }
+            logger.setLevel(level);
         } catch (Exception e) {
-            logger.setLevel(Level.SEVERE);
+            logger.setLevel(PlatformLogger.SEVERE);
         }
         return logger;
     }

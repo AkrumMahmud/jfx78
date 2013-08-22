@@ -25,11 +25,7 @@
 
 package javafx.scene.control;
 
-import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -38,6 +34,8 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.css.CssMetaData;
 import javafx.css.StyleConverter;
 import javafx.css.StyleableBooleanProperty;
@@ -49,6 +47,7 @@ import com.sun.javafx.collections.NonIterableChange;
 import com.sun.javafx.css.converters.SizeConverter;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 import javafx.css.Styleable;
+import javafx.util.Callback;
 
 /**
  * Text input component that allows a user to enter multiple lines of
@@ -390,6 +389,34 @@ public class TextArea extends TextInputControl {
         @Override
         public void removeListener(InvalidationListener listener) {
             content.listenerHelper = ListListenerHelper.removeListener(content.listenerHelper, listener);
+        }
+        /**
+         * Creates a {@link javafx.collections.transformation.FilteredList} wrapper of this list using
+         * the specified predicate.
+         * @param predicate the predicate to use
+         * @return new {@code FilteredList}
+         */
+        public FilteredList<CharSequence> filtered(Callback<CharSequence, Boolean> predicate) {
+            return new FilteredList<CharSequence>(this, predicate);
+        }
+
+        /**
+         * Creates a {@link javafx.collections.transformation.SortedList} wrapper of this list using
+         * the specified comparator.
+         * @param comparator the comparator to use or null for the natural order
+         * @return new {@code SortedList}
+         */
+        public SortedList<CharSequence> sorted(Comparator<CharSequence> comparator) {
+            return new SortedList<CharSequence>(this, comparator);
+        }
+
+        /**
+         * Creates a {@link SortedList} wrapper of this list with the natural
+         * ordering.
+         * @return new {@code SortedList}
+         */
+        public SortedList<CharSequence> sorted() {
+            return sorted(null);
         }
     }
 

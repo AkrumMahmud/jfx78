@@ -35,7 +35,6 @@ import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 import com.sun.javafx.property.PropertyReference;
 import com.sun.javafx.scene.control.Logging;
 
@@ -149,7 +148,7 @@ public class PropertyValueFactory<S,T> implements Callback<CellDataFeatures<S,T>
         } catch (IllegalStateException e) {
             // log the warning and move on
             final PlatformLogger logger = Logging.getControlsLogger();
-            if (logger.isLoggable(Level.WARNING)) {
+            if (logger.isLoggable(PlatformLogger.WARNING)) {
                logger.finest("Can not retrieve property '" + getProperty() +
                         "' in PropertyValueFactory: " + this +
                         " with provided class type: " + rowData.getClass(), e);

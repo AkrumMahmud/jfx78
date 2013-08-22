@@ -37,7 +37,6 @@ import java.util.Collections;
 import java.util.List;
 import com.sun.javafx.scene.control.Logging;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 /**
  */
@@ -170,7 +169,7 @@ public class ListCellBehavior<T> extends CellBehaviorBase<ListCell<T>> {
         // we don't want to react to it.
         if (listCell.isEmpty() || ! listCell.contains(e.getX(), e.getY())) {
             final PlatformLogger logger = Logging.getControlsLogger();
-            if (listCell.isEmpty() && logger.isLoggable(Level.WARNING)) {
+            if (listCell.isEmpty() && logger.isLoggable(PlatformLogger.WARNING)) {
 //                logger.warning("ListCell is empty, so mouse pressed event is "
 //                        + "ignored. If you've created a custom cell and overridden "
 //                        + "updateItem, be sure to call super.updateItem(item, empty)");
