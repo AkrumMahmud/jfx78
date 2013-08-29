@@ -553,7 +553,7 @@ public class SelectBindingTest {
 	@Test
     public void stressTestRandomOperationsResultInCorrectListenersInstalled() {
 
-            final Level logLevel = Logging.getLogger().level();
+            final int logLevel = Logging.getLogger().getLevel();
             Logging.getLogger().setLevel(PlatformLogger.SEVERE);
             List<String> steps = new ArrayList<String>();
 

@@ -1375,7 +1375,7 @@ final class LensApplication extends Application {
                                        int[] xs, int[] ys, int dx, int dy) {
         try {
 
-            if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+            if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
                 LensLogger.getLogger().fine("MultiTouch event with "
                                             + states.length + " points "
                                             + " on " + view);

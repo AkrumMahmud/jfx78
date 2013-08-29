@@ -81,7 +81,7 @@ public class ControlTest {
     private SkinStub<ControlStub> s;
     private ResizableRectangle skinNode;
 
-    private Level originalLogLevel = null;
+    private int originalLogLevel = 0;
 
     @Before public void setUp() {
         c = new ControlStub();
@@ -100,7 +100,7 @@ public class ControlTest {
 
     private void disableLogging() {
         final PlatformLogger logger = Logging.getControlsLogger();
-        originalLogLevel = logger.level();
+        originalLogLevel = logger.getLevel();
         logger.setLevel(PlatformLogger.OFF);
     }
 

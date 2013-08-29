@@ -74,7 +74,7 @@ public final class StyleCacheEntry {
             }
             this.fontSize = font != null ? font.getSize() : Font.getDefault().getSize();
 
-            int hash = Double.hashCode(fontSize);
+            int hash = ((Double) fontSize).hashCode();
 
             for (int i=0; i<length; i++) {
 

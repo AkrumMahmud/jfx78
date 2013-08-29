@@ -26,11 +26,15 @@
 package javafx.collections;
 
 import javafx.beans.InvalidationListener;
+
 import org.junit.Test;
 
 import java.util.*;
-import javafx.collections.MockSetObserver.Tuple;
 
+import javafx.collections.MockSetObserver.Tuple;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.util.Callback;
 import static org.junit.Assert.*;
 
 public class FXCollectionsTest {
@@ -775,6 +779,24 @@ public class FXCollectionsTest {
         public void remove(int i, int i1) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
+
+		@Override
+		public FilteredList<String> filtered(Callback<String, Boolean> predicate) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public SortedList<String> sorted(Comparator<String> comparator) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public SortedList<String> sorted() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 
     }
 }

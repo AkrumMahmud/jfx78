@@ -151,7 +151,6 @@ import com.sun.javafx.sg.prism.NGNode;
 import com.sun.javafx.tk.Toolkit;
 import com.sun.javafx.accessible.providers.AccessibleProvider;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 import javafx.css.StyleableProperty;
 import javafx.geometry.NodeOrientation;
 import javafx.stage.Window;
