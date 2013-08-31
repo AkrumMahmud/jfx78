@@ -42,7 +42,7 @@ import javafx.scene.control.TooltipBuilder;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.layout.StackPaneBuilder;
-import javafx.scene.web.WebView;
+//import javafx.scene.web.WebView;
 
 /**
  *
@@ -62,7 +62,7 @@ class SourceTab extends Tab {
             case ".css":
             case ".fxml":
                 String source = Utils.loadFile(getClass().getResource(url));
-                if (EnsembleApp.IS_EMBEDDED || EnsembleApp.IS_IOS) {
+//                if (EnsembleApp.IS_EMBEDDED || EnsembleApp.IS_IOS) {
                     // TODO: Convert to TextFlow
                     //                    TextFlow textFlow = TextFlowBuilder.create()
                     //                            .build();
@@ -70,11 +70,11 @@ class SourceTab extends Tab {
                     //                    Reader r = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(url)));
                     TextArea textArea = TextAreaBuilder.create().text(source).style("-fx-font-family: 'Courier New';").build();
                     setContent(textArea);
-                } else {
-                    WebView webView = new WebView();
-                    webView.getEngine().loadContent(samplePage.convertToHTML(source));
-                    setContent(webView);
-                }
+//                } else {
+//                    WebView webView = new WebView();
+//                    webView.getEngine().loadContent(samplePage.convertToHTML(source));
+//                    setContent(webView);
+//                }
                 break;
             case ".jpg":
             case ".png":

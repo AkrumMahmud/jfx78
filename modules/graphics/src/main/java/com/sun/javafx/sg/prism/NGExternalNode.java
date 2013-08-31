@@ -28,7 +28,6 @@ package com.sun.javafx.sg.prism;
 import java.nio.Buffer;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.function.UnaryOperator;
 import com.sun.javafx.geom.Rectangle;
 import com.sun.prism.Graphics;
 import com.sun.prism.PixelFormat;
@@ -193,28 +192,20 @@ public class NGExternalNode extends NGNode {
                                  height < bufferData.srcbounds.height;
         
         bufferData = bufferData.copyWithBounds(x, y, width, height);
-        renderData.updateAndGet(new UnaryOperator<RenderData>() {
-            @Override
-            public RenderData apply(RenderData prev) {
-                boolean clearTarget = (prev != null ? prev.clearTarget : false);
-                return new RenderData(bufferData, x, y, width, height, clearTarget | shrinked);
-            }
-        });
+        RenderData prev = renderData.get();
+        boolean clearTarget = (prev != null ? prev.clearTarget : false);
+        renderData.set(new RenderData(bufferData, x, y, width, height, clearTarget | shrinked));
     }
 
     public void repaintDirtyRegion(final int dirtyX, final int dirtyY,
                                    final int dirtyWidth, final int dirtyHeight)
     {
-        renderData.updateAndGet(new UnaryOperator<RenderData>() {
-            @Override
-            public RenderData apply(RenderData prev) {
-                if (prev != null) {
-                    return prev.copyAddDirtyRect(dirtyX, dirtyY, dirtyWidth, dirtyHeight);
-                } else {
-                    return new RenderData(bufferData, dirtyX, dirtyY, dirtyWidth, dirtyHeight, false);
-                }
-            }
-        });
+        RenderData prev = renderData.get();
+        if (prev != null) {
+            renderData.set(prev.copyAddDirtyRect(dirtyX, dirtyY, dirtyWidth, dirtyHeight));
+        } else {
+            renderData.set(new RenderData(bufferData, dirtyX, dirtyY, dirtyWidth, dirtyHeight, false));
+        }
     }
     
     public void markContentDirty() {

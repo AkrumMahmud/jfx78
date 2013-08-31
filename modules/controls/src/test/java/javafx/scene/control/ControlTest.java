@@ -50,7 +50,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 import static org.junit.Assert.*;
 
@@ -82,7 +81,7 @@ public class ControlTest {
     private SkinStub<ControlStub> s;
     private ResizableRectangle skinNode;
 
-    private Level originalLogLevel = null;
+    private int originalLogLevel = 0;
 
     @Before public void setUp() {
         c = new ControlStub();
@@ -101,14 +100,14 @@ public class ControlTest {
 
     private void disableLogging() {
         final PlatformLogger logger = Logging.getControlsLogger();
-        originalLogLevel = logger.level();
-        logger.setLevel(Level.OFF);
+        originalLogLevel = logger.getLevel();
+        logger.setLevel(PlatformLogger.OFF);
     }
 
     private void enableLogging() {
         final PlatformLogger logger = Logging.getControlsLogger();
 //        logger.setLevel(originalLogLevel);
-        logger.setLevel(Level.FINE);
+        logger.setLevel(PlatformLogger.FINE);
     }
 
     @Test public void focusTraversableIsTrueByDefault() {

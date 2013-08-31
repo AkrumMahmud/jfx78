@@ -50,7 +50,7 @@ import com.sun.glass.ui.Size;
 import com.sun.glass.ui.Timer;
 import com.sun.glass.ui.View;
 import com.sun.glass.ui.Window;
-import sun.util.logging.PlatformLogger.Level;
+import sun.util.logging.PlatformLogger;
 
 final class LensApplication extends Application {
 
@@ -596,7 +596,7 @@ final class LensApplication extends Application {
         }
         @Override
         void dispatch() {
-            if (LensLogger.getLogger().isLoggable(Level.FINEST)) {
+            if (LensLogger.getLogger().isLoggable(PlatformLogger.FINEST)) {
                 LensLogger.getLogger().finest("processing drag  " + action);
             }
             switch (action) {
@@ -712,7 +712,7 @@ final class LensApplication extends Application {
 
     @Override
     protected Object _enterNestedEventLoop() {
-        if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
             LensLogger.getLogger().fine("_enterNestedEventLoop");
         }
 
@@ -722,7 +722,7 @@ final class LensApplication extends Application {
         // start our nested loop, which will block until that exits
         Object ret = _runLoop();
 
-        if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
             LensLogger.getLogger().fine("Resuming event loop");
         }
 
@@ -733,7 +733,7 @@ final class LensApplication extends Application {
 
     @Override
     protected void _leaveNestedEventLoop(Object retValue) {
-        if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
             LensLogger.getLogger().fine("_leaveNestedEventLoop");
         }
 
@@ -750,7 +750,7 @@ final class LensApplication extends Application {
         // blocked nesting call.
         current.release = retValue;
 
-        if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
             LensLogger.getLogger().fine("_leaveNestedEventLoop");
         }
 
@@ -766,7 +766,7 @@ final class LensApplication extends Application {
         //push this new instance on the stack
         activeRunLoops.push(control);
 
-        if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
             LensLogger.getLogger().fine("Starting event loop");
         }
 
@@ -787,7 +787,7 @@ final class LensApplication extends Application {
                 event = eventList.removeFirst();
             }
 
-            if (LensLogger.getLogger().isLoggable(Level.FINEST)) {
+            if (LensLogger.getLogger().isLoggable(PlatformLogger.FINEST)) {
                 LensLogger.getLogger().fine("Processing " + event);
             }
 
@@ -798,7 +798,7 @@ final class LensApplication extends Application {
             }
         }
 
-        if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
             LensLogger.getLogger().fine("Leaving event loop");
         }
 
@@ -950,7 +950,7 @@ final class LensApplication extends Application {
     protected void notifyWindowResize(LensWindow window,
                                       int eventType,
                                       int width, int height) {
-        if (LensLogger.getLogger().isLoggable(Level.INFO)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.INFO)) {
             LensLogger.getLogger().info(
                 "notifyResize with "+WindowEvent.getEventName(eventType)+
                 " event "+ window + " to " + width + "x" + height);
@@ -976,7 +976,7 @@ final class LensApplication extends Application {
      * @param y new Y Coordinate of the window
      */
     protected void notifyWindowMove(LensWindow window, int x, int y) {
-        if (LensLogger.getLogger().isLoggable(Level.INFO)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.INFO)) {
             LensLogger.getLogger().info(
                 "Move " + window + " to " + x + "," + y);
         }
@@ -1025,7 +1025,7 @@ final class LensApplication extends Application {
                 return;
         }
 
-        if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
             LensLogger.getLogger().fine(
                 "notifyWindowEvent eventType = " +
                 WindowEvent.getEventName(windowEvent));
@@ -1038,7 +1038,7 @@ final class LensApplication extends Application {
 
     protected void windowExpose(LensWindow window, int x, int y, int width,
                                 int height) {
-        if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
             LensLogger.getLogger().fine(
                 "Expose " + window + " "
                 + x + "," + y + "+" + width + "x" + height);
@@ -1066,7 +1066,7 @@ final class LensApplication extends Application {
     private void notifyKeyEvent(LensView view, int type , int keyCode,
                                 int modifiers, char[] chars) {
         try {
-            if (LensLogger.getLogger().isLoggable(Level.FINER)) {
+            if (LensLogger.getLogger().isLoggable(PlatformLogger.FINER)) {
                 LensLogger.getLogger().finer("Key event on " + view);
             }
             postEvent(new LensKeyEvent(view, type, keyCode,
@@ -1100,7 +1100,7 @@ final class LensApplication extends Application {
                           boolean isPopupTrigger, boolean isSynthesized) {
 
         try {
-            if (LensLogger.getLogger().isLoggable(Level.FINEST)) {
+            if (LensLogger.getLogger().isLoggable(PlatformLogger.FINEST)) {
                 LensLogger.getLogger().finest("Mouse event on " + view);
             }
 
@@ -1198,19 +1198,19 @@ final class LensApplication extends Application {
         if (eventType == MouseEvent.DOWN && cachedButtonPressed == MouseEvent.BUTTON_NONE) {
             //save the button that might have strated the drag event
             cachedButtonPressed = button;
-            if (LensLogger.getLogger().isLoggable(Level.FINEST)) {
+            if (LensLogger.getLogger().isLoggable(PlatformLogger.FINEST)) {
                 LensLogger.getLogger().finest("Caching mouse button - " + button);
             }
         } else if (eventType == MouseEvent.UP && button == cachedButtonPressed) {
             //reset cached button on mouse up
             cachedButtonPressed = MouseEvent.BUTTON_NONE;
 
-            if (LensLogger.getLogger().isLoggable(Level.FINEST)) {
+            if (LensLogger.getLogger().isLoggable(PlatformLogger.FINEST)) {
                 LensLogger.getLogger().finest("reset mouse button cache " + button);
             }
             if (dragStarted) {
                 //drag button has been released while drag is active = drop
-                if (LensLogger.getLogger().isLoggable(Level.FINEST)) {
+                if (LensLogger.getLogger().isLoggable(PlatformLogger.FINEST)) {
                     LensLogger.getLogger().finest("notifying drag DROP");
                 }
                 postEvent(new LensDragEvent(view, x, y, absx, absy, DragActions.DROP));
@@ -1240,7 +1240,7 @@ final class LensApplication extends Application {
                     //first notification
                     postEvent(new LensDragEvent(view, x, y, absx, absy, DragActions.ENTER));
                     dragActionsPreformed |= DragActions.ENTER.getValue();
-                    if (LensLogger.getLogger().isLoggable(Level.FINEST)) {
+                    if (LensLogger.getLogger().isLoggable(PlatformLogger.FINEST)) {
                         LensLogger.getLogger().finest("Notifying DragEnter");
                     }
                 } else if (dragView == view &&
@@ -1249,7 +1249,7 @@ final class LensApplication extends Application {
                     //now we need to send DragOver notification
                     postEvent(new LensDragEvent(view, x, y, absx, absy, DragActions.OVER));
                     dragActionsPreformed |= DragActions.OVER.getValue();
-                    if (LensLogger.getLogger().isLoggable(Level.FINEST)) {
+                    if (LensLogger.getLogger().isLoggable(PlatformLogger.FINEST)) {
                         LensLogger.getLogger().finest("Notifying DragOver");
                     }
                 } else if (dragView != view) {
@@ -1257,12 +1257,12 @@ final class LensApplication extends Application {
                     //reset the actions flags and dragView,
                     //also notify the new view for dragEnter
 
-                    if (LensLogger.getLogger().isLoggable(Level.FINEST)) {
+                    if (LensLogger.getLogger().isLoggable(PlatformLogger.FINEST)) {
                         LensLogger.getLogger().finest("Notifying DragLeave old view");
                     }
                     postEvent(new LensDragEvent(dragView, x, y, absx, absy, DragActions.LEAVE));
 
-                    if (LensLogger.getLogger().isLoggable(Level.FINEST)) {
+                    if (LensLogger.getLogger().isLoggable(PlatformLogger.FINEST)) {
                         LensLogger.getLogger().finest("Notifying DragEnter new view");
                     }
                     postEvent(new LensDragEvent(view, x, y, absx, absy, DragActions.ENTER));
@@ -1277,7 +1277,7 @@ final class LensApplication extends Application {
                     //cache the view that the drag started on
                     dragView = view;
                 }
-                if (LensLogger.getLogger().isLoggable(Level.FINEST)) {
+                if (LensLogger.getLogger().isLoggable(PlatformLogger.FINEST)) {
                     LensLogger.getLogger().finest("Drag detected - sending DRAG event");
                 }
                 postEvent(new LensMouseEvent(view, eventType,
@@ -1322,7 +1322,7 @@ final class LensApplication extends Application {
                                    double yMultiplier) {
 
         try {
-            if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+            if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
                 LensLogger.getLogger().fine("Scroll event on " + view);
             }
 
@@ -1352,7 +1352,7 @@ final class LensApplication extends Application {
                                   int x, int y, int absX, int absY) {
         try {
 
-            if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+            if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
                 LensLogger.getLogger().fine("Touch event "
                                             + state + " at "
                                             + x + "," + y
@@ -1382,7 +1382,7 @@ final class LensApplication extends Application {
                                        int[] xs, int[] ys, int dx, int dy) {
         try {
 
-            if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+            if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
                 LensLogger.getLogger().fine("MultiTouch event with "
                                             + states.length + " points "
                                             + " on " + view);
@@ -1408,7 +1408,7 @@ final class LensApplication extends Application {
      */
     private void notifyViewEvent(LensView view, int viewEventType,
                                  int x, int y, int width, int height) {
-        if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
             LensLogger.getLogger().fine(
                 "Notify event type "
                 + ViewEvent.getTypeString(viewEventType)
@@ -1421,7 +1421,7 @@ final class LensApplication extends Application {
 
     private void notifyMenuEvent(LensView view, int x, int y, int xAbs,
                                  int yAbs, boolean isKeyboardTrigger) {
-        if (LensLogger.getLogger().isLoggable(Level.FINER)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINER)) {
             LensLogger.getLogger().finer(
                 "Notify menu event " +
                 "x=" + x + ", y=" + y + ", xAbs=" + xAbs + ", yAbs=" + yAbs +
@@ -1431,7 +1431,7 @@ final class LensApplication extends Application {
         if (view != null) {
             postEvent(new LensMenuEvent(view, x, y, xAbs, yAbs, isKeyboardTrigger));
         } else {
-            if (LensLogger.getLogger().isLoggable(Level.FINER)) {
+            if (LensLogger.getLogger().isLoggable(PlatformLogger.FINER)) {
                 LensLogger.getLogger().finer("view is null, skipping event");
             }
         }
@@ -1445,7 +1445,7 @@ final class LensApplication extends Application {
      * @param attach true is the device was attached, false if it was detached.
      */
     private void notifyDeviceEvent(int flags, boolean attach) {
-        if (LensLogger.getLogger().isLoggable(Level.FINE)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINE)) {
             LensLogger.getLogger().fine(
                 "Notify device event attach=" + attach
                 + ", flags=0x" + Integer.toHexString(flags));
@@ -1587,7 +1587,7 @@ final class LensApplication extends Application {
 
     @Override
     protected void _invokeAndWait(Runnable runnable) {
-        if (LensLogger.getLogger().isLoggable(Level.FINEST)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINEST)) {
             LensLogger.getLogger().fine("invokeAndWait " + runnable);
         }
         synchronized (invokeAndWaitLock) {
@@ -1609,7 +1609,7 @@ final class LensApplication extends Application {
 
     @Override
     protected void _invokeLater(Runnable runnable) {
-        if (LensLogger.getLogger().isLoggable(Level.FINEST)) {
+        if (LensLogger.getLogger().isLoggable(PlatformLogger.FINEST)) {
             LensLogger.getLogger().fine("invokeLater " + runnable);
         }
         synchronized (eventList) {

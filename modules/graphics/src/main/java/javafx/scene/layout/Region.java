@@ -69,7 +69,6 @@ import com.sun.javafx.scene.input.PickResultChooser;
 import com.sun.javafx.sg.prism.NGNode;
 import com.sun.javafx.sg.prism.NGRegion;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 /**
  * Region is the base class for all JavaFX Node-based UI Controls, and all layout containers.
@@ -1164,7 +1163,7 @@ public class Region extends Parent {
         setWidth(width);
         setHeight(height);
         PlatformLogger logger = Logging.getLayoutLogger();
-        if (logger.isLoggable(Level.FINER)) {
+        if (logger.isLoggable(PlatformLogger.FINER)) {
             logger.finer(this.toString() + " resized to " + width + " x " + height);
         }
     }

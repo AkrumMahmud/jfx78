@@ -44,7 +44,6 @@ import com.sun.javafx.accessible.utils.NavigateDirection;
 import com.sun.javafx.accessible.utils.PropertyIds;
 import com.sun.javafx.accessible.utils.Rect;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 /**
  *
@@ -137,11 +136,11 @@ public class AccessibleStage implements AccessibleProvider,
     {
         PlatformLogger logger = Logging.getAccessibilityLogger();
         for (int idx=0; idx<currChildren.size(); idx++) {
-            if (logger.isLoggable(Level.FINER)) {
+            if (logger.isLoggable(PlatformLogger.FINER)) {
                 logger.finer(this.toString() + "destroyHierarchy: idx=" + idx + currChildren.get(idx));
             }
             if ( currChildren.get(idx).children.size() > 0 ) {
-                if (logger.isLoggable(Level.FINER)) {
+                if (logger.isLoggable(PlatformLogger.FINER)) {
                     logger.finer(this.toString() + "destroyHierarchy: Has Children" + currChildren.get(idx).children);
                 }
                 destroyHierarchy(currChildren.get(idx).children) ;
@@ -156,11 +155,11 @@ public class AccessibleStage implements AccessibleProvider,
     {
         PlatformLogger logger = Logging.getAccessibilityLogger();
         for (int idx=0; idx<currChildren.size(); idx++) {
-            if (logger.isLoggable(Level.FINER)) {
+            if (logger.isLoggable(PlatformLogger.FINER)) {
                 logger.finer(this.toString() + "printAccHierarchy: idx=" + idx + currChildren.get(idx));
             }
             if ( currChildren.get(idx).children.size() > 0 ) {
-                if (logger.isLoggable(Level.FINER)) {
+                if (logger.isLoggable(PlatformLogger.FINER)) {
                     logger.finer(this.toString() + "printAccHierarchy: Has Children" + currChildren.get(idx).children);
                 }
                 printAccHierarchy(currChildren.get(idx).children) ;
@@ -177,25 +176,25 @@ public class AccessibleStage implements AccessibleProvider,
         AccessibleNode curaccNode = null;
         ObservableList<Node> nodes = pRoot.getChildrenUnmodifiable();
         PlatformLogger logger = Logging.getAccessibilityLogger();
-        if (logger.isLoggable(Level.FINER)) {
+        if (logger.isLoggable(PlatformLogger.FINER)) {
             logger.finer(this.toString()+ "initAccessibleHierarchy1: pRoot=" + pRoot + " parent=" + parent);
         }
         if (nodes.isEmpty()) {
-            if (logger.isLoggable(Level.FINEST)) {
+            if (logger.isLoggable(PlatformLogger.FINEST)) {
                 logger.finer(this.toString()+ "initAccessibleHierarchy: no child, pRoot=" + pRoot);
             }
             return;
         }
         for (int idx = 0; idx < nodes.size(); idx++) {
             n = nodes.get(idx);
-            if (logger.isLoggable(Level.FINER)) {
+            if (logger.isLoggable(PlatformLogger.FINER)) {
                 logger.finer(this.toString()+ "initAccessibleHierarchy: idx=" + idx + " node= " + n);
             }
             // use the logic for instanceof later when public API is reviewed. For now use reflection
             try {
                 curaccNode = (AccessibleNode)n.impl_getAccessible() ; 
                 if ( curaccNode != null ) { // Control has an accessible implementation
-                    if (logger.isLoggable(Level.FINER)) {
+                    if (logger.isLoggable(PlatformLogger.FINER)) {
                         logger.finer(this.toString()+ "initAccessibleHierarchy: Found Accessible.");
                         logger.finer(this.toString()+ "  node= " + n + " curaccNode=" + curaccNode);
                         logger.finer(this.toString()+ "  control type=" + curaccNode.getPropertyValue(PropertyIds.CONTROL_TYPE));
@@ -210,7 +209,7 @@ public class AccessibleStage implements AccessibleProvider,
                 if (curaccNode == null) {
                     curaccNode = parent;
                 }
-                if (logger.isLoggable(Level.FINER)) {
+                if (logger.isLoggable(PlatformLogger.FINER)) {
                     logger.finer(this.toString()+ "initAccessibleHierarchy: idx=" + idx + " accNode.children= " + curaccNode);
                 }
                 try {
@@ -228,7 +227,7 @@ public class AccessibleStage implements AccessibleProvider,
                 currChildren.get(idx).parent = parent ;
             }
         }
-        if (logger.isLoggable(Level.FINER)) {
+        if (logger.isLoggable(PlatformLogger.FINER)) {
             logger.finer(this.toString()+ "initAccessibleHierarchy: parent.children= " + parent.children );
         }
     }
@@ -358,7 +357,7 @@ public class AccessibleStage implements AccessibleProvider,
     @Override
     public Object navigate(NavigateDirection direction) {
         PlatformLogger logger = Logging.getAccessibilityLogger();
-        if (logger.isLoggable(Level.FINER)) {
+        if (logger.isLoggable(PlatformLogger.FINER)) {
             logger.finer("this: " + this.toString());
             logger.finer("navigate direction: " + direction);
         }
@@ -377,7 +376,7 @@ public class AccessibleStage implements AccessibleProvider,
                 accTemp = accChildren.get(accChildren.size()-1) ;
                 break;
         }
-        if (logger.isLoggable(Level.FINER)) {
+        if (logger.isLoggable(PlatformLogger.FINER)) {
             logger.finer("returning: " + accTemp.accElement);
         }
         return accTemp.accElement;
@@ -428,7 +427,7 @@ public class AccessibleStage implements AccessibleProvider,
         AccessibleNode aNode = getProviderFromPoint( accChildren, x, y ) ;
         if( aNode !=null)
         {
-            if (logger.isLoggable(Level.FINER)) {
+            if (logger.isLoggable(PlatformLogger.FINER)) {
                 logger.finer(this.toString()+ "Accessible Stage: elementProviderFromPoint x=" + x + " y=" + y +"Node"+ aNode.accElement);
             }
             Object aBase = aNode.getAccessibleElement();

@@ -39,7 +39,6 @@ import java.util.Collections;
 import java.util.List;
 import com.sun.javafx.scene.control.Logging;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 /**
  */
@@ -174,7 +173,7 @@ public class TreeCellBehavior<T> extends CellBehaviorBase<TreeCell<T>> {
         // we don't want to react to it.
         if (treeCell.isEmpty() || ! treeCell.contains(event.getX(), event.getY())) {
             final PlatformLogger logger = Logging.getControlsLogger();
-            if (treeCell.isEmpty() && logger.isLoggable(Level.WARNING)) {
+            if (treeCell.isEmpty() && logger.isLoggable(PlatformLogger.WARNING)) {
 //                logger.warning("TreeCell is empty, so mouse pressed event is "
 //                        + "ignored. If you've created a custom cell and overridden "
 //                        + "updateItem, be sure to call super.updateItem(item, empty)");

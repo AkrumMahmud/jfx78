@@ -42,7 +42,7 @@ import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.StringBinding;
 import javafx.binding.Variable;
 import javafx.collections.ObservableList;
-import sun.util.logging.PlatformLogger.Level;
+import sun.util.logging.PlatformLogger;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -553,8 +553,8 @@ public class SelectBindingTest {
 	@Test
     public void stressTestRandomOperationsResultInCorrectListenersInstalled() {
 
-            final Level logLevel = Logging.getLogger().level();
-            Logging.getLogger().setLevel(Level.SEVERE);
+            final int logLevel = Logging.getLogger().getLevel();
+            Logging.getLogger().setLevel(PlatformLogger.SEVERE);
             List<String> steps = new ArrayList<String>();
 
             Random rand = new Random(System.currentTimeMillis());

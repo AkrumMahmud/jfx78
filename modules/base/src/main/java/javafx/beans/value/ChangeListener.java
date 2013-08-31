@@ -42,7 +42,6 @@ package javafx.beans.value;
  *
  * @since JavaFX 2.0
  */
-@FunctionalInterface
 public interface ChangeListener<T> {
 
     /**

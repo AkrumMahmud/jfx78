@@ -49,7 +49,7 @@ import com.sun.prism.impl.PrismSettings;
 import com.sun.prism.paint.Color;
 import com.sun.prism.paint.Paint;
 
-abstract class GlassScene implements TKScene {
+public abstract class GlassScene implements TKScene {
 
     private GlassStage stage;
 
