@@ -26,6 +26,7 @@ package com.sun.glass.ui.accessible;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.util.Locale;
 
 import sun.util.logging.PlatformLogger;
 
@@ -38,7 +39,7 @@ public class AccessibleLogger {
         String levelString = AccessController.doPrivileged(
         new PrivilegedAction<String>() {
             public String run() {
-                return System.getProperty("log.accessible", "SEVERE").toUpperCase();
+                return System.getProperty("log.accessible", "SEVERE").toUpperCase(Locale.ROOT);
             }
         });
 
