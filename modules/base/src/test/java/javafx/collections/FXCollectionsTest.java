@@ -782,21 +782,17 @@ public class FXCollectionsTest {
 
 		@Override
 		public FilteredList<String> filtered(Callback<String, Boolean> predicate) {
-			// TODO Auto-generated method stub
-			return null;
+			return new FilteredList<String>(this, predicate);
 		}
 
 		@Override
 		public SortedList<String> sorted(Comparator<String> comparator) {
-			// TODO Auto-generated method stub
-			return null;
+			return new SortedList<String>(this, comparator);
 		}
 
 		@Override
 		public SortedList<String> sorted() {
-			// TODO Auto-generated method stub
-			return null;
+			return sorted(null);
 		}
-
     }
 }
