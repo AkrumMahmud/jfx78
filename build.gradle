@@ -2069,4 +2069,4 @@ compileTargets { t ->
 
 
 //JFX78 maven publishing
-// apply from: 'narya.gradle'    
+apply from: 'narya.gradle'    
