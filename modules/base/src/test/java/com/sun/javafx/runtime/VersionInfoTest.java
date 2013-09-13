@@ -25,14 +25,17 @@
 
 package com.sun.javafx.runtime;
 
+import org.junit.Ignore;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**
  */
 public class VersionInfoTest {
 
-    @Test
+	@Ignore
+	@Test
     public void testMajorVersion() {
         String version = VersionInfo.getVersion();
         // Need to update major version number when we develop the next

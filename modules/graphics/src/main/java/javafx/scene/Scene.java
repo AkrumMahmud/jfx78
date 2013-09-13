@@ -115,6 +115,7 @@ import com.sun.javafx.event.EventQueue;
 import com.sun.javafx.geom.PickRay;
 import com.sun.javafx.geom.Vec3d;
 import com.sun.javafx.geom.transform.BaseTransform;
+import sun.util.logging.PlatformLogger;
 import com.sun.javafx.perf.PerformanceTracker;
 import com.sun.javafx.robot.impl.FXRobotHelper;
 import com.sun.javafx.runtime.SystemProperties;
@@ -141,7 +142,6 @@ import com.sun.javafx.scene.LayoutFlags;
 import com.sun.prism.impl.PrismSettings;
 
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 import static com.sun.javafx.logging.PulseLogger.PULSE_LOGGER;
 import static com.sun.javafx.logging.PulseLogger.PULSE_LOGGING_ENABLED;
 
@@ -1990,7 +1990,7 @@ public class Scene implements EventTarget {
                 ((Node.FocusedProperty) value.focusedProperty()).notifyListeners();
             }
             PlatformLogger logger = Logging.getFocusLogger();
-            if (logger.isLoggable(Level.FINE)) {
+            if (logger.isLoggable(PlatformLogger.FINE)) {
                 logger.fine("Changed focus from "
                         + oldFocusOwner + " to " + value);
             }

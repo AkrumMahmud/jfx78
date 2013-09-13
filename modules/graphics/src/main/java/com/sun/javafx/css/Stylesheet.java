@@ -300,8 +300,15 @@ public class Stylesheet {
             throw new IllegalArgumentException("cannot read source file");
         }
 
-        if ((destination.exists() && destination.canWrite() == false) || destination.createNewFile() == false) {
-            throw new IllegalArgumentException("cannot write destination file");
+        if (destination.exists()) {
+        	if(destination.canWrite() == false) {
+        		throw new IllegalArgumentException("existing destination file is not writeable: " + destination.getAbsolutePath());
+        	}
+        }
+        else {
+        	if(destination.createNewFile() == false) {
+        		throw new IllegalArgumentException("cannot create destination file: " + destination.getAbsolutePath());
+        	}
         }
 
         URI sourceURI = source.toURI();

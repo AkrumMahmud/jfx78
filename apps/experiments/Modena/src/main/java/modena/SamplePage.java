@@ -88,7 +88,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.paint.Color;
-import javafx.scene.web.HTMLEditor;
+//import javafx.scene.web.HTMLEditor;
 
 import static modena.SamplePageChartHelper.*;
 import static modena.SamplePageHelpers.*;
@@ -463,19 +463,19 @@ public class SamplePage extends GridPane {
                 withState(TextAreaBuilder.create().text("Focused").prefColumnCount(7).prefRowCount(2).build(), "focused"),
                 withState(TextAreaBuilder.create().text("Disabled").prefColumnCount(8).prefRowCount(2).build(), "disabled")
         );
-        newSection(
-                "HTMLEditor:",
-                new HTMLEditor() {{
-                    setHtmlText("Hello <b>Bold</b> Text");
-                    setPrefSize(650, 120);
-                }});
-        newSection(
-                "HTMLEditor\nFocused:",
-                withState(new HTMLEditor() {{
-                    setHtmlText("<i>Focused</i>");
-                    setPrefSize(650, 120);
-                }}, "focused")
-                );
+//        newSection(
+//                "HTMLEditor:",
+//                new HTMLEditor() {{
+//                    setHtmlText("Hello <b>Bold</b> Text");
+//                    setPrefSize(650, 120);
+//                }});
+//        newSection(
+//                "HTMLEditor\nFocused:",
+//                withState(new HTMLEditor() {{
+//                    setHtmlText("<i>Focused</i>");
+//                    setPrefSize(650, 120);
+//                }}, "focused")
+//                );
         newDetailedSection(
                 new String[] { "ToolBar (H|TOP):", "normal", "overflow", "disabled" },
                 createToolBar(Side.TOP, false, false),

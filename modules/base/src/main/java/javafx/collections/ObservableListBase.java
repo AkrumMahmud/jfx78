@@ -26,12 +26,11 @@
 package javafx.collections;
 
 import com.sun.javafx.collections.ListListenerHelper;
-import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import javafx.beans.InvalidationListener;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.util.Callback;
 
 /**
  * Abstract class that serves as a base class for {@link ObservableList} implementations.
@@ -269,4 +268,34 @@ public abstract class ObservableListBase<E> extends AbstractList<E>  implements 
     public void remove(int from, int to) {
         removeRange(from, to);
     }
+
+    /**
+     * Creates a {@link javafx.collections.transformation.FilteredList} wrapper of this list using
+     * the specified predicate.
+     * @param predicate the predicate to use
+     * @return new {@code FilteredList}
+     */
+    public FilteredList<E> filtered(Callback<E, Boolean> predicate) {
+        return new FilteredList<E>(this, predicate);
+    }
+
+    /**
+     * Creates a {@link javafx.collections.transformation.SortedList} wrapper of this list using
+     * the specified comparator.
+     * @param comparator the comparator to use or null for the natural order
+     * @return new {@code SortedList}
+     */
+    public SortedList<E> sorted(Comparator<E> comparator) {
+        return new SortedList<E>(this, comparator);
+    }
+
+    /**
+     * Creates a {@link SortedList} wrapper of this list with the natural
+     * ordering.
+     * @return new {@code SortedList}
+     */
+    public SortedList<E> sorted() {
+        return sorted(null);
+    }
+
 }

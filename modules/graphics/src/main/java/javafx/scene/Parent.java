@@ -52,6 +52,7 @@ import com.sun.javafx.geom.transform.BaseTransform;
 import com.sun.javafx.geom.transform.NoninvertibleTransformException;
 import com.sun.javafx.jmx.MXNodeAlgorithm;
 import com.sun.javafx.jmx.MXNodeAlgorithmContext;
+import sun.util.logging.PlatformLogger;
 import com.sun.javafx.scene.CssFlags;
 import com.sun.javafx.scene.DirtyBits;
 import com.sun.javafx.scene.input.PickResultChooser;
@@ -61,7 +62,6 @@ import com.sun.javafx.sg.prism.NGNode;
 import com.sun.javafx.tk.Toolkit;
 import com.sun.javafx.scene.LayoutFlags;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 import static com.sun.javafx.logging.PulseLogger.PULSE_LOGGER;
 import static com.sun.javafx.logging.PulseLogger.PULSE_LOGGING_ENABLED;
 
@@ -1045,20 +1045,20 @@ public abstract class Parent extends Node {
      */
     public final void layout() {
         switch(layoutFlag) {
-            case CLEAN:
-                break;
-            case NEEDS_LAYOUT:
-                performingLayout = true;
-                layoutChildren();
-                // Intended fall-through
-            case DIRTY_BRANCH:
-                for (int i = 0, max = children.size(); i < max; i++) {
-                    final Node child = children.get(i);
-                    if (child instanceof Parent) {
-                        ((Parent)child).layout();
-                    } else if (child instanceof SubScene) {
-                        ((SubScene)child).layoutPass();
-                    }
+	        case CLEAN:
+	            break;
+	        case NEEDS_LAYOUT:
+	            performingLayout = true;
+	            layoutChildren();
+	            // Intended fall-through
+	        case DIRTY_BRANCH:
+	            for (int i = 0, max = children.size(); i < max; i++) {
+	                final Node child = children.get(i);
+	                if (child instanceof Parent) {
+	                    ((Parent)child).layout();
+	                } else if (child instanceof SubScene) {
+	                    ((SubScene)child).layoutPass();
+	                }
                 }
                 setLayoutFlag(LayoutFlags.CLEAN);
                 performingLayout = false;
