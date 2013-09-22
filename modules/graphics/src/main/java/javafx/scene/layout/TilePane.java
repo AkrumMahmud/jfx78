@@ -848,7 +848,7 @@ public class TilePane extends Pane {
                 // widest may depend on height of tile
                 h = computeMaxPrefAreaHeight(managed, marginAccessor, -1, getTileAlignmentInternal().getVpos());
             }
-            return snapSize(computeMaxPrefAreaWidth(managed, marginAccessor, h, getTileAlignmentInternal().getHpos()));
+            return snapSize(computeMaxPrefAreaWidth(managed, marginAccessor, h, true));
         }
         return snapSize(preftilewidth);
     }
@@ -868,7 +868,7 @@ public class TilePane extends Pane {
             }
             if (horizBias) {
                 // tallest may depend on width of tile
-                w = computeMaxPrefAreaWidth(managed, marginAccessor, -1, getTileAlignmentInternal().getHpos());
+                w = computeMaxPrefAreaWidth(managed, marginAccessor);
             }
             return snapSize(computeMaxPrefAreaHeight(managed, marginAccessor, w, getTileAlignmentInternal().getVpos()));
         }
@@ -942,7 +942,13 @@ public class TilePane extends Pane {
                           top + computeYOffset(insideHeight,
                                             computeContentHeight(lastColumnRemainder, getTileHeight()),
                                             vpos) : columnY;
-        double baselineOffset = getMaxAreaBaselineOffset(managed, marginAccessor);
+        double baselineOffset = getTileAlignmentInternal().getVpos() == VPos.BASELINE ?
+                getAreaBaselineOffset(managed, marginAccessor, new Callback<Integer, Double>() {
+
+            public Double call(Integer i) {
+                return getTileWidth();
+            }
+        }, getTileHeight(), false) : -1;
 
         int r = 0;
         int c = 0;

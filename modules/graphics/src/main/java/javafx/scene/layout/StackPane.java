@@ -129,7 +129,7 @@ import javafx.util.Callback;
  */
 
 public class StackPane extends Pane {
-    
+
     private boolean biasDirty = true;
     private boolean performingLayout = false;
     private Orientation bias;
@@ -272,14 +272,14 @@ public class StackPane extends Pane {
                 }
             }
             biasDirty = false;
-        }        
+        }
         return bias;
     }
 
     @Override protected double computeMinWidth(double height) {
         List<Node>managed = getManagedChildren();
         return getInsets().getLeft() +
-               computeMaxMinAreaWidth(managed, marginAccessor, getAlignmentInternal().getHpos(), height) +
+               computeMaxMinAreaWidth(managed, marginAccessor, height, true) +
                getInsets().getRight();
     }
 
@@ -292,40 +292,15 @@ public class StackPane extends Pane {
 
     @Override protected double computePrefWidth(double height) {
         List<Node>managed = getManagedChildren();
-//        double h = -1;
-//        boolean vertBias = false;
-//        for (Node child: managed) {
-//            if (child.getContentBias() == Orientation.VERTICAL) {
-//                vertBias = true;
-//                break;
-//            }
-//        }
-//        if (vertBias) {
-//            // widest may depend on height
-//            h = computeMaxPrefAreaHeight(managed, margins, -1, getAlignment().getVpos());
-//        }
         Insets padding = getInsets();
         return padding.getLeft() +
                computeMaxPrefAreaWidth(managed, marginAccessor,
-                                       (height == -1) ? -1 : (height - padding.getTop() - padding.getBottom()),
-                                       getAlignmentInternal().getHpos()) +
+                                       (height == -1) ? -1 : (height - padding.getTop() - padding.getBottom()), true) +
                padding.getRight();
     }
 
     @Override protected double computePrefHeight(double width) {
         List<Node>managed = getManagedChildren();
-//        double w = -1;
-//        boolean horizBias = false;
-//        for (Node child: managed) {
-//            if (child.getContentBias() == Orientation.HORIZONTAL) {
-//                horizBias = true;
-//                break;
-//            }
-//        }
-//        if (horizBias) {
-//            // tallest may depend on width of tile
-//            w = computeMaxPrefAreaWidth(managed, margins, -1, getAlignment().getHpos());
-//        }
         Insets padding = getInsets();
         return padding.getTop() +
                computeMaxPrefAreaHeight(managed, marginAccessor,
@@ -350,16 +325,22 @@ public class StackPane extends Pane {
         Pos align = getAlignmentInternal();
         HPos alignHpos = align.getHpos();
         VPos alignVpos = align.getVpos();
-        double width = getWidth();
+        final double width = getWidth();
         double height = getHeight();
         double top = getInsets().getTop();
         double right = getInsets().getRight();
         double left = getInsets().getLeft();
         double bottom = getInsets().getBottom();
-        double baselineOffset = alignVpos == VPos.BASELINE ? getMaxBaselineOffset(managed)
-                                    : height/2;
         double contentWidth = width - left - right;
         double contentHeight = height - top - bottom;
+        double baselineOffset = alignVpos == VPos.BASELINE ?
+                getAreaBaselineOffset(managed, marginAccessor, new Callback<Integer, Double>() {
+
+            public Double call(Integer i) {
+                return width;
+            }
+        }, contentHeight, true)
+                                    : 0;
         for (int i = 0, size = managed.size(); i < size; i++) {
             Node child = managed.get(i);
             Pos childAlignment = StackPane.getAlignment(child);

@@ -660,7 +660,7 @@ public class FlowPane extends Pane {
                     nodeRect.node = child;
                     Insets margin = getMargin(child);
                     nodeRect.width = computeChildPrefAreaWidth(child, margin);
-                    nodeRect.height = computeChildPrefAreaHeight(child, -1, margin);
+                    nodeRect.height = computeChildPrefAreaHeight(child, margin);
                     double nodeLength = getOrientation() == HORIZONTAL ? nodeRect.width : nodeRect.height;
                     if (runLength + nodeLength > maxRunLength && runLength > 0) {
                         // wrap to next run *unless* its the only node in the run
@@ -697,7 +697,7 @@ public class FlowPane extends Pane {
         return runs;
     }
 
-    private void normalizeRun(Run run, double runOffset) {
+    private void normalizeRun(final Run run, double runOffset) {
         if (getOrientation() == HORIZONTAL) {
             // horizontal
             ArrayList<Node> rownodes = new ArrayList();
@@ -709,7 +709,13 @@ public class FlowPane extends Pane {
                 lrect.y = runOffset;
             }
             run.height = computeMaxPrefAreaHeight(rownodes, marginAccessor, getRowValignment());
-            run.baselineOffset = getRowValignment() == VPos.BASELINE? getMaxAreaBaselineOffset(rownodes, marginAccessor) : run.height;
+            run.baselineOffset = getRowValignment() == VPos.BASELINE?
+                    getAreaBaselineOffset(rownodes, marginAccessor, new Callback<Integer, Double>() {
+
+                public Double call(Integer i) {
+                    return run.rects.get(i).width;
+                }
+            }, run.height, true) : 0;
 
         } else {
             // vertical
@@ -787,8 +793,6 @@ public class FlowPane extends Pane {
                            getOrientation() == HORIZONTAL? lrect.width : run.width,
                            getOrientation() == VERTICAL? lrect.height : run.height,
                            run.baselineOffset, getMargin(lrect.node),
-                           // only fill height if we don't have baseline alignment
-                           true, getOrientation() == VERTICAL || getRowValignment() != VPos.BASELINE,
                            getColumnHalignmentInternal(), getRowValignmentInternal());
             }
         }
