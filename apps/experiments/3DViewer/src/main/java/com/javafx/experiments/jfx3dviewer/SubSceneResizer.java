@@ -31,6 +31,9 @@
  */
 package com.javafx.experiments.jfx3dviewer;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.SubScene;
 import javafx.scene.layout.Pane;
@@ -39,7 +42,7 @@ import javafx.scene.layout.Pane;
  * Resizable container for a SubScene
  */
 public class SubSceneResizer extends Pane {
-    private final SubScene subScene;
+    private SubScene subScene;
     private final Node controlsPanel;
 
     public SubSceneResizer(SubScene subScene, Node controlsPanel) {
@@ -51,11 +54,42 @@ public class SubSceneResizer extends Pane {
         getChildren().addAll(subScene, controlsPanel);
     }
 
+    public SubSceneResizer(ObjectProperty<SubScene> subScene, Node controlsPanel) {
+        this.subScene = subScene.get();
+        this.controlsPanel = controlsPanel;
+        if (this.subScene != null) {
+            setPrefSize(this.subScene.getWidth(),this.subScene.getHeight());
+            getChildren().add(this.subScene);
+        }
+        subScene.addListener(new ChangeListener<SubScene>() {
+
+			@Override
+			public void changed(ObservableValue<? extends SubScene> observable,
+					SubScene o, SubScene newSubScene) {
+				SubSceneResizer.this.subScene = newSubScene;
+	            if (SubSceneResizer.this.subScene != null) {
+	                setPrefSize(SubSceneResizer.this.subScene.getWidth(),SubSceneResizer.this.subScene.getHeight());
+	                if (getChildren().size() == 1) {
+	                    getChildren().add(0,SubSceneResizer.this.subScene);
+	                } else {
+	                    getChildren().set(0,SubSceneResizer.this.subScene);
+	                }
+	            }
+				
+			}
+		});
+        setMinSize(50,50);
+        setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
+        getChildren().add(controlsPanel);
+    }
+
     @Override protected void layoutChildren() {
         final double width = getWidth();
         final double height = getHeight();
-        subScene.setWidth(width);
-        subScene.setHeight(height);
+        if (subScene!=null) {
+            subScene.setWidth(width);
+            subScene.setHeight(height);
+        }
         final int controlsWidth = (int)snapSize(controlsPanel.prefWidth(-1));
         final int controlsHeight = (int)snapSize(controlsPanel.prefHeight(-1));
         controlsPanel.resizeRelocate(width-controlsWidth,0,controlsWidth,controlsHeight);
