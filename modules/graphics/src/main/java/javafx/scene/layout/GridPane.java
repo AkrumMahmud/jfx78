@@ -1337,7 +1337,9 @@ public class GridPane extends Pane {
 
     private CompositeSize computeMaxHeights() {
         if (rowMaxHeight == null) {
-            rowMaxHeight = createCompositeRows();
+            rowMaxHeight = createCompositeRows(Double.MAX_VALUE); // Do not restrict the row (to allow grow). The
+                                                                  // Nodes will be restricted to their computed size
+                                                                  // in Region.layoutInArea call
             final ObservableList<RowConstraints> rowConstr = getRowConstraints();
             CompositeSize prefHeights = null;
             for (int i = 0; i < rowConstr.size(); ++i) {
@@ -1357,20 +1359,6 @@ public class GridPane extends Pane {
                     }
                 }
             }
-            List<Node> managed = getManagedChildren();
-            for (int i = 0, size = managed.size(); i < size; i++) {
-                Node child = managed.get(i);
-                int start = getNodeRowIndex(child);
-                int end = getNodeRowEndConvertRemaining(child);
-                double childMaxAreaHeight = computeChildMaxAreaHeight(child,
-                        isNodePositionedByBaseline(child) ? rowMaxBaselineComplement[start] : -1,
-                        getMargin(child), -1);
-                if (start == end && !rowMaxHeight.isPreset(start)) {
-                    rowMaxHeight.setMaxSize(start, childMaxAreaHeight);
-                } else if (start != end){
-                    rowMaxHeight.setMaxMultiSize(start, end + 1, childMaxAreaHeight);
-                }
-            }
         }
         return rowMaxHeight;
     }
@@ -1381,10 +1369,10 @@ public class GridPane extends Pane {
             if (rowPrefHeight != null) {
                 return rowPrefHeight;
             }
-            rowPrefHeight = createCompositeRows();
+            rowPrefHeight = createCompositeRows(0);
             result = rowPrefHeight;
         } else {
-            result = createCompositeRows();
+            result = createCompositeRows(0);
         }
 
         final ObservableList<RowConstraints> rowConstr = getRowConstraints();
@@ -1429,10 +1417,10 @@ public class GridPane extends Pane {
             if (rowMinHeight != null) {
                 return rowMinHeight;
             }
-            rowMinHeight = createCompositeRows();
+            rowMinHeight = createCompositeRows(0);
             result = rowMinHeight;
         } else {
-            result = createCompositeRows();
+            result = createCompositeRows(0);
         }
 
         final ObservableList<RowConstraints> rowConstr = getRowConstraints();
@@ -1478,7 +1466,9 @@ public class GridPane extends Pane {
 
     private CompositeSize computeMaxWidths() {
         if (columnMaxWidth == null) {
-            columnMaxWidth = createCompositeColumns();
+            columnMaxWidth = createCompositeColumns(Double.MAX_VALUE);// Do not restrict the column (to allow grow). The
+                                                                      // Nodes will be restricted to their computed size
+                                                                      // in Region.layoutInArea call
             final ObservableList<ColumnConstraints> columnConstr = getColumnConstraints();
             CompositeSize prefWidths = null;
             for (int i = 0; i < columnConstr.size(); ++i) {
@@ -1498,19 +1488,6 @@ public class GridPane extends Pane {
                     }
                 }
             }
-            List<Node> managed = getManagedChildren();
-            for (int i = 0, size = managed.size(); i < size; i++) {
-                Node child = managed.get(i);
-                int start = getNodeColumnIndex(child);
-                int end = getNodeColumnEndConvertRemaining(child);
-                if (start == end && !columnMaxWidth.isPreset(start)) {
-                    columnMaxWidth.setMaxSize(start, computeChildMaxAreaWidth(child,
-                            -1, getMargin(child), -1, false));
-                } else if (start != end){
-                    columnMaxWidth.setMaxMultiSize(start, end + 1, computeChildMaxAreaWidth(child,
-                            -1, getMargin(child), -1, false));
-                }
-            }
         }
         return columnMaxWidth;
     }
@@ -1521,10 +1498,10 @@ public class GridPane extends Pane {
             if (columnPrefWidth != null) {
                 return columnPrefWidth;
             }
-            columnPrefWidth = createCompositeColumns();
+            columnPrefWidth = createCompositeColumns(0);
             result = columnPrefWidth;
         } else {
-            result = createCompositeColumns();
+            result = createCompositeColumns(0);
         }
 
         final ObservableList<ColumnConstraints> columnConstr = getColumnConstraints();
@@ -1572,10 +1549,10 @@ public class GridPane extends Pane {
             if (columnMinWidth != null) {
                 return columnMinWidth;
             }
-            columnMinWidth = createCompositeColumns();
+            columnMinWidth = createCompositeColumns(0);
             result = columnMinWidth;
         } else {
-            result = createCompositeColumns();
+            result = createCompositeColumns(0);
         }
 
         final ObservableList<ColumnConstraints> columnConstr = getColumnConstraints();
@@ -1614,7 +1591,7 @@ public class GridPane extends Pane {
         final CompositeSize heights;
         if (rowPercentTotal == 100) {
             // all rows defined by percentage, no need to compute pref heights
-            heights = createCompositeRows();
+            heights = createCompositeRows(0);
         } else {
             heights = (CompositeSize) computePrefHeights(null).clone();
         }
@@ -1627,7 +1604,7 @@ public class GridPane extends Pane {
         final CompositeSize widths;
         if (columnPercentTotal == 100) {
             // all columns defined by percentage, no need to compute pref widths
-            widths = createCompositeColumns();
+            widths = createCompositeColumns(0);
         } else {
             widths = (CompositeSize) computePrefWidths(null).clone();
         }
@@ -2315,14 +2292,14 @@ public class GridPane extends Pane {
         return "Grid hgap="+getHgap()+", vgap="+getVgap()+", alignment="+getAlignment();
     }
 
-    private CompositeSize createCompositeRows() {
+    private CompositeSize createCompositeRows(double initSize) {
         return new CompositeSize(getNumberOfRows(), rowPercentHeight, rowPercentTotal,
-                snapSpace(getVgap()));
+                snapSpace(getVgap()), initSize);
     }
 
-    private CompositeSize createCompositeColumns() {
+    private CompositeSize createCompositeColumns(double initSize) {
         return new CompositeSize(getNumberOfColumns(), columnPercentWidth, columnPercentTotal,
-                snapSpace(getHgap()));
+                snapSpace(getHgap()), initSize);
     }
 
     private int getNodeRowEndConvertRemaining(Node child) {
@@ -2495,9 +2472,9 @@ public class GridPane extends Pane {
         private final double totalFixedPercent;
         private final double gap;
 
-        public CompositeSize(int capacity, double fixedPercent[], double totalFixedPercent, double gap) {
+        public CompositeSize(int capacity, double fixedPercent[], double totalFixedPercent, double gap, double initSize) {
             singleSizes = new double[capacity];
-            Arrays.fill(singleSizes, 0);
+            Arrays.fill(singleSizes, initSize);
 
             this.fixedPercent = fixedPercent;
             this.totalFixedPercent = totalFixedPercent;
