@@ -45,7 +45,6 @@ import com.sun.javafx.css.converters.BooleanConverter;
 import com.sun.javafx.css.converters.EnumConverter;
 import com.sun.javafx.css.converters.SizeConverter;
 import java.util.Iterator;
-import java.util.function.Function;
 import javafx.css.Styleable;
 import javafx.geometry.HPos;
 import javafx.util.Callback;
@@ -625,7 +624,7 @@ public class HBox extends Pane {
         double space = snapSpace(getSpacing());
         boolean shouldFillHeight = shouldFillHeight();
 
-        double[][] actualAreaWidths = getAreaWidths(managed, height, false);
+        final double[][] actualAreaWidths = getAreaWidths(managed, height, false);
         double contentWidth = adjustAreaWidths(managed, actualAreaWidths, width, height);
         double contentHeight = height - top - bottom;
 
@@ -634,9 +633,9 @@ public class HBox extends Pane {
         double baselineOffset = -1;
         if (alignVpos == VPos.BASELINE) {
             double baselineComplement = getMinBaselineComplement();
-            baselineOffset = getAreaBaselineOffset(managed, marginAccessor, new Function<Integer, Double>() {
+            baselineOffset = getAreaBaselineOffset(managed, marginAccessor, new Callback<Integer, Double>() {
 
-                public Double apply(Integer i) {
+                public Double call(Integer i) {
                     return actualAreaWidths[0][i];
                 }
             },

@@ -71,7 +71,7 @@ public final class StyleCacheEntry {
                 this.pseudoClassStates[n].addAll(pseudoClassStates[n]);
             }
             this.fontSize = font != null ? font.getSize() : Font.getDefault().getSize();
-            
+
         }
 
         @Override public String toString() {
@@ -82,7 +82,7 @@ public final class StyleCacheEntry {
         public int hashCode() {
             if (hash == Integer.MIN_VALUE) {
 
-                hash = Double.hashCode(fontSize);
+                hash = ((Double) fontSize).hashCode();
 
                 final int iMax = pseudoClassStates != null ? pseudoClassStates.length : 0;
 

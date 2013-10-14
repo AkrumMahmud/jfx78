@@ -146,6 +146,7 @@
         <antcall target="jar-javafx-android"/>
         <antcall target="jar-javafx-embed-swt"/>
         <ant antfile="${rt.root.dir}/javafx-builders/build.xml" target="jar" inheritAll="false"/>
+        <ant antfile="${rt.root.dir}/javafx-iio/build.xml" target="jar" inheritAll="false"/>
     </target>
 
     <target name="jar-decora-d3d" if="include.d3d">
@@ -235,6 +236,7 @@
         <ant antfile="${rt.root.dir}/javafx-util-converter/build.xml" target="test" inheritAll="false"/>
         <ant antfile="${rt.root.dir}/javafx-fxml/build.xml" target="test" inheritAll="false"/>
         <ant antfile="${rt.root.dir}/javafx-builders/build.xml" target="test" inheritAll="false"/>
+        <ant antfile="${rt.root.dir}/javafx-iio/build.xml" target="test" inheritAll="false"/>
     </target>
 
     <!--
@@ -280,6 +282,7 @@
         <antcall target="clean-prism-es2-all"/>
         <antcall target="clean-javafx-android"/>
         <antcall target="clean-javafx-embed-swt"/>
+        <ant antfile="${rt.root.dir}/javafx-iio/build.xml" target="clean" inheritAll="false"/>
         <ant antfile="${rt.root.dir}/javafx-builders/build.xml" target="clean" inheritAll="false"/>
     </target>
 

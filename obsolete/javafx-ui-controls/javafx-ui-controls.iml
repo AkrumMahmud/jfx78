@@ -16,6 +16,7 @@
     <orderEntry type="module" module-name="test-stub-toolkit" scope="TEST" />
     <orderEntry type="library" name="jfxrt-binary-stub" level="project" />
     <orderEntry type="library" name="junit-4.8.2" level="project" />
+    <orderEntry type="library" name="org.threeten:threetenbp:0.8.1" level="project" />
   </component>
 </module>
 

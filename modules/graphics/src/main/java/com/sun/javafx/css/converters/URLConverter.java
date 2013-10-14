@@ -134,7 +134,7 @@ public final class URLConverter extends StyleConverterImpl<ParsedValue[], String
 
         } catch (final MalformedURLException|URISyntaxException e) {
             PlatformLogger cssLogger = com.sun.javafx.Logging.getCSSLogger();
-            if (cssLogger.isLoggable(PlatformLogger.Level.WARNING)) {
+            if (cssLogger.isLoggable(PlatformLogger.WARNING)) {
                 cssLogger.warning(e.getLocalizedMessage());
             }
 

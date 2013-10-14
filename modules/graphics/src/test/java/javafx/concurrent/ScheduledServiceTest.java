@@ -809,9 +809,9 @@ public class ScheduledServiceTest extends ServiceTestBase {
     }
 
     @Test public void callingCancelFromOnSucceededEventHandlerShouldStopScheduledService() {
-        AtomicBoolean onReadyCalled = new AtomicBoolean();
-        AtomicBoolean onScheduledCalled = new AtomicBoolean();
-        AtomicBoolean onCancelledCalled = new AtomicBoolean();
+        final AtomicBoolean onReadyCalled = new AtomicBoolean();
+        final AtomicBoolean onScheduledCalled = new AtomicBoolean();
+        final AtomicBoolean onCancelledCalled = new AtomicBoolean();
         s.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override public void handle(WorkerStateEvent event) {
                 s.cancel();

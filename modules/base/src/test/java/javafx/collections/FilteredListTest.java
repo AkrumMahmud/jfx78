@@ -28,13 +28,15 @@ package javafx.collections;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.function.Predicate;
+
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.TransformationList;
+import javafx.util.Callback;
 import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -49,9 +51,13 @@ public class FilteredListTest {
     public void setUp() {
         list = FXCollections.observableArrayList();
         list.addAll("a", "c", "d", "c");
-        Predicate<String> predicate = (String e) -> !e.equals("c");
+        Callback<String, Boolean> callback = new Callback<String, Boolean>() {
+			public Boolean call(String e) {
+				return (Boolean) !e.equals("c");
+			}
+		};
         mlo = new MockListObserver<String>();
-        filteredList = new FilteredList<>(list, predicate);
+        filteredList = new FilteredList<>(list, callback);
         filteredList.addListener(mlo);
     }
 
@@ -107,26 +113,48 @@ public class FilteredListTest {
     @Ignore
     public void testLiveMode_changeMatcher() {
         assertEquals(Arrays.asList("a", "c", "c"), filteredList);
-        ObjectProperty<Predicate<String>> pProperty = new SimpleObjectProperty<>();
-        pProperty.set((String e) -> !e.equals("c"));
+        ObjectProperty<Callback<String, Boolean>> pProperty = new SimpleObjectProperty<>();
+        Callback<String, Boolean> callback1 = new Callback<String, Boolean>() {
+			public Boolean call(String e) {
+				return (Boolean) !e.equals("c");
+			}
+		};
+        
+        pProperty.set(callback1);
         filteredList = new FilteredList<>(list);
         filteredList.predicateProperty().bind(pProperty);
         filteredList.addListener(mlo);
         assertEquals(Arrays.asList("a", "d"), filteredList);
         mlo.check0();
-        pProperty.set((String s) -> !s.equals("d"));
+        Callback<String, Boolean> callback2 = new Callback<String, Boolean>() {
+			public Boolean call(String e) {
+				return (Boolean) !e.equals("d");
+			}
+		};
+        pProperty.set(callback2);
         mlo.check1AddRemove(filteredList, Arrays.asList("a", "d"), 0, 3);
     }
 
     @Test
     public void testLiveMode_mutableElement() {
-        ObservableList<Person> list = FXCollections.observableArrayList(
-                (Person p) -> new Observable[] { p.name });
+    	
+        Callback<Person, Observable[]> callback1 = new Callback<Person, Observable[]>() {
+			@Override
+			public Observable[] call(Person p) {
+				return new Observable[] {p.name};
+			}
+        };
+        ObservableList<Person> list = FXCollections.observableArrayList(callback1);
 
         list.addAll(createPerson("A"), createPerson("BB"), createPerson("C"));
 
-        FilteredList<Person> filtered = new FilteredList<Person>(list,
-                (Person p) -> p.name.get().length() > 1);
+        Callback<Person, Boolean> callback2 = new Callback<Person, Boolean>() {
+			@Override
+			public Boolean call(Person p) {
+				return p.name.get().length() > 1;
+			}
+        };
+        FilteredList<Person> filtered = new FilteredList<Person>(list, callback2);
         MockListObserver<Person> lo = new MockListObserver<Person>();
         assertEquals(Arrays.asList(createPerson("BB")), filtered);
 

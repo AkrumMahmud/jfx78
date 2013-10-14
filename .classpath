@@ -1,16 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="src" exported="true" path="/web"/>
-  <classpathentry kind="src" exported="true" path="/fxml"/>
-  <classpathentry kind="src" exported="true" path="/fxpackager"/>
-  <classpathentry kind="src" exported="true" path="/swt"/>
-  <classpathentry kind="src" exported="true" path="/swing"/>
-  <classpathentry kind="src" exported="true" path="/media"/>
-  <classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-  <classpathentry kind="lib" exported="true" path="../caches/sdk/rt/lib/ext/jfxrt.jar">
-    <attributes>
-      <attribute name="optional" value="true"/>
-    </attributes>
-  </classpathentry>
-  <classpathentry kind="output" path="bin"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="apps/performance/GraphicsPerformance/src/main/resources"/>
+	<classpathentry kind="src" path="apps/performance/GraphicsPerformance/src/main/java"/>
+	<classpathentry kind="src" path="apps/experiments/Modena/src/main/resources"/>
+	<classpathentry kind="src" path="apps/experiments/Modena/src/main/java"/>
+	<classpathentry exported="true" kind="src" path="/fxml"/>
+	<classpathentry exported="true" kind="src" path="/fxpackager"/>
+	<classpathentry exported="true" kind="src" path="/swt"/>
+	<classpathentry exported="true" kind="src" path="/swing"/>
+	<classpathentry exported="true" kind="src" path="/media"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry exported="true" kind="lib" path="../caches/sdk/rt/lib/ext/jfxrt.jar">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="/builders"/>
+	<classpathentry kind="src" path="/graphics"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>
