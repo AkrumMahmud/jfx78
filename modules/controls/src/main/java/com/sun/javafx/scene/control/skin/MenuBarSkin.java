@@ -351,7 +351,7 @@ public class MenuBarSkin extends BehaviorSkinBase<MenuBar, BehaviorBase<MenuBar>
         ** add an accelerator for F10 on windows and ctrl+F10 on mac/linux
         ** pressing f10 will select the first menu button on a menubar
         */
-        KeyCombination acceleratorKeyCombo;
+        final KeyCombination acceleratorKeyCombo;
         final String os = System.getProperty("os.name");
         if (os != null && os.startsWith("Mac")) {
            acceleratorKeyCombo = KeyCombination.keyCombination("ctrl+F10");
@@ -380,6 +380,17 @@ public class MenuBarSkin extends BehaviorSkinBase<MenuBar, BehaviorBase<MenuBar>
                     // remove event filter from the old scene (t)
                     if (t != null)
                         t.removeEventFilter(MouseEvent.MOUSE_CLICKED, weakSceneMouseEventHandler);
+                }
+                
+                /**
+                 * remove the f10 accelerator from the old scene
+                 * add it to the new scene
+                 */
+                if (t != null) {
+                    t.getAccelerators().remove(acceleratorKeyCombo);
+                }
+                if (t1 != null ) {
+                    t1.getAccelerators().put(acceleratorKeyCombo, firstMenuRunnable);
                 }
             }
         });
