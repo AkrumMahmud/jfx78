@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="lib/lucene-grouping-3.2.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-7-oracle-jfx78"/>
 	<classpathentry kind="src" path="/media"/>
+	<classpathentry kind="src" path="/web"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

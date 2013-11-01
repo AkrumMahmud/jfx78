@@ -47,14 +47,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-//import javafx.scene.web.WebView;
+import javafx.scene.web.WebView;
 
 /**
  * Ensmeble page for showing a page of documentation from the web
  */
 public class DocsPage extends Region implements ChangeListener<String>, Page{
-//    private final WebView webView = new WebView();   
-    private final SimpleStringProperty jfx78Hack = new SimpleStringProperty("");
+    private final WebView webView = new WebView();
     private final ScrollPane scrollPane = new ScrollPane();
     private final VBox sideBar = new VBox(10);
     private final Label sideBarTitle = new Label("Related Samples:");
@@ -64,29 +63,26 @@ public class DocsPage extends Region implements ChangeListener<String>, Page{
     
     public DocsPage(PageBrowser pageBrowser) {
         this.pageBrowser = pageBrowser;
-//        getChildren().add(webView);
+        getChildren().add(webView);
         scrollPane.setContent(sideBar);
         sideBar.setAlignment(Pos.TOP_CENTER);
         sideBar.getChildren().add(sideBarTitle);
         sideBarTitle.getStyleClass().add("sidebar-title");
         scrollPane.setFitToWidth(true);
         sideBar.setPadding(new Insets(10));
-//        webView.getEngine().locationProperty().addListener(this);
+        webView.getEngine().locationProperty().addListener(this);
     }
 
     @Override public ReadOnlyStringProperty titleProperty() {
-//        return webView.getEngine().titleProperty();
-        return jfx78Hack;
+        return webView.getEngine().titleProperty();
     }
 
     @Override public String getTitle() {
-//        return webView.getEngine().getTitle();
-        return "";
+        return webView.getEngine().getTitle();
     }
 
     @Override public String getUrl() {
-//        return webView.getEngine().getLocation();
-        return "";
+        return webView.getEngine().getLocation();
     }
 
     @Override public Node getNode() {
@@ -100,7 +96,7 @@ public class DocsPage extends Region implements ChangeListener<String>, Page{
     
     public void goToUrl(String url) {
         isLocalChange = true;
-//        webView.getEngine().load(url);
+        webView.getEngine().load(url);
         isLocalChange = false;
     }
     
@@ -109,11 +105,11 @@ public class DocsPage extends Region implements ChangeListener<String>, Page{
         final double h = getHeight();
         if (showSideBar) {
             final double sideBarWidth = sideBar.prefWidth(-1)+14;
-//            webView.resize(w - sideBarWidth, h);
+            webView.resize(w - sideBarWidth, h);
             scrollPane.setLayoutX(w - sideBarWidth);
             scrollPane.resize(sideBarWidth, h);
         } else {
-//            webView.resize(w,h);
+            webView.resize(w,h);
         }
     }
     
