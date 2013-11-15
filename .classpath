@@ -11,7 +11,7 @@
 	<classpathentry exported="true" kind="src" path="/swing"/>
 	<classpathentry exported="true" kind="src" path="/media"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry exported="true" kind="lib" path="../caches/sdk/rt/lib/ext/jfxrt.jar">
+ 	<classpathentry kind="lib" exported="true" path="../artifacts/sdk/rt/lib/ext/jfxrt.jar">
 		<attributes>
 			<attribute name="optional" value="true"/>
 		</attributes>

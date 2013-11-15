@@ -27,18 +27,14 @@ package javafx.collections;
 
 import com.sun.javafx.collections.NonIterableChange.SimplePermutationChange;
 import com.sun.javafx.collections.ObservableListWrapper;
-
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.collections.ListChangeListener.Change;
-
 import java.util.Collections;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
-
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -49,7 +45,6 @@ import javafx.util.Callback;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Ignore;
-
 import static org.junit.Assert.* ;
 
 /**
@@ -372,4 +367,13 @@ public class SortedListTest {
 //        assertEquals(1, sorted.size());
 //        assertTrue(sorted.get(0) == other);
 //    }
+    
+    @Test
+    public void testAddAllOnEmpty() {
+        list = FXCollections.observableArrayList();
+        SortedList<String> sl = list.sorted(String.CASE_INSENSITIVE_ORDER);
+        list.addAll("B", "A");
+        
+        assertEquals(Arrays.asList("A", "B"), sl);
+    }
 }
