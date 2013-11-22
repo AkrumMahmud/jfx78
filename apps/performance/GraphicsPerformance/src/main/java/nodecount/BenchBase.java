@@ -115,7 +115,7 @@ public abstract class BenchBase<T extends Node> extends Application {
 
     protected abstract T createNode();
 
-    private void runTest(Scene scene, BenchTest[] tests, int index) {
+    private void runTest(final Scene scene, final BenchTest[] tests, final int index) {
         if (index >= tests.length) {
             printResults(tests);
             Platform.exit();

@@ -72,7 +72,6 @@ import com.sun.javafx.css.converters.SizeConverter.SequenceConverter;
 import com.sun.javafx.css.converters.StringConverter;
 import com.sun.javafx.css.converters.URLConverter;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 import com.sun.javafx.scene.layout.region.BackgroundPositionConverter;
 import com.sun.javafx.scene.layout.region.BackgroundSizeConverter;
 import com.sun.javafx.scene.layout.region.BorderImageSliceConverter;
@@ -160,11 +159,10 @@ final public class CSSParser {
     private static final PlatformLogger LOGGER;
     static {
         LOGGER = com.sun.javafx.Logging.getCSSLogger();
-        final Level level = LOGGER.level();
-        if (level == null || (
-            level.compareTo(Level.WARNING) > 0 &&
-            level != Level.OFF)) {
-            LOGGER.setLevel(Level.WARNING);
+        final int level = LOGGER.getLevel();
+        if (level > PlatformLogger.WARNING  &&
+            level != PlatformLogger.OFF) {
+            LOGGER.setLevel(PlatformLogger.WARNING);
         }
     }
 
@@ -329,7 +327,7 @@ final public class CSSParser {
             reader.close();
         } catch (IOException ioe) {
         } catch (ParseException e) {
-            if (LOGGER.isLoggable(Level.WARNING)) {
+            if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
                 LOGGER.warning("\"" +property + ": " + expr  + "\" " + e.toString());
             }
         } catch (Exception ex) {
@@ -459,7 +457,7 @@ final public class CSSParser {
 
     private void reportException(Exception exception) {
 
-        if (LOGGER.isLoggable(Level.WARNING)) {
+        if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
             final StackTraceElement[] stea = exception.getStackTrace();
             if (stea.length > 0) {
                 final StringBuilder buf =
@@ -621,7 +619,7 @@ final public class CSSParser {
             trim = 5;
             break;
         default:
-            if (LOGGER.isLoggable(Level.FINEST)) {
+            if (LOGGER.isLoggable(PlatformLogger.FINEST)) {
                 LOGGER.finest("Expected \'<number>\'");
             }
             ParseException re = new ParseException("Expected \'<number>\'",token, this);
@@ -1086,7 +1084,7 @@ final public class CSSParser {
             error(root, msg);
         }
 
-        if (LOGGER.isLoggable(Level.WARNING)) {
+        if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
             LOGGER.warning(formatDeprecatedMessage(root, "ladder"));
         }
 
@@ -1550,7 +1548,7 @@ final public class CSSParser {
             error(root, msg);
         }
 
-        if (LOGGER.isLoggable(Level.WARNING)) {
+        if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
             LOGGER.warning(formatDeprecatedMessage(root, "linear gradient"));
         }
 
@@ -1876,7 +1874,7 @@ final public class CSSParser {
             error(root, msg);
         }
 
-        if (LOGGER.isLoggable(Level.WARNING)) {
+        if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
             LOGGER.warning(formatDeprecatedMessage(root, "radial gradient"));
         }
 
@@ -3777,7 +3775,7 @@ final public class CSSParser {
                 (token.getType() == CSSLexer.WS) ||
                 (token.getType() == CSSLexer.NL));
 
-        if (LOGGER.isLoggable(Level.FINEST)) {
+        if (LOGGER.isLoggable(PlatformLogger.FINEST)) {
             LOGGER.finest(token.toString());
         }
 
@@ -3811,7 +3809,7 @@ final public class CSSParser {
                         MessageFormat.format("Expected LBRACE at [{0,number,#},{1,number,#}]",
                                 line, pos);
                     CssError error = createError(msg);
-                    if (LOGGER.isLoggable(Level.WARNING)) {
+                    if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
                         LOGGER.warning(error.toString());
                     }
                     reportError(error);
@@ -3833,7 +3831,7 @@ final public class CSSParser {
                         MessageFormat.format("Expected RBRACE at [{0,number,#},{1,number,#}]",
                         line,pos);
                     CssError error = createError(msg);
-                    if (LOGGER.isLoggable(Level.WARNING)) {
+                    if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
                         LOGGER.warning(error.toString());
                     }
                     reportError(error);
@@ -3889,14 +3887,14 @@ final public class CSSParser {
                                     url = fontUri.toURL();
                                 } catch (URISyntaxException |  MalformedURLException malf) {
 
-                                    final int line = currentToken.getLine();
-                                    final int pos = currentToken.getOffset();
-                                    final String msg = MessageFormat.format("Could not resolve @font-face url [{2}] at [{0,number,#},{1,number,#}]",line,pos,urlStr);
-                                    CssError error = createError(msg);
-                                    if (LOGGER.isLoggable(Level.WARNING)) {
-                                        LOGGER.warning(error.toString());
-                                    }
-                                    reportError(error);
+                                        final int line = currentToken.getLine();
+                                        final int pos = currentToken.getOffset();
+                                        final String msg = MessageFormat.format("Could not resolve @font-face url [{2}] at [{0,number,#},{1,number,#}]",line,pos,urlStr);
+                                        CssError error = createError(msg);
+                                        if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
+                                            LOGGER.warning(error.toString());
+                                        }
+                                        reportError(error);
 
                                     // skip the rest.
                                     while(currentToken != null) {
@@ -3957,7 +3955,7 @@ final public class CSSParser {
                                     final int pos = currentToken.getOffset();
                                     final String msg = MessageFormat.format("Unknown @font-face src type ["+currentToken.getText()+")] at [{0,number,#},{1,number,#}]",line,pos);
                                     CssError error = createError(msg);
-                                    if (LOGGER.isLoggable(Level.WARNING)) {
+                                    if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
                                         LOGGER.warning(error.toString());
                                     }
                                     reportError(error);
@@ -3971,7 +3969,7 @@ final public class CSSParser {
                                 final int pos = currentToken.getOffset();
                                 final String msg = MessageFormat.format("Unexpected TOKEN ["+currentToken.getText()+"] at [{0,number,#},{1,number,#}]",line,pos);
                                 CssError error = createError(msg);
-                                if (LOGGER.isLoggable(Level.WARNING)) {
+                                if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
                                     LOGGER.warning(error.toString());
                                 }
                                 reportError(error);
@@ -4170,7 +4168,7 @@ final public class CSSParser {
             // get the next token, but don't skip whitespace
             // since it may be a combinator
             currentToken = lexer.nextToken();
-            if (LOGGER.isLoggable(Level.FINEST)) {
+            if (LOGGER.isLoggable(PlatformLogger.FINEST)) {
                 LOGGER.finest(currentToken.toString());
             }
         }
@@ -4255,7 +4253,7 @@ final public class CSSParser {
 
             // get the next token, but don't skip whitespace
             currentToken = lexer.nextToken();
-            if (LOGGER.isLoggable(Level.FINEST)) {
+            if (LOGGER.isLoggable(PlatformLogger.FINEST)) {
                 LOGGER.finest(currentToken.toString());
             }
         }
@@ -4340,7 +4338,7 @@ final public class CSSParser {
                         MessageFormat.format("Expected COLON at [{0,number,#},{1,number,#}]",
                     line,pos);
                 CssError error = createError(msg);
-                if (LOGGER.isLoggable(Level.WARNING)) {
+                if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
                     LOGGER.warning(error.toString());
                 }
                 reportError(error);
@@ -4361,7 +4359,7 @@ final public class CSSParser {
                         MessageFormat.format("{2} while parsing ''{3}'' at [{0,number,#},{1,number,#}]",
                     line,pos,re.getMessage(),property);
                 CssError error = createError(msg);
-                if (LOGGER.isLoggable(Level.WARNING)) {
+                if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
                     LOGGER.warning(error.toString());
                 }
                 reportError(error);
@@ -4501,7 +4499,7 @@ final public class CSSParser {
                     MessageFormat.format("Unexpected token {0}{1}{0} at [{2,number,#},{3,number,#}]",
                     "\'",text,line,pos);
                 CssError error = createError(msg);
-                if (LOGGER.isLoggable(Level.WARNING)) {
+                if (LOGGER.isLoggable(PlatformLogger.WARNING)) {
                     LOGGER.warning(error.toString());
                 }
                 reportError(error);

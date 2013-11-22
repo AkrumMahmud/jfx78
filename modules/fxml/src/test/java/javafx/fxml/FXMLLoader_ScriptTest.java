@@ -38,8 +38,8 @@ public class FXMLLoader_ScriptTest {
     public void testStaticScriptLoad() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("static_script_load.fxml"));
         fxmlLoader.impl_setStaticLoad(true);
-        AtomicBoolean scriptCalled = new AtomicBoolean();
-        AtomicBoolean scriptEndCalled = new AtomicBoolean();
+        final AtomicBoolean scriptCalled = new AtomicBoolean();
+        final AtomicBoolean scriptEndCalled = new AtomicBoolean();
         fxmlLoader.impl_setLoadListener(new LoadListener() {
 
             @Override

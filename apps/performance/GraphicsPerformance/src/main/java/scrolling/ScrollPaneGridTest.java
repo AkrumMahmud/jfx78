@@ -98,7 +98,7 @@ public class ScrollPaneGridTest extends BenchTest {
 
         // Wrap in a ScrollPane
         double side = ((scene.getWidth() + GAP) / getCols()) - GAP;
-        double height = (side * getRows()) + (GAP * (getRows() - 1));
+        final double height = (side * getRows()) + (GAP * (getRows() - 1));
         final Pane pane = (Pane) scene.getRoot();
         final ScrollPane sp = new ScrollPane(pane);
         sp.setFitToWidth(true);

@@ -47,7 +47,6 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import com.sun.javafx.css.converters.EnumConverter;
 import com.sun.javafx.css.converters.SizeConverter;
-import java.util.function.Function;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.css.Styleable;
@@ -944,9 +943,9 @@ public class TilePane extends Pane {
                                             computeContentHeight(lastColumnRemainder, getTileHeight()),
                                             vpos) : columnY;
         double baselineOffset = getTileAlignmentInternal().getVpos() == VPos.BASELINE ?
-                getAreaBaselineOffset(managed, marginAccessor, new Function<Integer, Double>() {
+                getAreaBaselineOffset(managed, marginAccessor, new Callback<Integer, Double>() {
 
-            public Double apply(Integer i) {
+            public Double call(Integer i) {
                 return getTileWidth();
             }
         }, getTileHeight(), false) : -1;

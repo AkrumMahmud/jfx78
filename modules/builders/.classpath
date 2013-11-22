@@ -1,7 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-  <classpathentry kind="lib" path="build/libs/builders.jar" exported="true" sourcepath="src/main/java"/>
-  <!-- Builders will never change because they are deprectated so reference the jar -->
-  <classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-  <classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="src" path="/graphics"/>
+	<classpathentry kind="src" path="/controls"/>
+	<classpathentry kind="src" path="/swt"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

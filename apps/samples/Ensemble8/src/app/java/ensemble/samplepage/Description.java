@@ -46,7 +46,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
+import javafx.util.Callback;
 import static ensemble.samplepage.SamplePage.INDENT;
 import static ensemble.samplepage.SamplePageContent.title;
 import javafx.application.ConditionalFeature;
@@ -79,9 +79,12 @@ public class Description extends VBox {
         sourceBtn.getStyleClass().add("sample-page-box-title");
         sourceBtn.setGraphic(new ImageView(ORANGE_ARROW));
         sourceBtn.setContentDisplay(ContentDisplay.RIGHT);
-        sourceBtn.setOnAction(event -> {
-            samplePage.pageBrowser.goToPage(samplePage.getUrl().replaceFirst("sample://", "sample-src://"));
-        });
+        sourceBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				samplePage.pageBrowser.goToPage(samplePage.getUrl().replaceFirst("sample://", "sample-src://"));
+			}
+		});
         if (!PlatformFeatures.EMBEDDED) getChildren().add(sourceBtn);
         if (Platform.isSupported(ConditionalFeature.WEB)) {
             // Setup Columns
@@ -126,30 +129,39 @@ public class Description extends VBox {
         }
 
         // listen for when sample changes
-        samplePage.registerSampleInfoUpdater(sampleInfo -> {
-            update(sampleInfo);
-            return null;
-        });
+        samplePage.registerSampleInfoUpdater(new Callback<SampleInfo, Void>() {
+			@Override
+			public Void call(SampleInfo sampleInfo) {
+				update(sampleInfo);
+				return null;
+			}
+		});
     }
 
     private void update(SampleInfo sampleInfo) {
         if (Platform.isSupported(ConditionalFeature.WEB)) {
-            relatedDocumentsList.getChildren().clear();
-            for (final URL docUrl : sampleInfo.getDocURLs()) {
-                Hyperlink link = new Hyperlink(docUrl.getName());
-                link.setOnAction(t -> {
-                    samplePage.pageBrowser.goToPage(docUrl.getURL());
-                });
-                link.setTooltip(new Tooltip(docUrl.getName()));
-                relatedDocumentsList.getChildren().add(link);
-            }
-            for (final String classpath : sampleInfo.apiClasspaths) {
-                Hyperlink link = new Hyperlink(classpath.replace('$', '.'));
-                link.setOnAction(t -> {
-                    samplePage.pageBrowser.goToPage(samplePage.apiClassToUrl(classpath));
-                });
-                relatedDocumentsList.getChildren().add(link);
-            }
+	        relatedDocumentsList.getChildren().clear();
+	        for (final URL docUrl : sampleInfo.getDocURLs()) {
+	            Hyperlink link = new Hyperlink(docUrl.getName());
+	            link.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent arg0) {
+						samplePage.pageBrowser.goToPage(docUrl.getURL());
+					}
+	            });
+	            link.setTooltip(new Tooltip(docUrl.getName()));
+	            relatedDocumentsList.getChildren().add(link);
+	        }
+	        for (final String classpath : sampleInfo.apiClasspaths) {
+	            Hyperlink link = new Hyperlink(classpath.replace('$', '.'));
+	            link.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent arg0) {
+						samplePage.pageBrowser.goToPage(samplePage.apiClassToUrl(classpath));
+					}
+				});
+	            relatedDocumentsList.getChildren().add(link);
+	        }
         }
         relatedSamples.getChildren().clear();
         for (final SampleInfo.URL sampleURL : sampleInfo.getRelatedSampleURLs()) {

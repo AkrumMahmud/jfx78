@@ -96,6 +96,18 @@ void defineProperty(String name, Properties props, String defaultValue) {
 }
 
 /**
+ * Converts the simple name of a library to the full name. For example, on mac
+ * the simple name "glass" becomes "libglass.dylib". On Linux or Solaris, it would
+ * be "libglass.so", and on Windows "glass.dll".
+ *
+ * @param name The simple name of the library
+ * @return The name of the shared library file
+ */
+String library(String name) {
+    return "${IS_WINDOWS ? '' : 'lib'}$name.${IS_WINDOWS ? 'dll' : IS_MAC ? 'dylib' : 'so'}"
+}
+
+/**
  * Converts cygwin style paths to windows style paths, but with a forward slash.
  * This method is safe to call from any platform, and will only do work if
  * called on Windows (in all other cases it simply returns the supplied path.
@@ -379,8 +391,8 @@ defineProperty("PROMOTED_BUILD_NUMBER", "00")
 defineProperty("PRODUCT_NAME", "OpenJFX")
 // TODO: set the values of RAW_VERSION, RELEASE_NAME, and RELEASE_MILESTONE based on the
 // settings in build.properties
-defineProperty("RAW_VERSION", "8.0.0")
-defineProperty("RELEASE_NAME", "8.0")
+defineProperty("RAW_VERSION", "7.8.0")
+defineProperty("RELEASE_NAME", "7.8")
 defineProperty("RELEASE_MILESTONE", "ea")
 
 // Check whether the COMPILE_TARGETS property has been specified (if so, it was done by
@@ -968,7 +980,7 @@ allprojects {
     if (project == rootProject) return
     // All of our projects are java projects
     apply plugin: "java"
-    sourceCompatibility = 1.8
+    sourceCompatibility = 1.7
 
     // Setup the repositories that we'll download libraries from. Maven Central is
     // just easy for most things. The custom "ivy" repo is for downloading SWT. The way it
@@ -1027,8 +1039,8 @@ allprojects {
         options.windowTitle("JavaFX Project ${project.name} ${RELEASE_NAME}")
         options.links(JDK_DOCS);
         options.addBooleanOption("XDignore.symbol.file").setValue(true);
-        options.addBooleanOption("Xdoclint:none").setValue(!IS_DOC_LINT);
-        options.addBooleanOption("javafx").setValue(true);
+//        options.addBooleanOption("Xdoclint:none").setValue(!IS_DOC_LINT);
+//        options.addBooleanOption("javafx").setValue(true);
         // All doc-files are located in src/main/docs because Gradle's javadoc doesn't copy
         // over the doc-files if they are embedded with the sources. I find this arrangement
         // somewhat cleaner anyway (never was a fan of mixing javadoc files with the sources)
@@ -2226,8 +2238,8 @@ task javadoc(type: Javadoc) {
     options.bottom("${javadocBottom}")
     options.links(JDK_DOCS);
     options.addBooleanOption("XDignore.symbol.file").setValue(true);
-    options.addBooleanOption("Xdoclint:none").setValue(!IS_DOC_LINT);
-    options.addBooleanOption("javafx").setValue(true);
+//    options.addBooleanOption("Xdoclint:none").setValue(!IS_DOC_LINT);
+//    options.addBooleanOption("javafx").setValue(true);
     doLast {
         projectsToDocument.each { p ->
             copy {
@@ -2680,3 +2692,7 @@ compileTargets { t ->
         }
     )
 }
+
+
+//JFX78 maven publishing
+// apply from: 'narya.gradle'    

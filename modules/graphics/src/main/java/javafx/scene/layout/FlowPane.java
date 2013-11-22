@@ -43,7 +43,6 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import com.sun.javafx.css.converters.EnumConverter;
 import com.sun.javafx.css.converters.SizeConverter;
-import java.util.function.Function;
 import javafx.css.Styleable;
 
 import static javafx.geometry.Orientation.*;
@@ -698,7 +697,7 @@ public class FlowPane extends Pane {
         return runs;
     }
 
-    private void normalizeRun(Run run, double runOffset) {
+    private void normalizeRun(final Run run, double runOffset) {
         if (getOrientation() == HORIZONTAL) {
             // horizontal
             ArrayList<Node> rownodes = new ArrayList();
@@ -711,9 +710,9 @@ public class FlowPane extends Pane {
             }
             run.height = computeMaxPrefAreaHeight(rownodes, marginAccessor, getRowValignment());
             run.baselineOffset = getRowValignment() == VPos.BASELINE?
-                    getAreaBaselineOffset(rownodes, marginAccessor, new Function<Integer, Double>() {
+                    getAreaBaselineOffset(rownodes, marginAccessor, new Callback<Integer, Double>() {
 
-                public Double apply(Integer i) {
+                public Double call(Integer i) {
                     return run.rects.get(i).width;
                 }
             }, run.height, true) : 0;

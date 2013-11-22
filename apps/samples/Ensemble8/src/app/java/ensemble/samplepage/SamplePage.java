@@ -35,7 +35,6 @@ import ensemble.Page;
 import ensemble.PageBrowser;
 import ensemble.SampleInfo;
 import static ensemble.SampleInfo.SampleRuntimeInfo;
-
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
@@ -43,6 +42,8 @@ import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
@@ -118,9 +119,13 @@ public class SamplePage extends StackPane implements Page {
      * @param updater a method that updates content for a given SampleInfo
      */
     void registerSampleInfoUpdater(final Callback<SampleInfo, Void> updater) {
-        sampleInfoProperty.addListener((ov, t, sampleInfo) -> {
-            updater.call(sampleInfo);
-        });
+        sampleInfoProperty.addListener(new ChangeListener<SampleInfo>() {
+			@Override
+			public void changed(ObservableValue<? extends SampleInfo> ov,
+					SampleInfo t, SampleInfo sampleInfo) {
+				updater.call(sampleInfo);
+			}
+		});
         updater.call(sampleInfoProperty.get());
     }
 }

@@ -51,7 +51,7 @@ import com.sun.prism.paint.Paint;
 import sun.misc.JavaSecurityAccess;
 import sun.misc.SharedSecrets;
 
-abstract class GlassScene implements TKScene {
+public abstract class GlassScene implements TKScene {
 
     private static final JavaSecurityAccess javaSecurityAccess =
             SharedSecrets.getJavaSecurityAccess();

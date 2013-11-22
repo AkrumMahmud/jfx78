@@ -25,38 +25,6 @@
 
 package javafx.scene.layout;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.beans.property.ReadOnlyDoubleWrapper;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyObjectPropertyBase;
-import javafx.beans.value.ChangeListener;
-import javafx.collections.ObservableList;
-import javafx.css.CssMetaData;
-import javafx.css.Styleable;
-import javafx.css.StyleableBooleanProperty;
-import javafx.css.StyleableDoubleProperty;
-import javafx.css.StyleableObjectProperty;
-import javafx.css.StyleableProperty;
-import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.image.Image;
-import javafx.scene.shape.Shape;
-import javafx.util.Callback;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Function;
 import com.sun.javafx.Logging;
 import com.sun.javafx.TempState;
 import com.sun.javafx.binding.ExpressionHelper;
@@ -73,8 +41,24 @@ import com.sun.javafx.scene.input.PickResultChooser;
 import com.sun.javafx.sg.prism.NGNode;
 import com.sun.javafx.sg.prism.NGRegion;
 import com.sun.javafx.tk.Toolkit;
+
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.ObservableList;
+import javafx.css.*;
+import javafx.geometry.*;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.image.Image;
+import javafx.scene.shape.Shape;
+import javafx.util.Callback;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Region is the base class for all JavaFX Node-based UI Controls, and all layout containers.
@@ -262,39 +246,39 @@ public class Region extends Parent {
     }
 
     double getAreaBaselineOffset(List<Node> children, Callback<Node, Insets> margins,
-                                        Function<Integer, Double> positionToWidth,
+    		Callback<Integer, Double> positionToWidth,
                                         double areaHeight, boolean fillHeight) {
         return getAreaBaselineOffset(children, margins, positionToWidth, areaHeight, fillHeight, isSnapToPixel());
     }
 
     static double getAreaBaselineOffset(List<Node> children, Callback<Node, Insets> margins,
-            Function<Integer, Double> positionToWidth,
+    		Callback<Integer, Double> positionToWidth,
             double areaHeight, boolean fillHeight, boolean snapToPixel) {
         return getAreaBaselineOffset(children, margins, positionToWidth, areaHeight, fillHeight,
                 getMinBaselineComplement(children), snapToPixel);
     }
 
     double getAreaBaselineOffset(List<Node> children, Callback<Node, Insets> margins,
-                                 Function<Integer, Double> positionToWidth,
+    		Callback<Integer, Double> positionToWidth,
                                  double areaHeight, final boolean fillHeight, double minComplement) {
         return getAreaBaselineOffset(children, margins, positionToWidth, areaHeight, fillHeight, minComplement, isSnapToPixel());
     }
 
     static double getAreaBaselineOffset(List<Node> children, Callback<Node, Insets> margins,
-            Function<Integer, Double> positionToWidth,
+    		Callback<Integer, Double> positionToWidth,
             double areaHeight, final boolean fillHeight, double minComplement, boolean snapToPixel) {
-        return getAreaBaselineOffset(children, margins, positionToWidth, areaHeight, new Function<Integer, Boolean>() {
+        return getAreaBaselineOffset(children, margins, positionToWidth, areaHeight, new Callback<Integer, Boolean>() {
 
             @Override
-            public Boolean apply(Integer t) {
+            public Boolean call(Integer t) {
                 return fillHeight;
             }
         }, minComplement, snapToPixel);
     }
 
     double getAreaBaselineOffset(List<Node> children, Callback<Node, Insets> margins,
-                                 Function<Integer, Double> positionToWidth,
-                                 double areaHeight, Function<Integer, Boolean> fillHeight, double minComplement) {
+    		Callback<Integer, Double> positionToWidth,
+                                 double areaHeight, Callback<Integer, Boolean> fillHeight, double minComplement) {
         return getAreaBaselineOffset(children, margins, positionToWidth, areaHeight, fillHeight, minComplement, isSnapToPixel());
     }
 
@@ -309,8 +293,8 @@ public class Region extends Parent {
      * @param minComplement minimum complement
      */
     static double getAreaBaselineOffset(List<Node> children, Callback<Node, Insets> margins,
-            Function<Integer, Double> positionToWidth,
-            double areaHeight, Function<Integer, Boolean> fillHeight, double minComplement, boolean snapToPixel) {
+            Callback<Integer, Double> positionToWidth,
+            double areaHeight, Callback<Integer, Boolean> fillHeight, double minComplement, boolean snapToPixel) {
         double b = 0;
         for (int i = 0;i < children.size(); ++i) {
             Node n = children.get(i);
@@ -321,9 +305,9 @@ public class Region extends Parent {
             if (bo == BASELINE_OFFSET_SAME_AS_HEIGHT) {
                 double alt = -1;
                 if (n.getContentBias() == Orientation.HORIZONTAL) {
-                    alt = positionToWidth.apply(i);
+                    alt = positionToWidth.call(i);
                 }
-                if (fillHeight.apply(i)) {
+                if (fillHeight.call(i)) {
                     // If the children fills it's height, than it's "preferred" height is the area without the complement and insets
                     b = Math.max(b, top + boundedSize(n.minHeight(alt), areaHeight - minComplement - top - bottom,
                             n.maxHeight(alt)));
@@ -1361,7 +1345,7 @@ public class Region extends Parent {
         setWidth(width);
         setHeight(height);
         PlatformLogger logger = Logging.getLayoutLogger();
-        if (logger.isLoggable(Level.FINER)) {
+        if (logger.isLoggable(PlatformLogger.FINER)) {
             logger.finer(this.toString() + " resized to " + width + " x " + height);
         }
     }

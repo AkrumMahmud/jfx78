@@ -35,7 +35,6 @@ import java.util.List;
  * @see Change
  * @since JavaFX 2.0
  */
-@FunctionalInterface
 public interface ListChangeListener<E> {
 
     /**

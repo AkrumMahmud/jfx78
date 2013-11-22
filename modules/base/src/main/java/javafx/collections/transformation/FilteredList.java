@@ -27,17 +27,20 @@ package javafx.collections.transformation;
 
 import com.sun.javafx.collections.NonIterableChange.GenericAddRemoveChange;
 import com.sun.javafx.collections.SortHelper;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.function.Predicate;
+
 import javafx.beans.NamedArg;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
+import javafx.util.Callback;
 
 /**
  * Wraps an ObservableList and filters it's content using the provided Predicate.
@@ -53,13 +56,11 @@ public final class FilteredList<E> extends TransformationList<E, E>{
     private int size;
 
     private SortHelper helper;
-    private static final Predicate ALWAYS_TRUE = new Predicate() {
-
+    private static final Callback<?, Boolean> ALWAYS_TRUE = new Callback() {
         @Override
-        public boolean test(Object t) {
+        public Object call(Object o) {
             return true;
         }
-
     };
 
     /**
@@ -68,7 +69,7 @@ public final class FilteredList<E> extends TransformationList<E, E>{
      * @param source the source list
      * @param predicate the predicate to match the elements. Cannot be null.
      */
-    public FilteredList(@NamedArg("source") ObservableList<E> source, @NamedArg("predicate") Predicate<? super E> predicate) {
+    public FilteredList(@NamedArg("source") ObservableList<E> source, @NamedArg("predicate") Callback<? super E, Boolean> predicate) {
         super(source);
         if (predicate == null) {
             throw new NullPointerException();
@@ -87,22 +88,22 @@ public final class FilteredList<E> extends TransformationList<E, E>{
      * @param source the source list
      */
     public FilteredList(@NamedArg("source") ObservableList<E> source) {
-        this(source, ALWAYS_TRUE);
+        this(source, (Callback<? super E, Boolean>) ALWAYS_TRUE);
     }
 
     /**
      * The predicate that will match the elements that will be in this FilteredList.
      * Elements not matching the predicate will be filtered-out.
      */
-    private final ObjectProperty<Predicate<? super E>> predicate =
-            new ObjectPropertyBase<Predicate<? super E>>(ALWAYS_TRUE) {
+    private final ObjectProperty<Callback<? super E, Boolean>> predicate =
+            new ObjectPropertyBase<Callback<? super E, Boolean>>((Callback<? super E, Boolean>) ALWAYS_TRUE) {
 
         @Override
         protected void invalidated() {
             if (get() == null) {
                 if (isBound()) {
                     unbind();
-                    set(ALWAYS_TRUE);
+                    set((Callback<? super E, Boolean>) ALWAYS_TRUE);
                     throw new IllegalArgumentException("Predicate cannot be null.");
 
                 }
@@ -122,15 +123,15 @@ public final class FilteredList<E> extends TransformationList<E, E>{
 
     };
 
-    public final ObjectProperty<Predicate<? super E>> predicateProperty() {
+    public final ObjectProperty<Callback<? super E, Boolean>> predicateProperty() {
         return predicate;
     }
 
-    public final Predicate<? super E> getPredicate() {
+    public final Callback<? super E, Boolean> getPredicate() {
         return predicate.get();
     }
 
-    public final void setPredicate(Predicate<? super E> predicate) {
+    public final void setPredicate(Callback<? super E, Boolean> predicate) {
         this.predicate.set(predicate);
     }
 
@@ -247,7 +248,7 @@ public final class FilteredList<E> extends TransformationList<E, E>{
     }
 
     private void addRemove(Change<? extends E> c) {
-        Predicate<? super E> pred = predicate.get();
+        Callback<? super E, Boolean> pred = predicate.get();
         ensureSize(getSource().size());
         final int from = findPosition(c.getFrom());
         final int to = findPosition(c.getFrom() + c.getRemovedSize());
@@ -266,7 +267,7 @@ public final class FilteredList<E> extends TransformationList<E, E>{
 
         ListIterator<? extends E> it = getSource().listIterator(pos);
         for (; fpos < to && it.nextIndex() < c.getTo();) {
-            if (pred.test(it.next())) {
+            if (pred.call(it.next())) {
                 filtered[fpos] = it.previousIndex();
                 nextAdd(fpos, fpos + 1);
                 ++fpos;
@@ -280,7 +281,7 @@ public final class FilteredList<E> extends TransformationList<E, E>{
         } else {
             // Add the remaining elements
             while (it.nextIndex() < c.getTo()) {
-                if (pred.test(it.next())) {
+                if (pred.call(it.next())) {
                     System.arraycopy(filtered, fpos, filtered, fpos + 1, size - fpos);
                     filtered[fpos] = it.previousIndex();
                     nextAdd(fpos, fpos + 1);
@@ -293,21 +294,21 @@ public final class FilteredList<E> extends TransformationList<E, E>{
     }
 
     private void updateFilter(int sourceFrom, int sourceTo) {
-        Predicate<? super E> pred = predicate.get();
+        Callback<? super E, Boolean> pred = predicate.get();
         beginChange();
         // Fast path for single element update
         if (sourceFrom == sourceTo - 1) {
             int pos = findPosition(sourceFrom);
             final E sourceFromElement = getSource().get(sourceFrom);
             if (filtered[pos] == sourceFrom) {
-                if (!pred.test(sourceFromElement)) {
+                if (!pred.call(sourceFromElement)) {
                     nextRemove(pos, sourceFromElement);
                     System.arraycopy(filtered, pos + 1, filtered, pos, size - pos - 1);
                     --size;
                 }
             } else {
                 ensureSize(getSource().size());
-                if (pred.test(sourceFromElement)) {
+                if (pred.call(sourceFromElement)) {
                     nextAdd(pos, pos + 1);
                     System.arraycopy(filtered, pos, filtered, pos + 1, size - pos);
                     filtered[pos] = sourceFrom;
@@ -327,7 +328,7 @@ public final class FilteredList<E> extends TransformationList<E, E>{
                 final ListIterator<? extends E> it = getSource().listIterator(sourceFrom);
                 for (; it.nextIndex() < jTo;) {
                     E el = it.next();
-                    if (pred.test(el)) {
+                    if (pred.call(el)) {
                         nextAdd(i, i + 1);
                         System.arraycopy(filtered, i, filtered, i + 1, size - i);
                         filtered[i] = it.previousIndex();
@@ -345,7 +346,7 @@ public final class FilteredList<E> extends TransformationList<E, E>{
             for (; i < filterTo; ++i) {
                 advanceTo(it, filtered[i]);
                 final E el = it.next();
-                if (!pred.test(el)) {
+                if (!pred.call(el)) {
                     nextRemove(i, el);
                     System.arraycopy(filtered, i + 1, filtered, i, size - i - 1);
                     size--;
@@ -357,7 +358,7 @@ public final class FilteredList<E> extends TransformationList<E, E>{
                 // and it's successor
                 while (it.nextIndex() < jTo) {
                     final E midEl = it.next();
-                    if (pred.test(midEl)) {
+                    if (pred.call(midEl)) {
                         nextAdd(i + 1, i + 2);
                         System.arraycopy(filtered, i + 1, filtered, i + 2, size - i - 1);
                         filtered[i + 1] = it.previousIndex();
@@ -383,21 +384,50 @@ public final class FilteredList<E> extends TransformationList<E, E>{
         ensureSize(getSource().size());
         List<E> removed = null;
         if (hasListeners()) {
-            removed = new ArrayList<>(this);
+            removed = new ArrayList<E>(this);
         }
         size = 0;
         int i = 0;
-        Predicate<? super E> pred = predicate.get();
+        Callback<? super E, Boolean> pred = predicate.get();
         for (Iterator<? extends E> it = getSource().iterator();it.hasNext(); ) {
             final E next = it.next();
-            if (pred.test(next)) {
+            if (pred.call(next)) {
                 filtered[size++] = i;
             }
             ++i;
         }
         if (hasListeners()) {
-            fireChange(new GenericAddRemoveChange<>(0, size, removed, this));
+            fireChange(new GenericAddRemoveChange<E>(0, size, removed, this));
         }
     }
 
+
+    /**
+     * Creates a {@link FilteredList} wrapper of this list using
+     * the specified predicate.
+     * @param predicate the predicate to use
+     * @return new {@code FilteredList}
+     */
+    public FilteredList<E> filtered(Callback<E, Boolean> predicate) {
+        return new FilteredList<E>(this, predicate);
+    }
+
+    /**
+     * Creates a {@link SortedList} wrapper of this list using
+     * the specified comparator.
+     * @param comparator the comparator to use or null for the natural order
+     * @return new {@code SortedList}
+     */
+    public SortedList<E> sorted(Comparator<E> comparator) {
+        return new SortedList<E>(this, comparator);
+    }
+
+    /**
+     * Creates a {@link SortedList} wrapper of this list with the natural
+     * ordering.
+     * @return new {@code SortedList}
+     */
+    public SortedList<E> sorted() {
+        return sorted(null);
+    }
 }

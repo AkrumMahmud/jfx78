@@ -2912,7 +2912,7 @@ public class FXMLLoader {
 
             @Override
             protected boolean methodIsOfType(Method m) {
-                return m.getParameterCount() == 0;
+                return m.getParameterTypes().length == 0;
             }
 
         },
@@ -2920,7 +2920,7 @@ public class FXMLLoader {
 
             @Override
             protected boolean methodIsOfType(Method m) {
-                return m.getParameterCount() == 1 &&
+                return m.getParameterTypes().length == 1 &&
                         Event.class.isAssignableFrom(m.getParameterTypes()[0]);
             }
 
@@ -2929,7 +2929,7 @@ public class FXMLLoader {
 
             @Override
             protected boolean methodIsOfType(Method m) {
-                return m.getParameterCount() == 1 &&
+                return m.getParameterTypes().length == 1 &&
                         m.getParameterTypes()[0].equals(ListChangeListener.Change.class);
             }
 
@@ -2938,7 +2938,7 @@ public class FXMLLoader {
 
             @Override
             protected boolean methodIsOfType(Method m) {
-                return m.getParameterCount() == 1 &&
+                return m.getParameterTypes().length == 1 &&
                         m.getParameterTypes()[0].equals(MapChangeListener.Change.class);
             }
 
@@ -2947,7 +2947,7 @@ public class FXMLLoader {
 
             @Override
             protected boolean methodIsOfType(Method m) {
-                return m.getParameterCount() == 1 &&
+                return m.getParameterTypes().length == 1 &&
                         m.getParameterTypes()[0].equals(SetChangeListener.Change.class);
             }
 
@@ -2956,7 +2956,7 @@ public class FXMLLoader {
 
             @Override
             protected boolean methodIsOfType(Method m) {
-                return m.getParameterCount() == 3 &&
+                return m.getParameterTypes().length == 3 &&
                         ObservableValue.class.isAssignableFrom(m.getParameterTypes()[0])
                         && m.getParameterTypes()[1].equals(m.getParameterTypes()[2]);
             }
