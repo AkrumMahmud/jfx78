@@ -22,16 +22,18 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-
 package javafx.fxml;
 
 import com.sun.javafx.fxml.BeanAdapter;
 import com.sun.javafx.fxml.builder.JavaFXFontBuilder;
 import com.sun.javafx.fxml.builder.JavaFXImageBuilder;
 import com.sun.javafx.fxml.builder.JavaFXSceneBuilder;
+import com.sun.javafx.fxml.builder.ProxyBuilder;
 import com.sun.javafx.fxml.builder.TriangleMeshBuilder;
 import com.sun.javafx.fxml.builder.URLBuilder;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -50,6 +52,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
+import javafx.beans.NamedArg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -74,7 +77,7 @@ public final class JavaFXBuilderFactory implements BuilderFactory {
 
     private final ClassLoader classLoader;
     private final boolean alwaysUseBuilders;
-    
+
     private final boolean webSupported;
 
     /**
@@ -137,6 +140,8 @@ public final class JavaFXBuilderFactory implements BuilderFactory {
             builder = new URLBuilder(classLoader);
         } else if (type == TriangleMesh.class) {
             builder = new TriangleMeshBuilder();
+        } else if (scanForConstructorAnnotations(type)) {
+            builder = new ProxyBuilder(type);
         } else {
             Builder<Object> objectBuilder = null;
             JavaFXBuilder typeBuilder = builders.get(type);
@@ -177,7 +182,7 @@ public final class JavaFXBuilderFactory implements BuilderFactory {
                     }
 
                     builders.put(type, typeBuilder == null ? NO_BUILDER : typeBuilder);
-                    
+
                 }
                 if (typeBuilder != null) {
                     objectBuilder = typeBuilder.createBuilder();
@@ -206,6 +211,25 @@ public final class JavaFXBuilderFactory implements BuilderFactory {
         }
         return typeBuilder;
     }
+
+    private boolean scanForConstructorAnnotations(Class<?> type) {
+// Disabled for openjfx78 as Constructor.getParamters() is a Java 8 function
+// Affects https://javafx-jira.kenai.com/browse/RT-29409
+//        Constructor constructors[] = ConstructorUtil.getConstructors(type);
+//        for (Constructor constructor : constructors) {
+//            Annotation[][] paramAnnotations = constructor.getParameterAnnotations();
+//            Parameter[] params = constructor.getParameters();
+//            for (int i = 0; i < params.length; i++) {
+//                for (Annotation annotation : paramAnnotations[i]) {
+//                    if (annotation instanceof NamedArg) {
+//                        return true;
+//                    }
+//                }
+//            }
+//        }
+        return false;
+    }
+
 }
 
 /**
@@ -330,7 +354,7 @@ final class JavaFXBuilder {
                     MethodUtil.invoke(m, builder, new Object[] { BeanAdapter.coerce(value, type) });
                 } catch (Exception e) {
                     Logger.getLogger(JavaFXBuilder.class.getName()).log(Level.WARNING,
-                        "Method " + m.getName() + " failed", e);
+                            "Method " + m.getName() + " failed", e);
                 }
                 //TODO Is it OK to return null here?
                 return null;
@@ -364,7 +388,7 @@ final class JavaFXBuilder {
                     setters.put(propName, setter);
                 }
                 if (setter != null) return null;
-            }
+                }
 
             Class<?> type;
             if (getter == null) {
@@ -463,7 +487,7 @@ final class JavaFXBuilder {
 
     private Method findMethod(String name) {
         if (name.length() > 1
-            && Character.isUpperCase(name.charAt(1))) {
+                && Character.isUpperCase(name.charAt(1))) {
             name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
         }
 
