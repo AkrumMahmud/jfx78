@@ -37,7 +37,6 @@ import com.sun.javafx.accessible.utils.NavigateDirection;
 import com.sun.javafx.accessible.utils.PropertyIds;
 import com.sun.javafx.accessible.utils.Rect;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 public class AccessibleNode implements AccessibleProvider
 {
@@ -150,7 +149,7 @@ public class AccessibleNode implements AccessibleProvider
             bounds.getMinY();
 
         PlatformLogger logger = Logging.getAccessibilityLogger();
-        if (logger.isLoggable(Level.FINER)) {
+        if (logger.isLoggable(PlatformLogger.FINER)) {
             logger.finer(this.toString()+ "MinX="+ bounds.getMinX() + "MinY="+bounds.getMinY() +
              "Width="+ bounds.getWidth() +"Height="+ bounds.getHeight());
         }
@@ -205,7 +204,7 @@ public class AccessibleNode implements AccessibleProvider
     @Override
     public Object navigate(NavigateDirection direction) { // this is not focussed driven
         PlatformLogger logger = Logging.getAccessibilityLogger();
-        if (logger.isLoggable(Level.FINER)) {
+        if (logger.isLoggable(PlatformLogger.FINER)) {
             logger.finer("this: " + this.toString());
             logger.finer("navigate direction: " + direction);
         }
@@ -225,7 +224,7 @@ public class AccessibleNode implements AccessibleProvider
                     // This should never happen so should we just remove this
                     // or raise an exception?
                     if (idx == -1) {
-                        if (logger.isLoggable(Level.FINER)) {
+                        if (logger.isLoggable(PlatformLogger.FINER)) {
                             logger.finer(this.toString()+ "  children.indexOf returned -1");
                         }
                     }
@@ -242,7 +241,7 @@ public class AccessibleNode implements AccessibleProvider
                     // This should never happen so should we just remove this
                     // or raise an exception?
                     if (idx == -1) {
-                        if (logger.isLoggable(Level.FINER)) {
+                        if (logger.isLoggable(PlatformLogger.FINER)) {
                             logger.finer(this.toString()+ "  children.indexOf returned -1");
                         }
                     }
@@ -264,7 +263,7 @@ public class AccessibleNode implements AccessibleProvider
                     accTemp = children.get(children.size()-1) ;
                 break;
         }
-        if (logger.isLoggable(Level.FINER)) {
+        if (logger.isLoggable(PlatformLogger.FINER)) {
             if (accTemp != null) {
                 logger.finer("returning: " + accTemp.accElement);
             } else {
@@ -285,7 +284,7 @@ public class AccessibleNode implements AccessibleProvider
     public void setFocus() {
 //        node.getScene().setImpl_focusOwner(node);
         PlatformLogger logger = Logging.getAccessibilityLogger();
-        if (logger.isLoggable(Level.FINER)) {
+        if (logger.isLoggable(PlatformLogger.FINER)) {
             logger.finer(this.toString()+ "In AccessibleNode.setFocus");
         }
         node.requestFocus();

@@ -29,7 +29,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Control;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 import com.sun.javafx.Logging;
 import com.sun.javafx.accessible.AccessibleNode;
@@ -49,13 +48,13 @@ public class AccessibleControl extends AccessibleNode {
                 PlatformLogger logger = Logging.getAccessibilityLogger();
                 if(!t && t1)
                 {
-                    if (logger.isLoggable(Level.FINER)) {
+                    if (logger.isLoggable(PlatformLogger.FINER)) {
                         logger.finer(this.toString() + " Focus Change: true");
                     }
                     fireEvent(EventIds.AUTOMATION_FOCUS_CHANGED);
                 }
                 else
-                    if (logger.isLoggable(Level.FINER)) {
+                    if (logger.isLoggable(PlatformLogger.FINER)) {
                         logger.finer(this.toString() + " Focus Change: false");
                     }
             }

@@ -38,7 +38,6 @@ import java.util.List;
 import com.sun.javafx.Logging;
 import com.sun.javafx.application.PlatformImpl;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 public class TraversalEngine {
 
@@ -85,7 +84,7 @@ public class TraversalEngine {
         registeredNodes = new ArrayList<Node>();
         listeners = new LinkedList<TraverseListener>();
         focusLogger = Logging.getFocusLogger();
-        if (focusLogger.isLoggable(Level.FINER)) {
+        if (focusLogger.isLoggable(PlatformLogger.FINER)) {
             focusLogger.finer("TraversalEngine constructor");
         }
     }
@@ -110,11 +109,11 @@ public class TraversalEngine {
 
         Node newNode = algorithm.traverse(owner, dir, this);
         if (newNode == null) {
-            if (focusLogger.isLoggable(Level.FINE)) {
+            if (focusLogger.isLoggable(PlatformLogger.FINE)) {
                 focusLogger.fine("new node is null, focus not moved");
             }
         } else {
-            if (focusLogger.isLoggable(Level.FINER)) {
+            if (focusLogger.isLoggable(PlatformLogger.FINER)) {
                 focusLogger.finer("new focus owner : "+newNode);
             }
             newNode.requestFocus();
@@ -137,7 +136,7 @@ public class TraversalEngine {
 
             for (nodeIndex = 1; nodeIndex < nodes.size(); nodeIndex++) {
 
-                if (focusLogger.isLoggable(Level.FINEST)) {
+                if (focusLogger.isLoggable(PlatformLogger.FINEST)) {
                     focusLogger.finest("getTopLeftFocusableNode(), distance : "+zeroZero.distance(getBounds(nodes.get(nodeIndex)).getMinX(), getBounds(nodes.get(nodeIndex)).getMinY())+" to  : "+nodes.get(nodeIndex)+". @ : "+getBounds(nodes.get(nodeIndex)).getMinX()+":"+getBounds(nodes.get(nodeIndex)).getMinY());
                 }
                 distance = zeroZero.distance(getBounds(nodes.get(nodeIndex)).getMinX(), getBounds(nodes.get(nodeIndex)).getMinY());
@@ -147,7 +146,7 @@ public class TraversalEngine {
                 }
 
             }
-            if (focusLogger.isLoggable(Level.FINER)) {
+            if (focusLogger.isLoggable(PlatformLogger.FINER)) {
                 focusLogger.finer("getTopLeftFocusableNode(), nearest  : "+nearestNode+", at : "+nearestDistance);
             }
 

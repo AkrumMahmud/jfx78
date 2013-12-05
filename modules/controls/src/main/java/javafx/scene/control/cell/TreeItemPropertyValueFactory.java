@@ -36,7 +36,6 @@ import javafx.util.Callback;
 import com.sun.javafx.property.PropertyReference;
 import com.sun.javafx.scene.control.Logging;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 
 /**
@@ -151,7 +150,7 @@ public class TreeItemPropertyValueFactory<S,T> implements Callback<TreeTableColu
 
             // log the warning and move on
             final PlatformLogger logger = Logging.getControlsLogger();
-            if (logger.isLoggable(Level.WARNING)) {
+            if (logger.isLoggable(PlatformLogger.WARNING)) {
                logger.finest("Can not retrieve property '" + getProperty() +
                         "' in TreeItemPropertyValueFactory: " + this +
                         " with provided class type: " + rowData.getClass(), e);
