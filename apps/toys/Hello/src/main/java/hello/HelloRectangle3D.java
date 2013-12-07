@@ -89,7 +89,7 @@ public class HelloRectangle3D extends Application {
         tx.setInterpolator(Interpolator.LINEAR);
         tx.play();
 
-        PerformanceTracker tracker = PerformanceTracker.getSceneTracker(scene);
+        final PerformanceTracker tracker = PerformanceTracker.getSceneTracker(scene);
         Timeline t = new Timeline(
             new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
                 @Override
