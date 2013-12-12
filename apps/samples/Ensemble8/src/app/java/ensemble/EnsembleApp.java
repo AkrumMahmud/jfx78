@@ -74,7 +74,7 @@ public class EnsembleApp extends Application {
     private static final String OS_ARCH = System.getProperty("ensemble.os.arch", System.getProperty("os.arch"));
     public static final boolean IS_IPHONE = false;
     public static final boolean IS_IOS = "iOS".equals(OS_NAME);
-    public static final boolean IS_EMBEDDED = "arm".equals(OS_ARCH) && !IS_IOS;
+    public static final boolean IS_EMBEDDED = OS_ARCH.startsWith("arm") && !IS_IOS;
     public static final boolean IS_DESKTOP = !IS_EMBEDDED && !IS_IOS;
     public static final boolean IS_MAC = OS_NAME.startsWith("Mac");
     public static final boolean PRELOAD_PREVIEW_IMAGES = true;
