@@ -34,11 +34,14 @@ package ensemble.compiletime.search;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+
 import javafx.collections.FXCollections;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -139,7 +142,7 @@ public class DocumentationIndexer {
             return handler.getDocPage();
         } catch (SAXException | IOException e) {
             String filename = "tmp" + tmpIndex++ + ".txt";
-            Files.write(new File(filename).toPath(), FXCollections.observableArrayList(content));
+            Files.write(new File(filename).toPath(), FXCollections.observableArrayList(content), StandardCharsets.UTF_8);
             throw new RuntimeException("\"Failed to parse '" + url + "', see content in " + filename + ".", e);
         }
     }

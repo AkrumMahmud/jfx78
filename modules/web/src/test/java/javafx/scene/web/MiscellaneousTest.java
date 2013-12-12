@@ -61,7 +61,7 @@ public class MiscellaneousTest extends TestBase {
             }
         }
         final ArrayList<Record> records = new ArrayList<Record>();
-        ChangeListener<State> listener = new ChangeListener<State>() {
+        final ChangeListener<State> listener = new ChangeListener<State>() {
             public void changed(ObservableValue<? extends State> ov,
                                 State oldValue, State newValue)
             {

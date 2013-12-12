@@ -28,7 +28,7 @@ package com.sun.javafx.font;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.io.IOException;
-import java.nio.file.Files;
+//import java.nio.file.Files;
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
@@ -87,7 +87,7 @@ class FontFileWriter implements FontConstants {
             new PrivilegedExceptionAction<File>() {
                 public File run() throws IOException {
                     try {
-                        return Files.createTempFile("+JXF", ".tmp").toFile();
+                        return File.createTempFile("+JXF", ".tmp");
                     } catch (IOException e) {
                         // don't reveal temporary directory location
                         throw new IOException("Unable to create temporary file");
@@ -267,7 +267,7 @@ class FontFileWriter implements FontConstants {
         File f = null;
         boolean hasPerm = false;
         try {
-            f = Files.createTempFile("+JXF", ".tmp").toFile();
+            f = File.createTempFile("+JXF", ".tmp");
             f.delete();
             f = null;
             hasPerm = true;

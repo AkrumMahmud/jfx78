@@ -30,7 +30,7 @@ import java.awt.EventQueue;
 import java.awt.Graphics2D;
 import java.awt.SecondaryLoop;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.InvocationTargetException;
+
 import java.lang.reflect.Method;
 import java.nio.IntBuffer;
 import java.security.AccessController;
@@ -46,7 +46,7 @@ import javafx.scene.image.WritablePixelFormat;
 import com.sun.javafx.application.PlatformImpl;
 import com.sun.javafx.tk.Toolkit;
 import sun.awt.AWTAccessor;
-import sun.awt.FwDispatcher;
+// import sun.awt.FwDispatcher;
 import sun.awt.image.IntegerComponentRaster;
 
 import javax.swing.*;
@@ -253,20 +253,22 @@ public class SwingFXUtils {
         }
     }
 
-    private static class FXDispatcher implements FwDispatcher {
-        @Override public boolean isDispatchThread() {
-            return Platform.isFxApplicationThread();
-        }
+//    private static class FXDispatcher implements FwDispatcher {
+//        @Override public boolean isDispatchThread() {
+//            return Platform.isFxApplicationThread();
+//        }
+//
+//        @Override public void scheduleDispatch(Runnable runnable) {
+//            Platform.runLater(runnable);
+//        }
+//
+//        @Override public SecondaryLoop createSecondaryLoop() {
+//            return new FwSecondaryLoop();
+//        }
+//    }
 
-        @Override public void scheduleDispatch(Runnable runnable) {
-            Platform.runLater(runnable);
-        }
-
-        @Override public SecondaryLoop createSecondaryLoop() {
-            return new FwSecondaryLoop();
-        }
-    }
-
+    //Called with reflection from PlatformImpl to avoid dependency
+    
     private static EventQueue getEventQueue() {
         return AccessController.doPrivileged(
                 new PrivilegedAction<EventQueue>() {
@@ -278,11 +280,15 @@ public class SwingFXUtils {
 
     //Called with reflection from PlatformImpl to avoid dependency
     public static void installFwEventQueue() {
-        AWTAccessor.getEventQueueAccessor().setFwDispatcher(getEventQueue(), new FXDispatcher());
+    	throw new RuntimeException("Java 8 is required to start the swing event thread from java fx");
+    	 
+    	// AWTAccessor.getEventQueueAccessor().setFwDispatcher(getEventQueue(), new FXDispatcher());
     }
 
     //Called with reflection from PlatformImpl to avoid dependency
     public static void removeFwEventQueue() {
-        AWTAccessor.getEventQueueAccessor().setFwDispatcher(getEventQueue(), null);
+    	throw new RuntimeException("Java 8 is required to start the swing event thread from java fx");
+    	 
+    	// AWTAccessor.getEventQueueAccessor().setFwDispatcher(getEventQueue(), null);
     }
 }

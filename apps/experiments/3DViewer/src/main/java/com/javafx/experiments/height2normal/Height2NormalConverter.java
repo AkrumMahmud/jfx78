@@ -53,9 +53,9 @@ public class Height2NormalConverter {
             for (int y=0; y<h; y++) {
                 for (int x=0; x<w; x++) {
                     final int pixelIndex = (y*w*4) + (x*4);
-                    heightPixels[pixelIndex] = (byte)(255-Byte.toUnsignedInt(heightPixels[pixelIndex]));
-                    heightPixels[pixelIndex+1] = (byte)(255-Byte.toUnsignedInt(heightPixels[pixelIndex+1]));
-                    heightPixels[pixelIndex+2] = (byte)(255-Byte.toUnsignedInt(heightPixels[pixelIndex+2]));
+                    heightPixels[pixelIndex] = (byte)(255-(heightPixels[pixelIndex] & 0xff));
+                    heightPixels[pixelIndex+1] = (byte)(255-(heightPixels[pixelIndex+1] & 0xff));
+                    heightPixels[pixelIndex+2] = (byte)(255-(heightPixels[pixelIndex+2] & 0xff));
                     heightPixels[pixelIndex+3] = heightPixels[pixelIndex+3];
                 }
             }
@@ -72,10 +72,10 @@ public class Height2NormalConverter {
                 final int pixelBelowIndex = (yBelow*w*4) + (x*4);
                 final int pixelLeftIndex = (y*w*4) + (xLeft*4);
                 final int pixelRightIndex = (y*w*4) + (xRight*4);
-                final int pixelAboveHeight = Byte.toUnsignedInt(heightPixels[pixelAboveIndex]);
-                final int pixelBelowHeight = Byte.toUnsignedInt(heightPixels[pixelBelowIndex]);
-                final int pixelLeftHeight = Byte.toUnsignedInt(heightPixels[pixelLeftIndex]);
-                final int pixelRightHeight = Byte.toUnsignedInt(heightPixels[pixelRightIndex]);
+                final int pixelAboveHeight = (heightPixels[pixelAboveIndex] & 0xff);
+                final int pixelBelowHeight = (heightPixels[pixelBelowIndex] & 0xff);
+                final int pixelLeftHeight = (heightPixels[pixelLeftIndex] & 0xff);
+                final int pixelRightHeight = (heightPixels[pixelRightIndex] & 0xff);
 
                 Point3D pixelAbove = new Point3D(x,yAbove,pixelAboveHeight);
                 Point3D pixelBelow = new Point3D(x,yBelow,pixelBelowHeight);

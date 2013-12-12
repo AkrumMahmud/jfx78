@@ -31,7 +31,6 @@ package javafx.animation;
  * of given fraction.
  * @since JavaFX 2.0
  */
-@FunctionalInterface
 public interface Interpolatable<T> {
 
     /**

@@ -52,7 +52,6 @@ import com.sun.javafx.scene.control.Logging;
 import javafx.css.Styleable;
 import javafx.css.StyleableProperty;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 
 /**
@@ -306,7 +305,7 @@ public abstract class Control extends Region implements Skinnable {
 
             // DEBUG: Log that we've changed the skin
             final PlatformLogger logger = Logging.getControlsLogger();
-            if (logger.isLoggable(Level.FINEST)) {
+            if (logger.isLoggable(PlatformLogger.FINEST)) {
                 logger.finest("Stored skin[" + getValue() + "] on " + this);
             }
         }

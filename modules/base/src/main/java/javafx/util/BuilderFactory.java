@@ -31,7 +31,6 @@ package javafx.util;
  *
  * @since JavaFX 2.0
  */
-@FunctionalInterface
 public interface BuilderFactory {
     /**
      * Returns a builder suitable for constructing instances of the given type.

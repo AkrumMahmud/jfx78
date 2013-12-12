@@ -37,7 +37,6 @@ package javafx.util;
  * @param <R> The type of the return type of the <code>call</code> method.
  * @since JavaFX 2.0
  */
-@FunctionalInterface
 public interface Callback<P,R> {
     /**
      * The <code>call</code> method is called when required, and is given a

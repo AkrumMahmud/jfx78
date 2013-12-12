@@ -32,6 +32,8 @@
 package com.javafx.experiments.jfx3dviewer;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.SubScene;
 import javafx.scene.layout.Pane;
@@ -59,17 +61,23 @@ public class SubSceneResizer extends Pane {
             setPrefSize(this.subScene.getWidth(),this.subScene.getHeight());
             getChildren().add(this.subScene);
         }
-        subScene.addListener((o,old,newSubScene) -> {
-            this.subScene = newSubScene;
-            if (this.subScene != null) {
-                setPrefSize(this.subScene.getWidth(),this.subScene.getHeight());
-                if (getChildren().size() == 1) {
-                    getChildren().add(0,this.subScene);
-                } else {
-                    getChildren().set(0,this.subScene);
-                }
-            }
-        });
+        subScene.addListener(new ChangeListener<SubScene>() {
+
+			@Override
+			public void changed(ObservableValue<? extends SubScene> observable,
+					SubScene o, SubScene newSubScene) {
+				SubSceneResizer.this.subScene = newSubScene;
+	            if (SubSceneResizer.this.subScene != null) {
+	                setPrefSize(SubSceneResizer.this.subScene.getWidth(),SubSceneResizer.this.subScene.getHeight());
+	                if (getChildren().size() == 1) {
+	                    getChildren().add(0,SubSceneResizer.this.subScene);
+	                } else {
+	                    getChildren().set(0,SubSceneResizer.this.subScene);
+	                }
+	            }
+				
+			}
+		});
         setMinSize(50,50);
         setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
         getChildren().add(controlsPanel);

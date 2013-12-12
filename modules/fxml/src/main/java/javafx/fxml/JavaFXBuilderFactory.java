@@ -37,7 +37,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.Parameter;
 import java.net.URL;
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -214,18 +213,20 @@ public final class JavaFXBuilderFactory implements BuilderFactory {
     }
 
     private boolean scanForConstructorAnnotations(Class<?> type) {
-        Constructor constructors[] = ConstructorUtil.getConstructors(type);
-        for (Constructor constructor : constructors) {
-            Annotation[][] paramAnnotations = constructor.getParameterAnnotations();
-            Parameter[] params = constructor.getParameters();
-            for (int i = 0; i < params.length; i++) {
-                for (Annotation annotation : paramAnnotations[i]) {
-                    if (annotation instanceof NamedArg) {
-                        return true;
-                    }
-                }
-            }
-        }
+// Disabled for openjfx78 as Constructor.getParamters() is a Java 8 function
+// Affects https://javafx-jira.kenai.com/browse/RT-29409
+//        Constructor constructors[] = ConstructorUtil.getConstructors(type);
+//        for (Constructor constructor : constructors) {
+//            Annotation[][] paramAnnotations = constructor.getParameterAnnotations();
+//            Parameter[] params = constructor.getParameters();
+//            for (int i = 0; i < params.length; i++) {
+//                for (Annotation annotation : paramAnnotations[i]) {
+//                    if (annotation instanceof NamedArg) {
+//                        return true;
+//                    }
+//                }
+//            }
+//        }
         return false;
     }
 
