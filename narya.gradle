@@ -1,0 +1,217 @@
+
+allprojects {
+    apply plugin: 'maven'
+    apply plugin: 'signing'
+
+    group = 'org.naryafx.jfx78'
+    version = '7.8.0.106'
+
+    configurations {
+        maven { extendsFrom archives }
+        published { extendsFrom archives, signatures}
+    }
+
+    ext.configurePOM = { pom ->
+        pom.project {
+            name "JFX78 $pom.artifactId Module"
+            description 'Java7 backport of OpenJFX8 javafx modules'
+            url 'http://bitbucket.org/narya/jfx78/'
+            modelVersion '4.0.0'
+            scm {
+                connection 'scm:hg:http://bitbucket.org/narya/jfx78/'
+                developerConnection 'scm:hg:ssh://hg@bitbucket.org/narya/jfx78/'
+                url 'http://bitbucket.org/narya/jfx78/'
+            }
+            //todo add openjfx list
+//            developers {
+//                developer {
+//                    name
+//                    email
+//                }
+//            }
+            licenses {
+                license {
+                    name 'GPL+Classpath Exception'
+                    url 'http://openjdk.java.net/legal/gplv2+ce.html'
+                    distribution 'repo'
+                }
+            }
+            dependencies.removeAll { dep ->
+                return dep.groupId == null || dep.artifactId == null || dep.version == null
+            }
+
+        }
+    }
+}
+
+subprojects {
+    uploadArchives {
+        doFirst {
+            // configure repositories in a doFirst so we can late bind the properties
+            checkPasswords()
+            repositories {
+                mavenDeployer {
+                    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+                    snapshotRepository(url: "https://repository-naryafx.forge.cloudbees.com/snapshot/") {
+                        authentication userName: cloudbeesUserName, password: cloudbeesPassword
+                    }
+                    repository(url: "https://repository-naryafx.forge.cloudbees.com/release/") {
+                        authentication userName: cloudbeesUserName, password: cloudbeesPassword
+                    }
+                    pom.whenConfigured configurePOM
+                }
+            }
+        }
+
+        configuration = configurations.published
+    }
+
+    install {
+        repositories {
+            mavenInstaller {
+                pom.whenConfigured configurePOM
+            }
+        }
+        configuration = configurations.published
+    }
+}
+
+
+project(':fxpackager') {
+    task fxpackagerBase(type: Jar, dependsOn: jar) {
+        from zipTree(jar.archivePath)
+
+        include '**'
+        exclude 'com/sun/javafx/tools/packager/bundlers/Linux*'
+        exclude 'com/sun/javafx/tools/packager/bundlers/Mac*'
+        exclude 'com/sun/javafx/tools/packager/bundlers/Win*'
+        exclude 'com/sun/javafx/tools/resource/linux/*'
+        exclude 'com/sun/javafx/tools/resource/mac/*'
+        exclude 'com/sun/javafx/tools/resource/windows/*'
+
+        baseName = 'jfx-packager'
+    }
+
+    task fxpackagerLinux(type: Jar, dependsOn: jar) {
+        enabled = IS_LINUX
+
+        from zipTree(jar.archivePath)
+
+        include 'com/sun/javafx/tools/packager/bundlers/Linux*'
+        include 'com/sun/javafx/tools/resource/linux'
+
+        baseName = 'jfx-packager-linuxbundles'
+    }
+
+    task fxpackagerMac(type: Jar, dependsOn: jar) {
+        enabled = IS_MAC
+
+        from zipTree(jar.archivePath)
+
+        include 'com/sun/javafx/tools/packager/bundlers/Mac*'
+        include 'com/sun/javafx/tools/resource/mac'
+
+        baseName = 'jfx-packager-macbundles'
+    }
+
+    task fxpackagerWindows(type: Jar, dependsOn: jar) {
+        enabled = IS_WINDOWS
+
+        from zipTree(jar.archivePath)
+
+        include 'com/sun/javafx/tools/packager/bundlers/Win*'
+        include 'com/sun/javafx/tools/resource/windows'
+
+        baseName = 'jfx-packager-winbundles'
+    }
+
+    artifacts {
+        archives(fxpackagerBase.archivePath) {
+            builtBy fxpackagerBase
+            name 'jfx-packager'
+        }
+        if (IS_LINUX) archives(fxpackagerLinux.archivePath) {
+            builtBy fxpackagerLinux
+            name 'jfx-packager-linuxbundles'
+        }
+        if (IS_MAC) archives(fxpackagerMac.archivePath) {
+            builtBy fxpackagerMac
+            name 'jfx-packager-macbundles'
+        }
+        if (IS_WINDOWS) archives(fxpackagerWindows.archivePath) {
+            builtBy fxpackagerWindows
+            name 'jfx-packager-windowsbundles'
+        }
+    }
+
+    ext.filters =  {
+        addFilter('jar') {artifact, file ->
+            artifact.name == 'fxpackager'
+        }
+        addFilter('base') {artifact, file ->
+            artifact.name == 'jfx-packager'
+        }
+        addFilter('linux') {artifact, file ->
+            artifact.name == 'jfx-packager-linuxbundles'
+        }
+        addFilter('mac') {artifact, file ->
+            artifact.name == 'jfx-packager-macbundles'
+        }
+        addFilter('windows') {artifact, file ->
+            artifact.name == 'jfx-packager-windowsbundles'
+        }
+        ['jar', 'base', 'linux', 'mac', 'windows'].each {
+            pom(it).whenConfigured configurePOM
+        }
+    }
+
+    uploadArchives {
+        repositories {
+            mavenDeployer filters
+        }
+    }
+
+    install {
+        repositories {
+            mavenInstaller filters
+        }
+    }
+}
+
+signing {
+    required = { gradle.taskGraph.hasTask(uploadPublished) && !version.endsWith("SNAPSHOT") }
+    sign configurations.archives
+}
+
+repositories {
+    mavenRepo url: 'https://oss.sonatype.org/content/groups/staging'
+    mavenCentral()
+    mavenRepo url: new File(System.getProperty('user.home'), '.m2/repository').toURI().toString()
+}
+
+
+
+ext.checkPasswords =  {
+    try {
+        def check = [sonatypeUsername, sonatypePassword]
+        println "Using sonatype user $sonatypeUsername"
+    } catch (MissingPropertyException e) {
+        e.printStackTrace()
+        Console console = System.console()
+        console.printf "\n\nIn order to upload to Sonatype we need your username and password.\nEnter a blank username or password to skip upload\n\n"
+        ext.sonatypeUsername = console.readLine("Sonatype Username: ")
+        ext.sonatypePassword = new String(console.readPassword("Sonatype Password: "))
+        if (!sonatypePassword || !sonatypeUsername) {
+            console.printf("\n\nSonatype upload aborted")
+            subprojects {
+                signing {
+                    enabled = false
+                }
+                uploadPublished {
+                    enabled = false
+                }
+            }
+            throw new StopExecutionException()
+        }
+    }
+}

@@ -38,7 +38,6 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import com.sun.javafx.css.converters.EnumConverter;
-import java.util.function.Function;
 import javafx.css.Styleable;
 import javafx.geometry.HPos;
 import javafx.util.Callback;
@@ -338,9 +337,9 @@ public class StackPane extends Pane {
         double contentWidth = width - left - right;
         double contentHeight = height - top - bottom;
         double baselineOffset = alignVpos == VPos.BASELINE ?
-                getAreaBaselineOffset(managed, marginAccessor, new Function<Integer, Double>() {
+                getAreaBaselineOffset(managed, marginAccessor, new Callback<Integer, Double>() {
 
-            public Double apply(Integer i) {
+            public Double call(Integer i) {
                 return width;
             }
         }, contentHeight, true)

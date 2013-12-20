@@ -39,6 +39,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
+import javafx.util.Callback;
 
 /**
  * Wraps an ObservableList and sorts it's content.
@@ -59,7 +60,7 @@ public final class SortedList<E> extends TransformationList<E, E>{
 
     private final SortHelper helper = new SortHelper();
 
-    private final Element<E> tempElement = new Element<>(null, -1);
+    private final Element<E> tempElement = new Element<E>(null, -1);
 
 
     /**
@@ -335,7 +336,7 @@ public final class SortedList<E> extends TransformationList<E, E>{
         ensureSize(size + 1);
         updateIndices(idx, 1);
         System.arraycopy(sorted, pos, sorted, pos + 1, size - pos);
-        sorted[pos] = new Element<>(e, idx);
+        sorted[pos] = new Element<E>(e, idx);
         ++size;
         nextAdd(pos, pos + 1);
 
@@ -395,5 +396,34 @@ public final class SortedList<E> extends TransformationList<E, E>{
         }
     }
 
+
+    /**
+     * Creates a {@link FilteredList} wrapper of this list using
+     * the specified predicate.
+     * @param predicate the predicate to use
+     * @return new {@code FilteredList}
+     */
+    public FilteredList<E> filtered(Callback<E, Boolean> predicate) {
+        return new FilteredList<E>(this, predicate);
+    }
+
+    /**
+     * Creates a {@link SortedList} wrapper of this list using
+     * the specified comparator.
+     * @param comparator the comparator to use or null for the natural order
+     * @return new {@code SortedList}
+     */
+    public SortedList<E> sorted(Comparator<E> comparator) {
+        return new SortedList<E>(this, comparator);
+    }
+
+    /**
+     * Creates a {@link SortedList} wrapper of this list with the natural
+     * ordering.
+     * @return new {@code SortedList}
+     */
+    public SortedList<E> sorted() {
+        return sorted(null);
+    }
 
 }

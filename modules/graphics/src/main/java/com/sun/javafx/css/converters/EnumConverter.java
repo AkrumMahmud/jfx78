@@ -42,7 +42,6 @@ import java.util.Map;
 
 import com.sun.javafx.Logging;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 public final class EnumConverter<E extends Enum<E>> extends StyleConverterImpl<String, E> {
 
@@ -94,7 +93,7 @@ public final class EnumConverter<E extends Enum<E>> extends StyleConverterImpl<S
 
             if (converter == null) {
                 final PlatformLogger logger = Logging.getCSSLogger();
-                if (logger.isLoggable(Level.SEVERE)) {
+                if (logger.isLoggable(PlatformLogger.SEVERE)) {
                     logger.severe("could not deserialize EnumConverter for " + ename);
                 }
             }
@@ -186,7 +185,7 @@ public final class EnumConverter<E extends Enum<E>> extends StyleConverterImpl<S
             assert false : "EnumConverter<"+ ename + "> not expected";
 
             final PlatformLogger logger = Logging.getCSSLogger();
-            if (logger.isLoggable(Level.SEVERE)) {
+            if (logger.isLoggable(PlatformLogger.SEVERE)) {
                 logger.severe("EnumConverter : converter Class is null for : "+ename);
             }
             break;

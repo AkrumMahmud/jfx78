@@ -44,7 +44,7 @@ public class PlatformFeatures {
     private static final boolean MAC = os.startsWith("Mac");
     private static final boolean LINUX = os.startsWith("Linux");
     private static final boolean IOS = os.startsWith("iOS");   
-    private static final boolean ARM = arch.equals("arm");
+    private static final boolean ARM = arch.startsWith("arm");
     
     public static final boolean SUPPORTS_BENDING_PAGES = !ARM;
     public static final boolean HAS_HELVETICA = MAC || IOS;

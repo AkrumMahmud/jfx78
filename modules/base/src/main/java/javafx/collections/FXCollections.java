@@ -63,6 +63,8 @@ import com.sun.javafx.collections.annotations.ReturnsUnmodifiableCollection;
 import java.util.RandomAccess;
 import javafx.beans.Observable;
 import javafx.collections.ListChangeListener.Change;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.util.Callback;
 
 /**
@@ -833,6 +835,36 @@ public class FXCollections {
         public void remove(int from, int to) {
             throw new UnsupportedOperationException();
         }
+
+        /**
+         * Creates a {@link javafx.collections.transformation.FilteredList} wrapper of this list using
+         * the specified predicate.
+         * @param predicate the predicate to use
+         * @return new {@code FilteredList}
+         */
+        public FilteredList<E> filtered(Callback<E, Boolean> predicate) {
+            return new FilteredList<E>(this, predicate);
+        }
+
+        /**
+         * Creates a {@link SortedList} wrapper of this list using
+         * the specified comparator.
+         * @param comparator the comparator to use or null for the natural order
+         * @return new {@code SortedList}
+         */
+        public SortedList<E> sorted(Comparator<E> comparator) {
+            return new SortedList<E>(this, comparator);
+        }
+
+        /**
+         * Creates a {@link SortedList} wrapper of this list with the natural
+         * ordering.
+         * @return new {@code SortedList}
+         */
+        public SortedList<E> sorted() {
+            return sorted(null);
+        }
+
     }
 
     private static class SingletonObservableList<E> extends AbstractList<E> implements ObservableList<E> {
@@ -915,6 +947,34 @@ public class FXCollections {
             return element;
         }
 
+        /**
+         * Creates a {@link javafx.collections.transformation.FilteredList} wrapper of this list using
+         * the specified predicate.
+         * @param predicate the predicate to use
+         * @return new {@code FilteredList}
+         */
+        public FilteredList<E> filtered(Callback<E, Boolean> predicate) {
+            return new FilteredList<E>(this, predicate);
+        }
+
+        /**
+         * Creates a {@link SortedList} wrapper of this list using
+         * the specified comparator.
+         * @param comparator the comparator to use or null for the natural order
+         * @return new {@code SortedList}
+         */
+        public SortedList<E> sorted(Comparator<E> comparator) {
+            return new SortedList<E>(this, comparator);
+        }
+
+        /**
+         * Creates a {@link SortedList} wrapper of this list with the natural
+         * ordering.
+         * @return new {@code SortedList}
+         */
+        public SortedList<E> sorted() {
+            return sorted(null);
+        }
     }
 
     private static class UnmodifiableObservableListImpl<T> extends ObservableListBase<T> implements ObservableList<T> {
@@ -1258,7 +1318,34 @@ public class FXCollections {
             helper = ListListenerHelper.removeListener(helper, listener);
         }
 
+        /**
+         * Creates a {@link javafx.collections.transformation.FilteredList} wrapper of this list using
+         * the specified predicate.
+         * @param predicate the predicate to use
+         * @return new {@code FilteredList}
+         */
+        public FilteredList<T> filtered(Callback<T, Boolean> predicate) {
+            return new FilteredList<T>(this, predicate);
+        }
 
+        /**
+         * Creates a {@link SortedList} wrapper of this list using
+         * the specified comparator.
+         * @param comparator the comparator to use or null for the natural order
+         * @return new {@code SortedList}
+         */
+        public SortedList<T> sorted(Comparator<T> comparator) {
+            return new SortedList<T>(this, comparator);
+        }
+
+        /**
+         * Creates a {@link SortedList} wrapper of this list with the natural
+         * ordering.
+         * @return new {@code SortedList}
+         */
+        public SortedList<T> sorted() {
+            return sorted(null);
+        }
     }
 
     private static class CheckedObservableList<T> extends ObservableListBase<T> implements ObservableList<T> {

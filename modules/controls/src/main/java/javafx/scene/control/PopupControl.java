@@ -59,7 +59,6 @@ import com.sun.javafx.scene.control.Logging;
 import javafx.css.StyleableProperty;
 import javafx.stage.Window;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 /**
  * An extension of PopupWindow that allows for CSS styling.
@@ -1120,7 +1119,7 @@ public class PopupControl extends PopupWindow implements Skinnable, Styleable {
 
                 // DEBUG: Log that we've changed the skin
                 final PlatformLogger logger = Logging.getControlsLogger();
-                if (logger.isLoggable(Level.FINEST)) {
+                if (logger.isLoggable(PlatformLogger.FINEST)) {
                     logger.finest("Stored skin[" + getValue() + "] on " + this);
                 }
             }

@@ -6,14 +6,11 @@
 	<classpathentry kind="src" path="src/samples/resources"/>
 	<classpathentry kind="src" path="src/compiletime/java"/>
 	<classpathentry kind="src" path="src/generated/java"/>
-    <classpathentry kind="src" path="src/generated/resources"/>
+	<classpathentry kind="src" path="src/generated/resources"/>
 	<classpathentry kind="lib" path="lib/lucene-core-3.2.0.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-grouping-3.2.0.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/rt">
-	<attributes>
-		<attribute name="optional" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-7-oracle-jfx78"/>
+	<classpathentry kind="src" path="/media"/>
+	<classpathentry kind="src" path="/web"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
