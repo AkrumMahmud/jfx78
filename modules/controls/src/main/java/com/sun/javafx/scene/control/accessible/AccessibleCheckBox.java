@@ -35,7 +35,6 @@ import com.sun.javafx.accessible.utils.EventIds;
 import com.sun.javafx.accessible.utils.PropertyIds;
 import com.sun.javafx.accessible.utils.ToggleState;
 import sun.util.logging.PlatformLogger;
-import sun.util.logging.PlatformLogger.Level;
 
 public class AccessibleCheckBox extends AccessibleControl implements ToggleProvider {
     CheckBox checkBox ;
@@ -75,7 +74,7 @@ public class AccessibleCheckBox extends AccessibleControl implements ToggleProvi
             toggleState = ToggleState.INDETERMINATE;
         if( checkBox.isSelected() )
             toggleState = ToggleState.ON;
-        if (logger.isLoggable(Level.FINER)) {
+        if (logger.isLoggable(PlatformLogger.FINER)) {
             logger.finer(this.toString()+ "getToggleState" + toggleState.toString());
         }
         return toggleState ;

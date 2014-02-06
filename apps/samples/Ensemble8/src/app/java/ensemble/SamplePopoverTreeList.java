@@ -34,7 +34,10 @@ package ensemble;
 import ensemble.control.Popover;
 import ensemble.control.PopoverTreeList;
 import ensemble.generated.Samples;
+
 import java.util.Comparator;
+
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
@@ -58,7 +61,7 @@ public class SamplePopoverTreeList extends PopoverTreeList implements Popover.Pa
         this.pageBrowser = pageBrowser;
         if (category.subCategories!=null) getItems().addAll((Object[])category.subCategories);
         if (category.samples!=null) getItems().addAll((Object[])category.samples);
-        getItems().sort(new Comparator() {
+        FXCollections.sort(getItems(), new Comparator() {
             
             private String getName(Object o) {
                 if (o instanceof SampleCategory) {

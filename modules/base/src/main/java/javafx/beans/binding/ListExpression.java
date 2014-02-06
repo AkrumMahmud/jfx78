@@ -33,11 +33,11 @@ import javafx.beans.value.ObservableIntegerValue;
 import javafx.beans.value.ObservableListValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.util.Callback;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 /**
  * A {@code ListExpression} is a
@@ -102,6 +102,35 @@ public abstract class ListExpression<E> implements ObservableListValue<E> {
             @ReturnsUnmodifiableCollection
             public ObservableList<ObservableListValue<E>> getDependencies() {
                 return FXCollections.singletonObservableList(value);
+            }
+
+            /**
+             * Creates a {@link javafx.collections.transformation.FilteredList} wrapper of this list using
+             * the specified predicate.
+             * @param predicate the predicate to use
+             * @return new {@code FilteredList}
+             */
+            public FilteredList<E> filtered(Callback<E, Boolean> predicate) {
+                return new FilteredList<E>(this, predicate);
+            }
+
+            /**
+             * Creates a {@link javafx.collections.transformation.SortedList} wrapper of this list using
+             * the specified comparator.
+             * @param comparator the comparator to use or null for the natural order
+             * @return new {@code SortedList}
+             */
+            public SortedList<E> sorted(Comparator<E> comparator) {
+                return new SortedList<E>(this, comparator);
+            }
+
+            /**
+             * Creates a {@link SortedList} wrapper of this list with the natural
+             * ordering.
+             * @return new {@code SortedList}
+             */
+            public SortedList<E> sorted() {
+                return sorted(null);
             }
         };
     }
@@ -392,4 +421,32 @@ public abstract class ListExpression<E> implements ObservableListValue<E> {
         }
     }
 
+    /**
+     * Creates a {@link javafx.collections.transformation.FilteredList} wrapper of this list using
+     * the specified predicate.
+     * @param predicate the predicate to use
+     * @return new {@code FilteredList}
+     */
+    public FilteredList<E> filtered(Callback<E, Boolean> predicate) {
+        return new FilteredList<E>(this, predicate);
+    }
+
+    /**
+     * Creates a {@link SortedList} wrapper of this list using
+     * the specified comparator.
+     * @param comparator the comparator to use or null for the natural order
+     * @return new {@code SortedList}
+     */
+    public SortedList<E> sorted(Comparator<E> comparator) {
+        return new SortedList<E>(this, comparator);
+    }
+
+    /**
+     * Creates a {@link SortedList} wrapper of this list with the natural
+     * ordering.
+     * @return new {@code SortedList}
+     */
+    public SortedList<E> sorted() {
+        return sorted(null);
+    }
 }

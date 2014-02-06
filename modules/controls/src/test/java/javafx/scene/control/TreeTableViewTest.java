@@ -2954,7 +2954,7 @@ public class TreeTableViewTest {
         first.setCellValueFactory(new TreeItemPropertyValueFactory<Person, String>("firstName"));
         first.setCellFactory(TextFieldTreeTableCell.forTreeTableColumn());
 
-        EventHandler<TreeTableColumn.CellEditEvent<Person, String>> onEditCommit = first.getOnEditCommit();
+        final EventHandler<TreeTableColumn.CellEditEvent<Person, String>> onEditCommit = first.getOnEditCommit();
         first.setOnEditCommit(new EventHandler<TreeTableColumn.CellEditEvent<Person, String>>() {
             @Override public void handle(TreeTableColumn.CellEditEvent<Person, String> event) {
                 test_rt_34685_commitCount++;

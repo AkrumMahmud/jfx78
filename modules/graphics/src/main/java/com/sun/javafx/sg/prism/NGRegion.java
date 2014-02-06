@@ -224,7 +224,7 @@ public class NGRegion extends NGGroup {
      * @param positionShape whether to center the shape
      */
     public void updateShape(Object shape, boolean scaleShape, boolean positionShape, boolean cacheShape) {
-        this.ngShape = shape == null ? null : ((javafx.scene.shape.Shape)shape).impl_getPeer();
+        this.ngShape = (NGShape) (shape == null ? null : ((javafx.scene.shape.Shape)shape).impl_getPeer());
         this.shape = shape == null ? null : ngShape.getShape();
         this.scaleShape = scaleShape;
         this.centerShape = positionShape;
@@ -1126,7 +1126,7 @@ public class NGRegion extends NGGroup {
 
     private void renderBorderRectangle(Graphics g) {
         final List<BorderImage> images = border.getImages();
-        final List<BorderStroke> strokes = images.isEmpty() ? border.getStrokes() : Collections.emptyList();
+        final List<BorderStroke> strokes = (List<BorderStroke>) (images.isEmpty() ? border.getStrokes() : Collections.emptyList());
         for (int i = 0, max = strokes.size(); i < max; i++) {
             final BorderStroke stroke = strokes.get(i);
             final BorderWidths widths = stroke.getWidths();

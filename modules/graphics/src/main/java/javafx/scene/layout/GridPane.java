@@ -58,7 +58,6 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.function.Function;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.css.Styleable;
@@ -1740,10 +1739,10 @@ public class GridPane extends Pane {
                 if (baselineOffsets[rowIndex] == -1) {
                     baselineOffsets[rowIndex] = getAreaBaselineOffset(rowBaseline[rowIndex],
                             marginAccessor,
-                            new Function<Integer, Double>() {
+                            new Callback<Integer, Double>() {
 
                                 @Override
-                                public Double apply(Integer t) {
+                                public Double call(Integer t) {
                                     Node n = rowBaseline[rowIndex].get(t);
                                     int c = getNodeColumnIndex(n);
                                     int cs = getNodeColumnSpan(n);
@@ -1758,10 +1757,10 @@ public class GridPane extends Pane {
                                 }
                             },
                             areaH,
-                            new Function<Integer, Boolean>() {
+                            new Callback<Integer, Boolean>() {
 
                                 @Override
-                                public Boolean apply(Integer t) {
+                                public Boolean call(Integer t) {
                                     Boolean b = isFillHeight(child);
                                     if (b != null) {
                                         return b;

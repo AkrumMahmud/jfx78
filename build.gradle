@@ -987,7 +987,7 @@ allprojects {
     }
     // All of our projects are java projects
     apply plugin: "java"
-    sourceCompatibility = 1.8
+    sourceCompatibility = 1.7
 
     // Setup the repositories that we'll download libraries from. Maven Central is
     // just easy for most things. The custom "ivy" repo is for downloading SWT. The way it
@@ -1054,8 +1054,8 @@ allprojects {
         options.windowTitle("JavaFX Project ${project.name} ${RELEASE_NAME}")
         options.links(JDK_DOCS);
         options.addBooleanOption("XDignore.symbol.file").setValue(true);
-        options.addBooleanOption("Xdoclint:none").setValue(!IS_DOC_LINT);
-        options.addBooleanOption("javafx").setValue(true);
+//        options.addBooleanOption("Xdoclint:none").setValue(!IS_DOC_LINT);
+//        options.addBooleanOption("javafx").setValue(true);
         // All doc-files are located in src/main/docs because Gradle's javadoc doesn't copy
         // over the doc-files if they are embedded with the sources. I find this arrangement
         // somewhat cleaner anyway (never was a fan of mixing javadoc files with the sources)
@@ -2309,8 +2309,8 @@ task javadoc(type: Javadoc) {
     options.bottom("${javadocBottom}")
     options.links(JDK_DOCS);
     options.addBooleanOption("XDignore.symbol.file").setValue(true);
-    options.addBooleanOption("Xdoclint:none").setValue(!IS_DOC_LINT);
-    options.addBooleanOption("javafx").setValue(true);
+//    options.addBooleanOption("Xdoclint:none").setValue(!IS_DOC_LINT);
+//    options.addBooleanOption("javafx").setValue(true);
     doLast {
         projectsToDocument.each { p ->
             copy {
@@ -2729,7 +2729,7 @@ project(":apps") {
                 ant.properties['JFX_CORE_ONLY'] = 'true'
               }
               ant.properties['jfxbuild.jfxrt.jar'] = jfxrtJar
-              ant.properties['platforms.JDK_1.8.home'] = "${rootProject.ext.JDK_HOME}"
+              ant.properties['platforms.JDK_1.7.home'] = "${rootProject.ext.JDK_HOME}"
               ant.project.executeTarget("sampleAppsJar")
             }
         }
@@ -2738,7 +2738,7 @@ project(":apps") {
         def appsClean = project.task("appsClean${t.capital}") {
             doLast() {
               ant.properties['targetBld'] = "$t.name"
-              ant.properties['platforms.JDK_1.8.home'] = "${rootProject.ext.JDK_HOME}"
+              ant.properties['platforms.JDK_1.7.home'] = "${rootProject.ext.JDK_HOME}"
               ant.project.executeTarget("sampleAppsClean")
             }
         }
@@ -2776,3 +2776,7 @@ compileTargets { t ->
         }
     )
 }
+
+
+//JFX78 maven publishing
+// apply from: 'narya.gradle'    
